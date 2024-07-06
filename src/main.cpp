@@ -167,7 +167,7 @@
 
 static const char *TAG = "Main";
 
-FaderPlayback faderPlayback(30, 1, new uint8_t[1]{0x40});
+FaderPlayback faderPlayback(30, 2, new uint8_t[2]{0x40, 0x41});
 
 // void onControlPadEvent(uint8_t type, uint16_t data)
 // {
@@ -209,6 +209,7 @@ void setup()
 
   faderPlayback.setup();
   faderPlayback.goToPattern(0);
+  faderPlayback.setGain(4095);
   // Serial.println("A" + String(FADER_PATTERN_1[0][17]));
   // Serial.println("A" + String(FADER_PATTERNS[0][0]));
 }
@@ -216,6 +217,7 @@ void setup()
 void loop()
 {
   faderPlayback.sendFrame();
+  delayMicroseconds(300);
 
   // for(int j=0; j<8; j++) {
   //     driver.setPWM(j, 0, random(0, 4095));

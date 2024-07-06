@@ -22,9 +22,9 @@ private:
 
 public:
     uint16_t patternIndex;
-    uint8_t frameRate;
+    uint16_t frameRate;
 
-    FaderPlayback(uint8_t frameRate, uint8_t driverCount, uint8_t* driverAddresses) : frameRate(frameRate), driverCount(driverCount), driverAddresses(driverAddresses) {};
+    FaderPlayback(uint16_t frameRate, uint8_t driverCount, uint8_t* driverAddresses) : frameRate(frameRate), driverCount(driverCount), driverAddresses(driverAddresses) {};
     void setup();
     void goToPattern(uint16_t patternIndex);
     void sendFrame();

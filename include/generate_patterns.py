@@ -51,8 +51,21 @@ if __name__ == "__main__":
         fade_down = np.linspace(4095, 0, pulse_length, dtype=np.uint16)
         # extend it to pattern_length with zeros
         fade_down = np.concatenate((fade_down, np.zeros(pattern_length - pulse_length, dtype=np.uint16)))
-        # repeat it for 16 columns
-        fade_down = np.tile(fade_down, (16, 1)).T
+        # repeat it for 16 columns, wrapping/rotating the array by 5 elements each time
+        fade_down = np.array([np.roll(fade_down, i * 5) for i in range(16)]).T.astype(np.uint16)
+
+
+        # # repeat it for 16 columns, multiplying by 0.9 each time
+        # fade_down = np.array([fade_down * 0.9**i for i in range(16)]).T.astype(np.uint16)
+
         arrays.append(fade_down)
+
+    # Create a strobe pattern
+    strobe_pattern_on = np.full((30, 16), 4095, dtype=np.uint16)
+    strobe_pattern_off = np.zeros((50, 16), dtype=np.uint16)
+    strobe_pattern = np.concatenate([strobe_pattern_on, strobe_pattern_off] * 50, axis=0)
+
+    # Add the strobe pattern to the list of arrays
+    arrays.append(strobe_pattern)
     # Convert the list of numpy arrays to a C++ file
     list_of_arrays_to_cpp_file(arrays, "FaderPatterns.h")

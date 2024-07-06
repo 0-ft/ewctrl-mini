@@ -75,5 +75,5 @@ void FaderPlayback::setGain(uint16_t gain)
     gain = gain > 4095 ? 4095 : gain;
     this->gain = gain;
     ESP_LOGI(TAG, "Set gain to %d", gain);
-    sendFrame();
+    // sendFrame();
 }

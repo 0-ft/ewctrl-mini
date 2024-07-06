@@ -1,0 +1,7 @@
+a:
+  type: 1
+  data: 256
+b:
+  type: 2
+  data: 512
+# Add more key mappings as needed
