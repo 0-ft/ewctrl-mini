@@ -4,8 +4,16 @@
 #include <WiFi.h>
 #include <esp_task_wdt.h>
 
+#define WIFI_COMMANDER_PORT 7032
+
 class WiFiCommander {
 public:
+    enum CommandTypes {
+        COMMAND_SET_PATTERN = 0x01,
+        COMMAND_SET_GAIN = 0x02,
+        COMMAND_SET_FRAMERATE = 0x03,
+    };
+    
     // Constructor
     WiFiCommander(const char* ssid, const char* password, void (*onEvent)(uint8_t type, uint16_t data), BaseType_t core = 0);
 

@@ -5,7 +5,7 @@ WiFiCommander* WiFiCommander::instance = nullptr;
 
 // Constructor implementation
 WiFiCommander::WiFiCommander(const char* ssid, const char* password, void (*onEvent)(uint8_t type, uint16_t data), BaseType_t core)
-    : ssid(ssid), password(password), onEvent(onEvent), server(80), core(core) {
+    : ssid(ssid), password(password), onEvent(onEvent), server(WIFI_COMMANDER_PORT), core(core) {
     instance = this;
 }
 
@@ -16,6 +16,7 @@ void WiFiCommander::init() {
 
     WiFi.onEvent(WiFiEvent);
 
+    WiFi.setHostname("EWCTRLMINI");
     WiFi.begin(ssid, password);
     Serial.println("Connecting to WiFi...");
 
