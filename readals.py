@@ -63,8 +63,25 @@ def parse_automations(filepath):
     # print(pointee_envelopes)
 
     float_params = list(root.iter("MxDFloatParameter"))
-    param_to_pointee = lambda p: p.find(".//AutomationTarget").get("Id")
-
+    param_to_pointee = lambda p: int(p.find(".//AutomationTarget").get("Id"))
+    param_to_name = lambda p: p.find("Name").get("Value")
+    name_pointees = {
+        param_to_name(param): param_to_pointee(param)
+        for param in float_params
+    }
+    # print(name_pointees)
+    name_envelopes = {
+        name: pointee_envelopes[pointee]
+        for name, pointee in name_pointees.items()
+        if pointee in pointee_envelopes
+    }
+    # print(name_envelopes)
+    return name_envelopes
+    # param_envelopes = {
+    #     param_to_name(param): pointee_envelopes[param_to_pointee(param)]
+    #     for param in float_params
+    # }
+    # print(param_envelopes)
     
     # pointee_params = {
     #     param_to_pointee(param): param
@@ -87,10 +104,10 @@ def parse_automations(filepath):
 
     # # print(lomid_map)
 
-    group_devices = list(root.iter("AudioEffectGroupDevice"))
+    # group_devices = list(root.iter("AudioEffectGroupDevice"))
 
-    for device in group_devices:
-        print(create_macro_display_map(device))
+    # for device in group_devices:
+    #     print(create_macro_display_map(device))
     #     # print(ET.tostring(device))
     #     # params = list(device.iter("MxDFloatParameter"))
     #     # print(params)
@@ -169,13 +186,59 @@ def sample_automation(segments, times):
         values.append((t, v))
     return np.array(values)
 
-automations = parse_automations(argv[1])
+def generate_cpp_bezier_patterns_header(data):
+    def float_event_to_cpp(event):
+        if 'CurveControl1X' in event and 'CurveControl1Y' in event and 'CurveControl2X' in event and 'CurveControl2Y' in event:
+            return (
+                f'{{ {event["Time"]}, {event["Value"]}, '
+                f'{event["CurveControl1X"]}, {event["CurveControl1Y"]}, '
+                f'{event["CurveControl2X"]}, {event["CurveControl2Y"]}, true }}'
+            )
+        else:
+            return f'{{ {event["Time"]}, {event["Value"]}, 0, 0, 0, 0, false }}'
+    
+    def envelope_to_cpp(envelope):
+        float_events_cpp = ",\n        ".join([float_event_to_cpp(event) for event in envelope])
+        return f'std::vector<FloatEvent>{{\n        {float_events_cpp}\n    }}'
+    
+    def pattern_to_cpp(pattern, index):
+        envelopes_cpp = ",\n    ".join([f'BezierEnvelope({envelope_to_cpp(envelope)})' for envelope in pattern])
+        return (
+            f'static const BezierPattern BEZIER_PATTERN_{index + 1} = BezierPattern({{\n'
+            f'    {envelopes_cpp}\n'
+            '});\n'
+        )
+    
+    patterns_cpp = "\n".join([pattern_to_cpp(pattern, i) for i, pattern in enumerate(data)])
+    pattern_vector_cpp = ",\n    ".join([f'BEZIER_PATTERN_{i + 1}' for i in range(len(data))])
+    
+    cpp_code = (
+        '#ifndef BEZIER_PATTERNS_INIT_H\n'
+        '#define BEZIER_PATTERNS_INIT_H\n\n'
+        '#include "BezierEnvelope.h"\n'
+        '#include "BezierPattern.h"\n\n'
+        f'{patterns_cpp}\n'
+        'static const std::vector<BezierPattern> BEZIER_PATTERNS = {\n'
+        f'    {pattern_vector_cpp}\n'
+        '};\n\n'
+        '#endif // BEZIER_PATTERNS_INIT_H\n'
+    )
+    
+    return cpp_code
 
-print(automations)
-res = parse_automation(automations["C1L0"])
-print(res)
+automations = parse_automations(argv[1])
+cpp = generate_cpp_bezier_patterns_header([[env for name, env in automations.items()]])
+open("include/BezierFaderPatterns.h", "w").write(cpp)
+# automations_to_cpp(automations)
+# print(automations)
+
+
+
+# print(automations)
+# res = parse_automation(automations["C1L0"])
 # print(res)
-samples = sample_automation(res, np.linspace(60, 62.0, 300))
+# print(res)
+# samples = sample_automation(res, np.linspace(60, 62.0, 300))
 # print(samples)
 # plt.plot(samples[:, 0], samples[:, 1])
 # plt.show()

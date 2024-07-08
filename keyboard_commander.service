@@ -1,0 +1,12 @@
+[Unit]
+Description=Keyboard Commander Service
+After=network.target
+
+[Service]
+ExecStart=/home/atlas/commander/venv/bin/python3 /home/atlas/commander/keyboard_client.py
+Restart=always
+User=atlas
+WorkingDirectory=/home/atlas/commander
+
+[Install]
+WantedBy=multi-user.target
