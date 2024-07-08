@@ -1,6 +1,7 @@
 
 #include "FaderPlayback.h"
 #include <FaderPatterns.h>
+#include <BezierFaderPatterns.h>
 
 static const char *TAG = "FaderPlayback";
 
@@ -25,31 +26,29 @@ void FaderPlayback::setup()
 
 void FaderPlayback::sendFrame()
 {
-    const auto pattern = FADER_PATTERNS[patternIndex];
-    const auto patternLength = FADER_PATTERN_LENGTHS[patternIndex];
-    // Serial.println("Pattern length: " + String(patternLength) + " pattern index: " + String(patternIndex) + " pattern start time: " + String(patternStartTime));
     const auto now = esp_timer_get_time();
     const auto deltaTime = now - patternStartTime;
-    const auto frameIndex = (deltaTime * frameRate / 1000000);
-    const uint16_t *frame;
-    if(frameIndex >= patternLength) {
-        frame = FADER_FRAME_ZEROES;
-    } else {
-        frame = pattern + (frameIndex * FADER_PATTERN_OUTPUTS_NUM);
-    }
-    // Serial.println("Frame index: " + String(frameIndex) + " last frame index: " + String(lastFrameIndex));
-    if (frameIndex != lastFrameIndex)
-    {
-        lastFrameIndex = frameIndex;
-    }
-    else
-    {
-        return;
-    }
-    // Serial.println("Writing frame " + String(frameIndex) + " of pattern " + String(patternIndex));
-    // Serial.println("available outputs: " + String(availableOutputs) + " pattern outputs: " + String(FADER_PATTERN_OUTPUTS_NUM));
-    // Serial.print("P " + String(patternIndex) + " F " + String(frameIndex) + ":\t");
-    // Serial.println("driver" + String(i / OUTPUTS_PER_DRIVER));
+
+    // const auto pattern = FADER_PATTERNS[patternIndex];
+    // const auto patternLength = FADER_PATTERN_LENGTHS[patternIndex];
+    // const auto frameIndex = (deltaTime * frameRate / 1000000);
+    // const uint16_t *frame;
+    // if(frameIndex >= patternLength) {
+    //     frame = FADER_FRAME_ZEROES;
+    // } else {
+    //     frame = pattern + (frameIndex * FADER_PATTERN_OUTPUTS_NUM);
+    // }
+    // if (frameIndex != lastFrameIndex)
+    // {
+    //     lastFrameIndex = frameIndex;
+    // }
+    // else
+    // {
+    //     return;
+    // }
+
+    const auto pattern = BEZIER_PATTERNS[patternIndex];
+    const auto frame = pattern.getFrameAtTime(deltaTime);
     for (uint8_t i = 0; i < availableOutputs; i++)
     {
         // const auto val = pattern[frameIndex * FADER_PATTERN_OUTPUTS_NUM + i];

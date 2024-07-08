@@ -1,4 +1,5 @@
 import gzip
+import json
 from sys import argv
 import numpy as np
 from lxml import etree as ET
@@ -58,7 +59,11 @@ def parse_automations(filepath):
         if envelope is not None
     }
 
-
+    # convert all values to floats
+    pointee_envelopes = {
+        pointee: [{k: float(v) for k, v in event.items()} for event in envelope]
+        for pointee, envelope in pointee_envelopes.items()
+    }
 
     # print(pointee_envelopes)
 
@@ -189,6 +194,7 @@ def sample_automation(segments, times):
 def generate_cpp_bezier_patterns_header(data):
     def float_event_to_cpp(event):
         if 'CurveControl1X' in event and 'CurveControl1Y' in event and 'CurveControl2X' in event and 'CurveControl2Y' in event:
+            # print(                f'{{ {event["Time"]}, {event["Value"]}, ')
             return (
                 f'{{ {event["Time"]}, {event["Value"]}, '
                 f'{event["CurveControl1X"]}, {event["CurveControl1Y"]}, '
@@ -226,7 +232,32 @@ def generate_cpp_bezier_patterns_header(data):
     
     return cpp_code
 
+def sanitise_envelope(envelope):
+    # remove points with negative time
+    envelope = [event for event in envelope if event["Time"] >= 0]
+    
+    # subtract the time of the first event from all events
+    start_time = envelope[0]["Time"]
+    envelope = [{
+        "Time": event["Time"] - start_time,
+        "Value": event["Value"],
+        "CurveControl1X": event.get("CurveControl1X", 0),
+        "CurveControl1Y": event.get("CurveControl1Y", 0),
+        "CurveControl2X": event.get("CurveControl2X", 0),
+        "CurveControl2Y": event.get("CurveControl2Y", 0)
+    } if "CurveControl1X" in event else {
+        "Time": event["Time"] - start_time,
+        "Value": event["Value"]
+    } for event in envelope]
+    return envelope
+
 automations = parse_automations(argv[1])
+# print(automations)
+automations = {
+    name: sanitise_envelope(envelope)
+    for name, envelope in automations.items()
+}
+open("automations.json", "w").write(json.dumps([list(automations.values())]))
 cpp = generate_cpp_bezier_patterns_header([[env for name, env in automations.items()]])
 open("include/BezierFaderPatterns.h", "w").write(cpp)
 # automations_to_cpp(automations)

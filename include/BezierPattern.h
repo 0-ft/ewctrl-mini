@@ -9,9 +9,9 @@ class BezierPattern {
 public:
     BezierPattern(const std::vector<BezierEnvelope>& envelopes);
     std::vector<uint16_t> getFrameAtTime(double time) const;
+    std::vector<BezierEnvelope> envelopes;
 
 private:
-    std::vector<BezierEnvelope> envelopes;
 };
 
 #endif // BEZIERPATTERN_H
