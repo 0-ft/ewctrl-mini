@@ -18,6 +18,7 @@ private:
     uint16_t lastFrameIndex;
     uint16_t frameCount;
     uint8_t availableOutputs;
+    int64_t measTime;
 
     void setPin(uint16_t value);
     void setAll(uint16_t* values);

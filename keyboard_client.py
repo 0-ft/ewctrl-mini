@@ -1,4 +1,5 @@
-import socket
+import asyncio
+import websockets
 import threading
 import queue
 import logging
@@ -12,8 +13,7 @@ import pyudev
 import errno
 import requests
 import json
-import asyncio
-import websockets
+import socket
 
 # Ports for different servers
 SERVERS = [('192.168.0.20', 80), 7032]  # Example: WLED at a specific IP and fader device to be discovered
@@ -29,18 +29,15 @@ class Commandable:
         raise NotImplementedError("This method should be overridden by subclasses")
 
 class FaderClient(Commandable):
-    HEARTBEAT_INTERVAL = 5  # Interval in seconds for the heartbeat
-
     def __init__(self, host, port, command_queue):
         self.host = host
         self.port = port
-        self.sock = None
         self.command_queue = command_queue
-        self.heartbeat_thread = threading.Thread(target=self.send_heartbeat, daemon=True)
+        self.websocket = None
         self.connection_thread = threading.Thread(target=self.manage_connection, daemon=True)
         self.connection_thread.start()
 
-    def send_command(self, command: str):
+    async def send_command(self, command: str):
         parts = command.split(',')
         if len(parts) != 2:
             logging.error(f"Invalid command format: {command}")
@@ -53,52 +50,34 @@ class FaderClient(Commandable):
         type_byte = command_type.to_bytes(1, 'big')
         data_bytes = command_data.to_bytes(2, 'big')
         message = bytes([start_marker]) + type_byte + data_bytes
-        self.sock.sendall(message)
-        logging.info(f"Sent command to {self.host}:{self.port} - Type={command_type}, Data={command_data}")
 
-    def send_heartbeat(self):
-        while True:
-            time.sleep(self.HEARTBEAT_INTERVAL)
-            if self.sock:
-                try:
-                    self.send_command("255,0")  # Heartbeat command
-                    self.sock.settimeout(2)  # Set a short timeout for the heartbeat response
-                    response = self.sock.recv(1)  # Try to receive a response (non-blocking)
-                    if not response:
-                        raise socket.error("No response to heartbeat")
-                except (socket.error, BrokenPipeError):
-                    logging.error(f"Heartbeat failed, connection to {self.host}:{self.port} lost.")
-                    self.sock.close()
-                    self.sock = None
-                    break  # Exit the heartbeat loop to allow reconnection
+        if self.websocket is not None and self.websocket.open:
+            await self.websocket.send(message)
+            logging.info(f"Sent command to {self.host}:{self.port} - Type={command_type}, Data={command_data}")
+
+    async def connect_to_server(self):
+        ws_url = f"ws://{self.host}:{self.port}/ws"
+        logging.info(f"Connecting to WebSocket at {ws_url}")
+        try:
+            self.websocket = await websockets.connect(ws_url)
+            logging.info(f"Connected to WebSocket server at {self.host}:{self.port}")
+            while True:
+                command = self.command_queue.get()  # Use blocking get() from queue
+                await self.send_command(command)
+        except Exception as e:
+            logging.error(f"Error connecting to WebSocket server: {e}")
+            self.websocket = None
 
     def manage_connection(self):
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
         while True:
-            try:
-                self.connect_to_server()
-                self.heartbeat_thread = threading.Thread(target=self.send_heartbeat, daemon=True)
-                self.heartbeat_thread.start()
-                while True:
-                    command = self.command_queue.get()
-                    self.send_command(command)
-            except (socket.error, BrokenPipeError):
-                logging.error(f"Connection to {self.host}:{self.port} lost.")
-            finally:
-                if self.sock:
-                    self.sock.close()
-                logging.info(f"FaderClient connection thread to {self.host}:{self.port} terminating.")
+            if not self.websocket or not self.websocket.open:
+                loop.run_until_complete(self.connect_to_server())
             time.sleep(1)  # Retry connection after a short delay
 
-    def connect_to_server(self):
-        self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, 4096)  # Increase send buffer size
-        self.sock.settimeout(5)  # Set timeout to handle network delays
-        logging.info(f"Connecting to {self.host}:{self.port}")
-        self.sock.connect((self.host, self.port))
-        logging.info(f"Connected to server at {self.host}:{self.port}")
-
     def is_connected(self) -> bool:
-        return self.sock is not None and self.sock.fileno() != -1
+        return self.websocket is not None and self.websocket.open
 
 class WLEDClient(Commandable):
     RETRY_DELAY = 2  # Time in seconds to wait before retrying the fetch
@@ -117,7 +96,7 @@ class WLEDClient(Commandable):
             try:
                 url = f"http://{self.host}/presets.json"
                 logging.info(f"Fetching presets from {url}")
-                response = requests.get(url)
+                response = requests.get(url, timeout=10)
                 if response.status_code == 200:
                     data = response.json()
                     self.presets = {v.get('n', f'Preset {k}'): k for k, v in data.items()}
@@ -146,11 +125,14 @@ class WLEDClient(Commandable):
             logging.error(f"Preset {command} not found")
 
     async def connect_to_server(self):
-        ws_url = f"ws://{self.host}/ws"
+        ws_url = f"ws://{self.host}:{self.port}/ws"
         logging.info(f"Connecting to WebSocket at {ws_url}")
         try:
             self.websocket = await websockets.connect(ws_url)
             logging.info(f"Connected to WebSocket server at {self.host}:{self.port}")
+            while True:
+                command = self.command_queue.get()  # Use blocking get() from queue
+                await self.send_command(command)
         except Exception as e:
             logging.error(f"Error connecting to WebSocket server: {e}")
             self.websocket = None
@@ -159,15 +141,10 @@ class WLEDClient(Commandable):
         self.fetch_presets()  # Fetch presets before managing the connection
         loop = asyncio.new_event_loop()
         asyncio.set_event_loop(loop)
-        try:
-            loop.run_until_complete(self.connect_to_server())
-            while self.websocket is not None and self.websocket.open:
-                command = self.command_queue.get()
-                loop.run_until_complete(self.send_command(command))
-        finally:
-            if self.websocket:
-                loop.run_until_complete(self.websocket.close())
-            logging.info(f"WLEDClient connection thread to {self.host}:{self.port} terminating.")
+        while True:
+            if not self.websocket or not self.websocket.open:
+                loop.run_until_complete(self.connect_to_server())
+            time.sleep(1)  # Retry connection after a short delay
 
     def is_connected(self) -> bool:
         return self.websocket is not None and self.websocket.open
@@ -214,9 +191,7 @@ class ServerManager:
 
     def manage_port_connection(self, port, ip=None):
         while True:
-            logging.info(f"MPC {port}, {self.clients}, {self.clients[port].is_connected() if port in self.clients else None}")
             if port not in self.clients or not self.clients[port].is_connected():
-                logging.debug(f"Connecting to server on port {port}")
                 server_ip = ip if ip else self.find_server(port)
                 if server_ip:
                     if port == 80:

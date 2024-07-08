@@ -3,10 +3,11 @@
 
 #include <WiFi.h>
 #include <ESPAsyncWebServer.h>
+#include <esp_log.h>
 
 class WebSocketsCommander {
 public:
-    WebSocketsCommander(const char* ssid, const char* password, void (*onEvent)(uint8_t type, uint16_t data), BaseType_t core = 0);
+    WebSocketsCommander(const char* ssid, const char* password, void (*onEvent)(uint8_t type, uint16_t data), BaseType_t core);
     void init();
 
 private:

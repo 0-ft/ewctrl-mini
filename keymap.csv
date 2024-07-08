@@ -1,7 +1,12 @@
 key,port,command
 key_a,7032,"2,0"
 key_z,7032,"2,4095"
+key_b,7032,"1,1"
+key_n,7032,"1,2"
+key_m,7032,"1,3"
+key_comma,7032,"1,12"
+key_dot,7032,"1,13"
+
 key_q,80,"Pulse 1"
 key_w,80,"Pulse 2"
 key_e,80,"Pulse 3"
-key_f,9165,"3,512"

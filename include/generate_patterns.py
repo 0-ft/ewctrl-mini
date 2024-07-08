@@ -30,10 +30,13 @@ def list_of_arrays_to_cpp_file(arrays, filename):
         f.write("// Create array indicating the length of each pattern\n")
         f.write(f"static const {VALUE_TYPE} FADER_PATTERN_LENGTHS[FADER_PATTERNS_NUM] = {{\n")
         f.write(f"    {', '.join([str(len(array)) for array in arrays])},\n")
-        # for length in pattern_lengths:
-        #     f.write(f"    {length},\n")
         f.write("};\n\n")
-        
+
+        f.write("// Create array FADER_FRAME_ZEROES\n")
+        f.write(f"static const {VALUE_TYPE} FADER_FRAME_ZEROES[FADER_PATTERN_OUTPUTS_NUM] = {{\n")
+        f.write(f"    {', '.join(['0'] * num_outputs)},\n")
+        f.write("};\n\n")
+
         f.write("#endif // FADER_PATTERNS_H\n")
 # Example usage
 if __name__ == "__main__":
@@ -54,11 +57,28 @@ if __name__ == "__main__":
         # repeat it for 16 columns, wrapping/rotating the array by 5 elements each time
         fade_down = np.array([np.roll(fade_down, i * 5) for i in range(16)]).T.astype(np.uint16)
 
-
         # # repeat it for 16 columns, multiplying by 0.9 each time
         # fade_down = np.array([fade_down * 0.9**i for i in range(16)]).T.astype(np.uint16)
 
         arrays.append(fade_down)
+
+    left_half_fade = np.linspace(4095, 0, 20, dtype=np.uint16)
+    left_half_fade = np.array([left_half_fade for i in range(8)]).T.astype(np.uint16)
+    left_half_fade = np.concatenate((left_half_fade, np.zeros((20, 8), dtype=np.uint16)), axis=1)
+    arrays.append(left_half_fade)
+
+    right_half_fade = np.fliplr(left_half_fade)
+    arrays.append(right_half_fade)
+
+    first_four_fade = np.linspace(4095, 0, 20, dtype=np.uint16)
+    first_four_fade = np.array([first_four_fade for i in range(4)]).T.astype(np.uint16)
+    first_four_fade = np.concatenate((first_four_fade, np.zeros((20, 12), dtype=np.uint16)), axis=1)
+    arrays.append(first_four_fade)
+
+    second_four_fade = np.linspace(4095, 0, 20, dtype=np.uint16)
+    second_four_fade = np.array([second_four_fade for i in range(4)]).T.astype(np.uint16)
+    second_four_fade = np.concatenate((np.zeros((20, 4), dtype=np.uint16), second_four_fade, np.zeros((20, 8), dtype=np.uint16)), axis=1)
+    arrays.append(second_four_fade)    
 
     # Create a strobe pattern
     strobe_pattern_on = np.full((30, 16), 4095, dtype=np.uint16)

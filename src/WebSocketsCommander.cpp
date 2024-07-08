@@ -1,29 +1,32 @@
 #include "WebSocketsCommander.h"
 #include <esp_task_wdt.h>
 
+static const char *TAG = "WebSocketsCommander";
+
 WebSocketsCommander* WebSocketsCommander::instance = nullptr;
 
 WebSocketsCommander::WebSocketsCommander(const char* ssid, const char* password, void (*onEvent)(uint8_t type, uint16_t data), BaseType_t core)
-    : ssid(ssid), password(password), onEvent(onEvent), core(core), server(80), ws("/ws") {
+    : ssid(ssid), password(password), onEvent(onEvent), core(core), server(7032), ws("/ws") {
     instance = this;
 }
 
 void WebSocketsCommander::init() {
-    Serial.begin(115200);
-    Serial.println("Initializing WebSocketsCommander with SSID: " + String(ssid));
+    esp_log_level_set(TAG, ESP_LOG_INFO); // Set log level for this tag
+
+    ESP_LOGI(TAG, "Initializing WebSocketsCommander with SSID: %s", ssid);
 
     WiFi.onEvent(WiFiEvent);
 
     WiFi.setHostname("EWCTRLMINI");
     WiFi.begin(ssid, password);
-    Serial.println("Connecting to WiFi...");
+    ESP_LOGI(TAG, "Connecting to WiFi...");
 
     while (WiFi.status() != WL_CONNECTED) {
         delay(500);
-        Serial.print(".");
+        ESP_LOGI(TAG, ".");
     }
-    Serial.println("\nWiFi connected");
-    Serial.println("IP address: " + WiFi.localIP().toString());
+    ESP_LOGI(TAG, "\nWiFi connected");
+    ESP_LOGI(TAG, "IP address: %s", WiFi.localIP().toString().c_str());
 
     ws.onEvent([this](AsyncWebSocket *server, AsyncWebSocketClient *client, AwsEventType type, void *arg, uint8_t *data, size_t len) {
         onWebSocketEvent(server, client, type, arg, data, len);
@@ -31,7 +34,7 @@ void WebSocketsCommander::init() {
     server.addHandler(&ws);
 
     server.begin();
-    Serial.println("WebSocket server started");
+    ESP_LOGI(TAG, "WebSocket server started");
 
     xTaskCreatePinnedToCore(
         WebSocketsCommander::listenForConnectionsTask, 
@@ -42,7 +45,7 @@ void WebSocketsCommander::init() {
         NULL, 
         core
     );
-    Serial.println("Listening task created and pinned to core " + String(core));
+    ESP_LOGI(TAG, "Listening task created and pinned to core %d", core);
 }
 
 void WebSocketsCommander::WiFiEvent(WiFiEvent_t event) {
@@ -50,11 +53,11 @@ void WebSocketsCommander::WiFiEvent(WiFiEvent_t event) {
 
     switch (event) {
         case ARDUINO_EVENT_WIFI_STA_GOT_IP:
-            Serial.println("WiFi connected");
-            Serial.println("IP address: " + WiFi.localIP().toString());
+            ESP_LOGI(TAG, "WiFi connected");
+            ESP_LOGI(TAG, "IP address: %s", WiFi.localIP().toString().c_str());
             break;
         case ARDUINO_EVENT_WIFI_STA_DISCONNECTED:
-            Serial.println("WiFi lost connection, attempting to reconnect...");
+            ESP_LOGI(TAG, "WiFi lost connection, attempting to reconnect...");
             WiFi.begin(instance->ssid, instance->password);
             break;
         default:
@@ -71,7 +74,7 @@ void WebSocketsCommander::listenForConnections() {
     esp_task_wdt_add(NULL);
     while (true) {
         if (WiFi.status() != WL_CONNECTED) {
-            Serial.println("WiFi disconnected, waiting to reconnect...");
+            ESP_LOGI(TAG, "WiFi disconnected, waiting to reconnect...");
             delay(1000);
             continue;
         }
@@ -89,20 +92,16 @@ void WebSocketsCommander::handleWebSocketMessage(void *arg, uint8_t *data, size_
     uint8_t type = data[1];
     uint16_t value = (data[2] << 8) | data[3];
 
-    if (type == 0xFF) { // Heartbeat message
-        ((AsyncWebSocketClient*)arg)->text("ACK");
-    } else {
-        onEvent(type, value);
-    }
+    onEvent(type, value);
 }
 
 void WebSocketsCommander::onWebSocketEvent(AsyncWebSocket *server, AsyncWebSocketClient *client, AwsEventType type, void *arg, uint8_t *data, size_t len) {
     switch (type) {
         case WS_EVT_CONNECT:
-            Serial.println("WebSocket client connected");
+            ESP_LOGI(TAG, "WebSocket client connected");
             break;
         case WS_EVT_DISCONNECT:
-            Serial.println("WebSocket client disconnected");
+            ESP_LOGI(TAG, "WebSocket client disconnected");
             break;
         case WS_EVT_DATA:
             handleWebSocketMessage(client, data, len);
