@@ -1,11 +1,11 @@
 #include "WebSocketsCommander.h"
 #include <esp_task_wdt.h>
 
-static const char *TAG = "WebSocketsCommander";
+#define TAG "WebSocketsCommander"
 
 WebSocketsCommander* WebSocketsCommander::instance = nullptr;
 
-WebSocketsCommander::WebSocketsCommander(const char* ssid, const char* password, void (*onEvent)(uint8_t type, uint16_t data), BaseType_t core)
+WebSocketsCommander::WebSocketsCommander(const char* ssid, const char* password, void (*onEvent)(JsonDocument& json), BaseType_t core)
     : ssid(ssid), password(password), onEvent(onEvent), core(core), server(7032), ws("/ws") {
     instance = this;
 }
@@ -86,13 +86,20 @@ void WebSocketsCommander::listenForConnections() {
 }
 
 void WebSocketsCommander::handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
-    if (len < 4 || data[0] != 0x00) {
+    DynamicJsonDocument jsonDoc(1024);
+
+    DeserializationError error = deserializeJson(jsonDoc, data, len);
+    if (error) {
+        ESP_LOGE(TAG, "deserializeJson() failed: %s", error.c_str());
         return;
     }
-    uint8_t type = data[1];
-    uint16_t value = (data[2] << 8) | data[3];
 
-    onEvent(type, value);
+    if (!jsonDoc.containsKey("type") || !jsonDoc.containsKey("data")) {
+        ESP_LOGE(TAG, "Invalid JSON format");
+        return;
+    }
+
+    onEvent(jsonDoc);
 }
 
 void WebSocketsCommander::onWebSocketEvent(AsyncWebSocket *server, AsyncWebSocketClient *client, AwsEventType type, void *arg, uint8_t *data, size_t len) {

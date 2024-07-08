@@ -25,6 +25,7 @@ class BezierEnvelope {
 public:
     BezierEnvelope(const std::vector<FloatEvent>& events);
     double sampleAtTime(double time) const;
+    double duration;
 
 private:
     std::vector<BezierSegment> bezierSegments;

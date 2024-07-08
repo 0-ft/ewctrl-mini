@@ -1,21 +1,21 @@
 #include "BezierJsonParser.h"
 
-std::vector<BezierPattern> parseJsonToBezierPatterns(const String& jsonString) {
+std::vector<BezierPattern> parseJsonToBezierPatterns(const JsonArray &doc) {
     std::vector<BezierPattern> patterns;
 
-    // Allocate a temporary JsonDocument
-    StaticJsonDocument<2000> doc;
+    // // Allocate a temporary JsonDocument
+    // StaticJsonDocument<2000> doc;
 
-    // Deserialize the JSON document
-    DeserializationError error = deserializeJson(doc, jsonString);
-    if (error) {
-        Serial.print(F("deserializeJson() failed: "));
-        Serial.println(error.f_str());
-        return patterns;
-    }
+    // // Deserialize the JSON document
+    // DeserializationError error = deserializeJson(doc, jsonString);
+    // if (error) {
+    //     Serial.print(F("deserializeJson() failed: "));
+    //     Serial.println(error.f_str());
+    //     return patterns;
+    // }
 
     // Parse the JSON array
-    for (JsonArray envelopeArray : doc.as<JsonArray>()) {
+    for (JsonArray envelopeArray : doc) {
         std::vector<BezierEnvelope> envelopes;
 
         for (JsonArray eventArray : envelopeArray) {

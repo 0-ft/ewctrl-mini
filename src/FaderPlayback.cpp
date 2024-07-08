@@ -1,7 +1,5 @@
 
 #include "FaderPlayback.h"
-#include <FaderPatterns.h>
-#include <BezierFaderPatterns.h>
 
 static const char *TAG = "FaderPlayback";
 
@@ -21,13 +19,17 @@ void FaderPlayback::setup()
         drivers.push_back(driver);
     }
     ESP_LOGI(TAG, "Set up %d drivers", drivers.size());
-    availableOutputs = (driverCount * OUTPUTS_PER_DRIVER) > FADER_PATTERN_OUTPUTS_NUM ? FADER_PATTERN_OUTPUTS_NUM : (driverCount * OUTPUTS_PER_DRIVER);
+    availableOutputs = driverCount * OUTPUTS_PER_DRIVER;
 }
 
 void FaderPlayback::sendFrame()
 {
+    if(patternIndex >= patterns.size()) {
+        ESP_LOGE(TAG, "Invalid pattern index %d", patternIndex);
+        return;
+    }
     const auto now = esp_timer_get_time();
-    const auto deltaTime = now - patternStartTime;
+    const auto deltaTime = (now - patternStartTime) / 1000000.0;
 
     // const auto pattern = FADER_PATTERNS[patternIndex];
     // const auto patternLength = FADER_PATTERN_LENGTHS[patternIndex];
@@ -47,9 +49,9 @@ void FaderPlayback::sendFrame()
     //     return;
     // }
 
-    const auto pattern = BEZIER_PATTERNS[patternIndex];
-    const auto frame = pattern.getFrameAtTime(deltaTime);
-    for (uint8_t i = 0; i < availableOutputs; i++)
+    const auto pattern = patterns[patternIndex];
+    const auto frame = pattern.getFrameAtTime(fmod(deltaTime, pattern.duration));
+    for (uint8_t i = 0; i < pattern.numOutputs && i < availableOutputs; i++)
     {
         // const auto val = pattern[frameIndex * FADER_PATTERN_OUTPUTS_NUM + i];
         // Serial.print(String(frame[i]) + "|");
@@ -68,7 +70,7 @@ void FaderPlayback::sendFrame()
 
 void FaderPlayback::goToPattern(uint16_t patternIndex)
 {
-    if (patternIndex >= FADER_PATTERNS_NUM)
+    if (patternIndex >= patterns.size())
     {
         ESP_LOGE(TAG, "Invalid pattern index %d", patternIndex);
         return;
@@ -86,5 +88,12 @@ void FaderPlayback::setGain(uint16_t gain)
     gain = gain > 4095 ? 4095 : gain;
     this->gain = gain;
     ESP_LOGI(TAG, "Set gain to %d", gain);
+    // sendFrame();
+}
+
+void FaderPlayback::setPatterns(std::vector<BezierPattern> patterns)
+{
+    this->patterns = patterns;
+    ESP_LOGI(TAG, "Set patterns, count %d" , patterns.size());
     // sendFrame();
 }

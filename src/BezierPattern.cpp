@@ -1,7 +1,15 @@
 #include "BezierPattern.h"
 #include <limits>
 
-BezierPattern::BezierPattern(const std::vector<BezierEnvelope>& envelopes) : envelopes(envelopes) {}
+BezierPattern::BezierPattern(const std::vector<BezierEnvelope>& envelopes) : envelopes(envelopes) {
+    duration = 0.0;
+
+    for (const auto& envelope : envelopes) {
+        duration = std::max(duration, envelope.duration);
+    }
+
+    numOutputs = envelopes.size();
+}
 
 std::vector<uint16_t> BezierPattern::getFrameAtTime(double time) const {
     std::vector<uint16_t> frame;

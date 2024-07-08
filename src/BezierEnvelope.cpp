@@ -3,6 +3,8 @@
 
 BezierEnvelope::BezierEnvelope(const std::vector<FloatEvent>& events) {
     bezierSegments = loadEnvelope(events);
+    duration = events.back().Time;
+
 }
 
 std::vector<BezierSegment> BezierEnvelope::loadEnvelope(const std::vector<FloatEvent>& events) {
@@ -35,10 +37,10 @@ std::vector<BezierSegment> BezierEnvelope::loadEnvelope(const std::vector<FloatE
         }
 
         // Log all control points
-        std::cout << "SEG\n";
-        for (auto& point : controlPoints) {
-            std::cout << "Control point: " << point.x << ", " << point.y << '\n';
-        }
+        // std::cout << "SEG\n";
+        // for (auto& point : controlPoints) {
+        //     std::cout << "Control point: " << point.x << ", " << point.y << '\n';
+        // }
         bezier::Bezier<3> bezierCurve(controlPoints);
         bezierSegments.push_back({startEvent.Time, endEvent.Time, bezierCurve});
     }
