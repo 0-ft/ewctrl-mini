@@ -1,5 +1,8 @@
 #include "WiFiCommander.h"
 
+
+static const char *TAG = "WiFiCommander";
+
 // Singleton instance
 WiFiCommander* WiFiCommander::instance = nullptr;
 
@@ -11,33 +14,31 @@ WiFiCommander::WiFiCommander(const char* ssid, const char* password, void (*onEv
 
 // Initializes the WiFiCommander
 void WiFiCommander::init() {
-    Serial.begin(115200);
-    Serial.println("Initializing WiFiCommander with SSID: " + String(ssid));
+    ESP_LOGI(TAG, "Initializing WiFiCommander with SSID: %s", String(ssid));
 
     WiFi.onEvent(WiFiEvent);
 
-    WiFi.setHostname("EWCTRLMINI");
+    WiFi.setHostname("CTRLMINI");
     WiFi.begin(ssid, password);
-    Serial.println("Connecting to WiFi...");
+    ESP_LOGI(TAG, "Connecting to WiFi...");
 
     // Attempt to connect to Wi-Fi in a loop
     while (WiFi.status() != WL_CONNECTED) {
         delay(500);
-        Serial.print(".");
+        // Serial.print(".");
     }
-    Serial.println("\nWiFi connected");
-    Serial.println("IP address: " + WiFi.localIP().toString());
+    ESP_LOGI(TAG, "\nWiFi connected, IP address: %s", WiFi.localIP().toString());
 
     xTaskCreatePinnedToCore(
         WiFiCommander::listenForConnectionsTask, // Task function
         "ListenTask",                            // Task name
         4096,                                    // Stack size
         this,                                    // Task parameter
-        1,                                       // Task priority
+        100,                                       // Task priority
         NULL,                                    // Task handle
         core                                     // Core to pin the task to
     );
-    Serial.println("Listening task created and pinned to core " + String(core));
+    ESP_LOGI(TAG, "Listening task created and pinned to core %d", String(core));
 }
 
 // WiFi event handler
@@ -46,11 +47,10 @@ void WiFiCommander::WiFiEvent(WiFiEvent_t event) {
 
     switch(event) {
         case ARDUINO_EVENT_WIFI_STA_GOT_IP:
-            Serial.println("WiFi connected");
-            Serial.println("IP address: " + WiFi.localIP().toString());
+            ESP_LOGI(TAG, "WiFi connected, IP address: %s", WiFi.localIP().toString());
             break;
         case ARDUINO_EVENT_WIFI_STA_DISCONNECTED:
-            Serial.println("WiFi lost connection, attempting to reconnect...");
+            ESP_LOGI(TAG, "WiFi lost connection, attempting to reconnect...");
             WiFi.begin(instance->ssid, instance->password);
             break;
         default:
@@ -68,19 +68,19 @@ void WiFiCommander::listenForConnectionsTask(void* pvParameters) {
 void WiFiCommander::listenForConnections() {
     esp_task_wdt_add(NULL);  // Add current task to watchdog timer
     server.begin();
-    Serial.println("Server started, waiting for connections...");
+    ESP_LOGI(TAG, "Server started, waiting for connections...");
     while (true) {
         if (WiFi.status() != WL_CONNECTED) {
-            Serial.println("WiFi disconnected, waiting to reconnect...");
+            ESP_LOGW(TAG, "WiFi disconnected, waiting to reconnect...");
             delay(1000);
             continue;  // Skip this iteration if Wi-Fi is not connected
         }
 
         WiFiClient client = server.available();
         if (client) {
-            Serial.println("Client connected to the server");
+            ESP_LOGI(TAG, "Client connected to the server");
             handleClient(client);
-            Serial.println("Client disconnected from the server");
+            ESP_LOGW(TAG, "Client disconnected from the server");
         }
         esp_task_wdt_reset();  // Reset watchdog timer
         vTaskDelay(10 / portTICK_PERIOD_MS);  // Small delay to yield to other tasks
@@ -95,17 +95,21 @@ void WiFiCommander::handleClient(WiFiClient& client) {
             uint8_t type;
             uint16_t data;
             if (readEvent(client, type, data)) {
-                Serial.println("Event received: Type=" + String(type) + ", Data=" + String(data));
+                if (type == 0xFF) {  // Heartbeat message
+                    client.write(0x01);  // Send acknowledgment
+                    continue;  // Skip calling onEvent
+                }
+                ESP_LOGI(TAG, "Event received: Type=%d, Data=%d", type, data);
                 onEvent(type, data);
             }
         }
         esp_task_wdt_reset();  // Reset watchdog timer
-        vTaskDelay(10 / portTICK_PERIOD_MS);  // Small delay to yield to other tasks
+        vTaskDelay(1 / portTICK_PERIOD_MS);  // Small delay to yield to other tasks
     }
     client.stop();
 }
 
-// Reads an event from the client
+// Reads an event from the clientaz
 bool WiFiCommander::readEvent(WiFiClient& client, uint8_t& type, uint16_t& data) {
     bool receiving = false;
     uint8_t buffer[3];

@@ -1,3 +1,4 @@
+
 #include "FaderPlayback.h"
 #include <FaderPatterns.h>
 
@@ -62,12 +63,12 @@ void FaderPlayback::goToPattern(uint16_t patternIndex)
         ESP_LOGE(TAG, "Invalid pattern index %d", patternIndex);
         return;
     }
-    ESP_LOGI(TAG, "Going to pattern %d", patternIndex);
     this->patternIndex = patternIndex;
     this->patternStartTime = esp_timer_get_time();
+    ESP_LOGI(TAG, "Changed to pattern %d", patternIndex);
     // Serial.println("Went to pattern " + String(patternIndex));
     // frameIndex = 0;
-    sendFrame();
+    // sendFrame();
 }
 
 void FaderPlayback::setGain(uint16_t gain)

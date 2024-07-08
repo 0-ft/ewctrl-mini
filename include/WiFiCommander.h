@@ -11,7 +11,7 @@ public:
     enum CommandTypes {
         COMMAND_SET_PATTERN = 0x01,
         COMMAND_SET_GAIN = 0x02,
-        COMMAND_SET_FRAMERATE = 0x03,
+        COMMAND_SET_FRAMERATE = 0x03
     };
     
     // Constructor
