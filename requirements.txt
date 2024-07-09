@@ -1,0 +1,8 @@
+evdev
+pyudev
+subprocess
+requests
+websockets
+bezier
+seaborn
+lxml
