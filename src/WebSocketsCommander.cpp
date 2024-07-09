@@ -12,8 +12,6 @@ WebSocketsCommander::WebSocketsCommander(const char *ssid, const char *password,
 
 void WebSocketsCommander::init()
 {
-    esp_log_level_set(TAG, ESP_LOG_INFO); // Set log level for this tag
-
     ESP_LOGI(TAG, "Initializing WebSocketsCommander with SSID: %s", ssid);
 
     WiFi.onEvent(WiFiEvent);
@@ -42,7 +40,7 @@ void WebSocketsCommander::init()
         "ListenTask",
         4096,
         this,
-        1,
+        configMAX_PRIORITIES - 1,
         NULL,
         core);
     ESP_LOGI(TAG, "Listening task created and pinned to core %d", core);
@@ -87,7 +85,7 @@ void WebSocketsCommander::listenForConnections()
         }
         ws.cleanupClients();
         esp_task_wdt_reset();
-        vTaskDelay(10 / portTICK_PERIOD_MS);
+        vTaskDelay(1 / portTICK_PERIOD_MS);
     }
     esp_task_wdt_delete(NULL);
 }

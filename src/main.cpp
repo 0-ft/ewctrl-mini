@@ -164,9 +164,9 @@ void handleWifiCommand(JsonDocument& doc)
 }
 
 
-// WiFiCommander wifiCommander("COMMANDER", "fadercommand", handleWifiCommand);
+WebSocketsCommander wifiCommander("COMMANDER", "fadercommand", handleWifiCommand, 0);
 // WiFiCommander wifiCommander("Queens", "trlguest021275", handleWifiCommand);
-WebSocketsCommander wifiCommander("Queens", "trlguest021275", handleWifiCommand, 0);
+// WebSocketsCommander wifiCommander("Queens", "trlguest021275", handleWifiCommand, 0);
 // WebSocketsCommander wifiCommander("190bpm hardcore steppas", "fungible", handleWifiCommand, 0);
 // WiFiCommander wifiCommander("190bpm hardcore steppas", "fungible", handleWifiCommand);
 
