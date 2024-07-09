@@ -3,7 +3,7 @@ Description=Keyboard Commander Service
 After=network.target
 
 [Service]
-ExecStart=/home/atlas/commander/venv/bin/python3 /home/atlas/commander/keyboard_client.py
+ExecStart=/home/atlas/ewctrl-mini/venv/bin/python3 /home/atlas/ewctrl-mini/keyboard_client.py
 Restart=always
 User=atlas
 WorkingDirectory=/home/atlas/commander
