@@ -6,6 +6,8 @@ from lxml import etree as ET
 import bezier
 # import seaborn
 from matplotlib import pyplot as plt
+# from json import encoder
+# encoder.FLOAT_REPR = lambda o: format(o, '.3f')
 
 # seaborn.set()
 
@@ -39,9 +41,7 @@ def create_macro_display_map(audio_effect_group_device):
     
     return macro_display_map
 
-
-# load automation lanes from an ableton als file
-def parse_automations(filepath):
+def load_als(filepath):
 
     with gzip.open(filepath, "r") as xml:
         open("als.xml", "wb").write(xml.read())
@@ -50,6 +50,21 @@ def parse_automations(filepath):
         tree = ET.parse(xml)
 
     root = tree.getroot()
+    return root
+
+def find_locators(root):
+    locator_elements = root.findall('.//Locator')
+    locators = {}
+    for locator in locator_elements:
+        locator_id = locator.get('Id')
+        locator_name = locator.find('.//Name').get('Value')
+        locator_time = float(locator.find('.//Time').get('Value')) * 135 * 2 / 60
+        locators[locator_name] = locator_time
+    return locators
+
+
+# load automation lanes from an ableton als file
+def parse_automations(root):
 
     pointee_envelopes = {}
     envelopes = list(root.iter("AutomationEnvelope"))
@@ -80,157 +95,20 @@ def parse_automations(filepath):
         for name, pointee in name_pointees.items()
         if pointee in pointee_envelopes
     }
-    # print(name_envelopes)
     return name_envelopes
-    # param_envelopes = {
-    #     param_to_name(param): pointee_envelopes[param_to_pointee(param)]
-    #     for param in float_params
-    # }
-    # print(param_envelopes)
-    
-    # pointee_params = {
-    #     param_to_pointee(param): param
-    #     for param in float_params
-    #     if param.find(".//AutomationTarget") is not None
-    # }
-    # print(pointee_params)
 
-    # target_map = {
-    #     t.find(".//AutomationTarget").get("Id"): t.find("Name").get("Value")
-    #     for t in float_params
-    #     if t.find(".//AutomationTarget") is not None
-    # }
-
-    # # lomid_map = {
-    # #     t.find("Name").get("Value"): t.find(".//LomId").get("Value")
-    # #     for t in float_params
-    # #     if t.find(".//AutomationTarget")
-    # # }
-
-    # # print(lomid_map)
-
-    # group_devices = list(root.iter("AudioEffectGroupDevice"))
-
-    # for device in group_devices:
-    #     print(create_macro_display_map(device))
-    #     # print(ET.tostring(device))
-    #     # params = list(device.iter("MxDFloatParameter"))
-    #     # print(params)
-    #     # print(ET.tostring(params[0]))
-    #     lomid_to_id = parse_lom_id_to_mxdidref(device)
-    #     print(lomid_to_id)
-    #     # parameters = {int(p.get("Id")): p.find(".//AutomationTarget").get("Id") for p in device.iter("MxDFloatParameter")}
-    #     # print(parameters)
-    #     # disp_names = list(device.xpath("*[starts-with(name(), 'MacroDisplayNames.')]"))
-    #     # print(disp_names)
-    #     # name_numbers = {
-    #     #     int(disp_name.tag.split(".")[-1]): disp_name.get("Value")
-    #     #     for disp_name in disp_names
-    #     # }
-    #     # print(name_numbers)
-    #     # name_targets = {
-    #     #     name: parameters[id]
-    #     #     for id, name in name_numbers.items()
-    #     # }
-    #     # print(name_targets)
-    #     # exit()
-    # # midi_tracks = root.iter("MidiTrack")
-    # # envelopes = list(root.iter("AutomationEnvelope"))
-
-
-    # return automations
-
-# parse a single segment between two points a and b of an ableton automation track, create a bezier curve object
-def curve_between(a, b):
-    ax, bx = a["Time"], b["Time"]
-    ay, by = a["Value"], b["Value"]
-
-    if "CurveControl1X" not in a:
-        nodes = np.asfortranarray([
-            [ax, bx],
-            [ay, by]
-        ])
-        return bezier.Curve(nodes, degree=1)
-
-    dx, dy = bx - ax, by - ay
-
-    c1x = ax + a["CurveControl1X"] * dx
-    c1y = ay + a["CurveControl1Y"] * dy
-
-    c2x = ax + a["CurveControl2X"] * dx
-    c2y = ay + a["CurveControl2Y"] * dy
-
-    nodes = np.asfortranarray([
-        [ax, c1x, c2x, bx],
-        [ay, c1y, c2y, by]
-    ])
-    print(nodes)
-    curve = bezier.Curve(nodes, degree=3)
-    return curve
-
-# parse an entire ableton automation track into a list of (start_time, curve) tuples
-def parse_automation(events):
-    events = [{k: float(v) for k, v in e.items()} for e in events]
-    points = [e for e in events if e["Time"] >= 0]
-    segments = [(a["Time"], b["Time"], curve_between(a, b)) for a, b in zip(points, points[1:])]
-    return segments
-
-# generate samples of a complete automation track at given times
-def sample_automation(segments, times):
-    values = []
-    segi = 0
-    end_time = segments[-1][1]
-    for t in times:
-        assert t <= end_time, f"time {t} out of range {segments[0][0]}-{end_time}"
-        while segi < (len(segments) - 1) and segments[segi][1] <= t:
-            segi += 1
-        seg_length = segments[segi][1] - segments[segi][0]
-        offset = t - segments[segi][0]
-        f = offset / seg_length
-        v = segments[segi][2].evaluate(f)[1, 0]
-        values.append((t, v))
-    return np.array(values)
-
-def generate_cpp_bezier_patterns_header(data):
-    def float_event_to_cpp(event):
-        if 'CurveControl1X' in event and 'CurveControl1Y' in event and 'CurveControl2X' in event and 'CurveControl2Y' in event:
-            # print(                f'{{ {event["Time"]}, {event["Value"]}, ')
-            return (
-                f'{{ {event["Time"]}, {event["Value"]}, '
-                f'{event["CurveControl1X"]}, {event["CurveControl1Y"]}, '
-                f'{event["CurveControl2X"]}, {event["CurveControl2Y"]}, true }}'
-            )
-        else:
-            return f'{{ {event["Time"]}, {event["Value"]}, 0, 0, 0, 0, false }}'
-    
-    def envelope_to_cpp(envelope):
-        float_events_cpp = ",\n        ".join([float_event_to_cpp(event) for event in envelope])
-        return f'std::vector<FloatEvent>{{\n        {float_events_cpp}\n    }}'
-    
-    def pattern_to_cpp(pattern, index):
-        envelopes_cpp = ",\n    ".join([f'BezierEnvelope({envelope_to_cpp(envelope)})' for envelope in pattern])
-        return (
-            f'static const BezierPattern BEZIER_PATTERN_{index + 1} = BezierPattern({{\n'
-            f'    {envelopes_cpp}\n'
-            '});\n'
-        )
-    
-    patterns_cpp = "\n".join([pattern_to_cpp(pattern, i) for i, pattern in enumerate(data)])
-    pattern_vector_cpp = ",\n    ".join([f'BEZIER_PATTERN_{i + 1}' for i in range(len(data))])
-    
-    cpp_code = (
-        '#ifndef BEZIER_PATTERNS_INIT_H\n'
-        '#define BEZIER_PATTERNS_INIT_H\n\n'
-        '#include "BezierEnvelope.h"\n'
-        '#include "BezierPattern.h"\n\n'
-        f'{patterns_cpp}\n'
-        'static const std::vector<BezierPattern> BEZIER_PATTERNS = {\n'
-        f'    {pattern_vector_cpp}\n'
-        '};\n\n'
-        '#endif // BEZIER_PATTERNS_INIT_H\n'
-    )
-    
-    return cpp_code
+#split envelope into multiple envelopes based on locators
+def split_envelope(envelope, locators):
+    splits = {}
+    envelope = sorted(envelope, key=lambda event: event["Time"])
+    for event in envelope:
+        for start_locator, end_locator in zip(locators.items(), list(locators.items())[1:]):
+            start_time = start_locator[1]
+            start_name = start_locator[0]
+            end_time = end_locator[1]
+            if event["Time"] >= start_time and event["Time"] <= end_time:
+                splits.setdefault(start_name, []).append(event)
+    return splits
 
 def sanitise_envelope(envelope):
     # remove points with negative time
@@ -238,6 +116,7 @@ def sanitise_envelope(envelope):
     
     # subtract the time of the first event from all events
     start_time = envelope[0]["Time"]
+    print(f"start time: {start_time}")
     envelope = [{
         "Time": event["Time"] - start_time,
         "Value": event["Value"],
@@ -249,17 +128,59 @@ def sanitise_envelope(envelope):
         "Time": event["Time"] - start_time,
         "Value": event["Value"]
     } for event in envelope]
+
+    envelope = [[
+        event["Time"],
+        event["Value"],
+        round(event.get("CurveControl1X", 0), 4),
+        round(event.get("CurveControl1Y", 0), 4),
+        round(event.get("CurveControl2X", 0), 4),
+        round(event.get("CurveControl2Y", 0), 4)
+    ] if "CurveControl1X" in event else [
+        event["Time"],
+        event["Value"],
+    ] for event in envelope
+    ]
+
+    # envelope = [{
+    #     "T": event["Time"] - start_time,
+    #     "V": event["Value"],
+    #     "C1X": round(event.get("CurveControl1X", 0), 4),
+    #     "C1Y": round(event.get("CurveControl1Y", 0), 4),
+    #     "C2X": round(event.get("CurveControl2X", 0), 4),
+    #     "C2Y": round(event.get("CurveControl2Y", 0), 4)
+    # } if "CurveControl1X" in event else {
+    #     "T": event["Time"] - start_time,
+    #     "V": event["Value"]
+    # } for event in envelope]
+
+
     return envelope
 
-automations = parse_automations(argv[1])
-# print(automations)
-automations = {
+root = load_als(argv[1])
+final = parse_automations(root)
+locators = find_locators(root)
+print(locators)
+
+patterns = {}
+for envelope_name, envelope in final.items():
+    splits = split_envelope(envelope, locators)
+    for locator, section in splits.items():
+        patterns.setdefault(locator, {})[envelope_name] = section
+        # print(f"{name} {locator}")
+        # print(sanitise_envelope(split_envelope))
+        # print("")
+
+# print(patterns)
+
+final = {
     name: sanitise_envelope(envelope)
-    for name, envelope in automations.items()
+    for name, envelope in final.items()
 }
-open("automations.json", "w").write(json.dumps([list(automations.values())]))
-cpp = generate_cpp_bezier_patterns_header([[env for name, env in automations.items()]])
-open("include/BezierFaderPatterns.h", "w").write(cpp)
+
+open("patterns.json", "w").write(json.dumps([list(final.values())], indent=2))
+# cpp = generate_cpp_bezier_patterns_header([[env for name, env in automations.items()]])
+# open("include/BezierFaderPatterns.h", "w").write(cpp)
 # automations_to_cpp(automations)
 # print(automations)
 

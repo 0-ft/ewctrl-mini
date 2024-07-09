@@ -60,7 +60,7 @@ async def send_test_json(uri):
         await websocket.send(json_message)
         print(f"Sent: {json_message}")
         # Receive a response (if any) and print it
-        websocket.close()
+        await websocket.close()
         # try:
         #     response = await websocket.recv()
         #     print(f"Received: {response}")

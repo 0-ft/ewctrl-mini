@@ -1,7 +1,9 @@
 #include "WebSocketsCommander.h"
 #include <esp_task_wdt.h>
+#include <numeric>
 
-#define TAG "WebSocketsCommander"
+
+static const char *TAG = "WebSocketsCommander";
 
 WebSocketsCommander* WebSocketsCommander::instance = nullptr;
 
@@ -85,22 +87,44 @@ void WebSocketsCommander::listenForConnections() {
     esp_task_wdt_delete(NULL);
 }
 
-void WebSocketsCommander::handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
-    DynamicJsonDocument jsonDoc(1024);
+void WebSocketsCommander::handleWebSocketMessage(AwsFrameInfo *info, uint8_t *data, size_t len) {
+    ESP_LOGI(TAG, "Received message chunk, index %llu, len %llu, final %d", info->index, info->len, info->final);
 
-    DeserializationError error = deserializeJson(jsonDoc, data, len);
-    if (error) {
-        ESP_LOGE(TAG, "deserializeJson() failed: %s", error.c_str());
-        return;
+    if (info->index == 0) {
+        if (messageBuffer != nullptr) {
+            delete[] messageBuffer;
+        }
+        messageBufferLength = info->len;
+        messageBuffer = new char[messageBufferLength + 1];
+        memset(messageBuffer, 0, messageBufferLength + 1);
     }
 
-    if (!jsonDoc.containsKey("type") || !jsonDoc.containsKey("data")) {
-        ESP_LOGE(TAG, "Invalid JSON format");
-        return;
-    }
+    memcpy(messageBuffer + info->index, data, len);
 
-    onEvent(jsonDoc);
+    if ((info->index + len) == info->len && info->final) {
+        ESP_LOGI(TAG, "Received complete message: %s", messageBuffer);
+        DynamicJsonDocument jsonDoc(65536);
+        DeserializationError error = deserializeJson(jsonDoc, messageBuffer);
+        if (error) {
+            ESP_LOGE(TAG, "deserializeJson() failed: %s", error.c_str());
+            delete[] messageBuffer;
+            messageBuffer = nullptr;
+            return;
+        }
+
+        if (!jsonDoc.containsKey("type") || !jsonDoc.containsKey("data")) {
+            ESP_LOGE(TAG, "Invalid JSON format");
+            delete[] messageBuffer;
+            messageBuffer = nullptr;
+            return;
+        }
+
+        onEvent(jsonDoc);
+        delete[] messageBuffer;
+        messageBuffer = nullptr;
+    }
 }
+
 
 void WebSocketsCommander::onWebSocketEvent(AsyncWebSocket *server, AsyncWebSocketClient *client, AwsEventType type, void *arg, uint8_t *data, size_t len) {
     switch (type) {
@@ -111,7 +135,7 @@ void WebSocketsCommander::onWebSocketEvent(AsyncWebSocket *server, AsyncWebSocke
             ESP_LOGI(TAG, "WebSocket client disconnected");
             break;
         case WS_EVT_DATA:
-            handleWebSocketMessage(client, data, len);
+            handleWebSocketMessage((AwsFrameInfo*)arg, data, len);
             break;
         case WS_EVT_PONG:
         case WS_EVT_ERROR:

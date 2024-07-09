@@ -5,17 +5,18 @@
 #include <ESPAsyncWebServer.h>
 #include <ArduinoJson.h>
 #include <esp_log.h>
+#include <vector>
 
 class WebSocketsCommander {
 public:
-    WebSocketsCommander(const char* ssid, const char* password, void (*onEvent)(JsonDocument& json), BaseType_t core);
-    void init();
     enum CommandTypes {
         COMMAND_SET_PATTERN = 0x01,
         COMMAND_SET_GAIN = 0x02,
         COMMAND_SET_FRAMERATE = 0x03,
         COMMAND_SET_PATTERNS = 0x04
     };
+    WebSocketsCommander(const char* ssid, const char* password, void (*onEvent)(JsonDocument& json), BaseType_t core);
+    void init();
 
 private:
     const char* ssid;
@@ -24,11 +25,13 @@ private:
     BaseType_t core;
     AsyncWebServer server;
     AsyncWebSocket ws;
-
+    char* messageBuffer;
+    size_t messageBufferLength;
+    
     static void WiFiEvent(WiFiEvent_t event);
     static void listenForConnectionsTask(void* pvParameters);
     void listenForConnections();
-    void handleWebSocketMessage(void *arg, uint8_t *data, size_t len);
+    void handleWebSocketMessage(AwsFrameInfo *info, uint8_t *data, size_t len);
     void onWebSocketEvent(AsyncWebSocket *server, AsyncWebSocketClient *client, AwsEventType type, void *arg, uint8_t *data, size_t len);
     static WebSocketsCommander* instance; // Singleton instance
 };

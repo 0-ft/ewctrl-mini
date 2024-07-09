@@ -25,7 +25,7 @@ void FaderPlayback::setup()
 void FaderPlayback::sendFrame()
 {
     if(patternIndex >= patterns.size()) {
-        ESP_LOGE(TAG, "Invalid pattern index %d", patternIndex);
+        // ESP_LOGE(TAG, "Invalid pattern index %d", patternIndex);
         return;
     }
     const auto now = esp_timer_get_time();

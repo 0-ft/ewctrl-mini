@@ -19,7 +19,7 @@ import socket
 SERVERS = [('192.168.0.20', 80), 7032]  # Example: WLED at a specific IP and fader device to be discovered
 
 # Configure logging
-logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 class Commandable:
     def send_command(self, command: str):
@@ -34,6 +34,7 @@ class FaderClient(Commandable):
         self.port = port
         self.command_queue = command_queue
         self.websocket = None
+        self.patterns = json.load(open('patterns.json'))
         self.connection_thread = threading.Thread(target=self.manage_connection, daemon=True)
         self.connection_thread.start()
 
@@ -44,23 +45,33 @@ class FaderClient(Commandable):
             return
 
         command_type = int(parts[0])
-        command_data = int(parts[1])
+        command_data = json.loads(parts[1])
 
-        start_marker = 0x00
-        type_byte = command_type.to_bytes(1, 'big')
-        data_bytes = command_data.to_bytes(2, 'big')
-        message = bytes([start_marker]) + type_byte + data_bytes
+        message = json.dumps({
+            "type": command_type,
+            "data": command_data
+        })
 
         if self.websocket is not None and self.websocket.open:
             await self.websocket.send(message)
-            logging.info(f"Sent command to {self.host}:{self.port} - Type={command_type}, Data={command_data}")
+            logging.info(f"Sent command to {self.host}:{self.port} - {message}")
+
+    async def send_patterns(self):
+        if self.websocket is not None and self.websocket.open:
+            message = json.dumps({
+                "type": 4,
+                "data": self.patterns
+            })
+            await self.websocket.send(message)
+            logging.info(f"Sent patterns to {self.host}:{self.port}")
 
     async def connect_to_server(self):
         ws_url = f"ws://{self.host}:{self.port}/ws"
         logging.info(f"Connecting to WebSocket at {ws_url}")
         try:
-            self.websocket = await websockets.connect(ws_url)
+            self.websocket = await websockets.connect(ws_url, max_size=None)
             logging.info(f"Connected to WebSocket server at {self.host}:{self.port}")
+            await self.send_patterns()
             while True:
                 command = self.command_queue.get()  # Use blocking get() from queue
                 await self.send_command(command)
@@ -96,7 +107,7 @@ class WLEDClient(Commandable):
             try:
                 url = f"http://{self.host}/presets.json"
                 logging.info(f"Fetching presets from {url}")
-                response = requests.get(url, timeout=10)
+                response = requests.get(url)
                 if response.status_code == 200:
                     data = response.json()
                     self.presets = {v.get('n', f'Preset {k}'): k for k, v in data.items()}

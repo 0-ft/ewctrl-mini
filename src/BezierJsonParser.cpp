@@ -1,6 +1,10 @@
 #include "BezierJsonParser.h"
+#include <esp_log.h>
+
+static const char *TAG = "BezierJsonParser";
 
 std::vector<BezierPattern> parseJsonToBezierPatterns(const JsonArray &doc) {
+    ESP_LOGI(TAG, "Parsing JSON to BezierPatterns");
     std::vector<BezierPattern> patterns;
 
     // // Allocate a temporary JsonDocument
@@ -21,17 +25,16 @@ std::vector<BezierPattern> parseJsonToBezierPatterns(const JsonArray &doc) {
         for (JsonArray eventArray : envelopeArray) {
             std::vector<FloatEvent> events;
 
-            for (JsonObject eventObj : eventArray) {
+            for (JsonArray eventJson : eventArray) {
                 FloatEvent event;
-                event.Time = eventObj["Time"].as<double>();
-                event.Value = eventObj["Value"].as<float>();
+                event.Time = eventJson[0].as<double>();
+                event.Value = eventJson[1].as<float>();
 
-                if (eventObj.containsKey("CurveControl1X") && eventObj.containsKey("CurveControl1Y") &&
-                    eventObj.containsKey("CurveControl2X") && eventObj.containsKey("CurveControl2Y")) {
-                    event.CurveControl1X = eventObj["CurveControl1X"].as<double>();
-                    event.CurveControl1Y = eventObj["CurveControl1Y"].as<double>();
-                    event.CurveControl2X = eventObj["CurveControl2X"].as<double>();
-                    event.CurveControl2Y = eventObj["CurveControl2Y"].as<double>();
+                if (eventJson.size() == 6) {
+                    event.CurveControl1X = eventJson[2].as<double>();
+                    event.CurveControl1Y = eventJson[3].as<double>();
+                    event.CurveControl2X = eventJson[4].as<double>();
+                    event.CurveControl2Y = eventJson[5].as<double>();
                     event.HasCurveControls = true;
                 } else {
                     event.HasCurveControls = false;
@@ -45,6 +48,8 @@ std::vector<BezierPattern> parseJsonToBezierPatterns(const JsonArray &doc) {
 
         patterns.push_back(BezierPattern(envelopes));
     }
+
+    ESP_LOGI(TAG, "Parsed %d patterns", patterns.size());
 
     return patterns;
 }
