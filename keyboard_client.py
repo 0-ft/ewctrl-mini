@@ -302,6 +302,7 @@ class KeyboardCommander:
                 keymap[key] = []
                 print(row)
                 if(row["ewctrl"]):
+                    # cmd = f"1,{row['ewctrl']}" if row
                     keymap[key].append({
                         'target': "ewctrl",
                         'command': f"1,{row['ewctrl']}"
@@ -397,7 +398,7 @@ def main():
     # generate_patterns("pridelx_3.als")
     generate_patterns("/boot/ewctrl/lx.als")
     server_manager = ServerManager()
-    keyboard_commander = KeyboardCommander('patterns_map.csv', server_manager)
+    keyboard_commander = KeyboardCommander('/boot/ewctrl/patterns_map.csv', server_manager)
     keyboard_commander.start()
 
 if __name__ == "__main__":
