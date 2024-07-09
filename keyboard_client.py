@@ -38,6 +38,28 @@ class FaderClient(Commandable):
         self.connection_thread = threading.Thread(target=self.manage_connection, daemon=True)
         self.connection_thread.start()
 
+    async def ws_recv_ack(self):
+        # receive a single byte, 0 means OK, 1 means error & resend
+        if self.websocket is not None and self.websocket.open:
+            ack = await self.websocket.recv()
+            print("Got ack", ack)
+            return ack == "0"
+        else:
+            self.websocket = None
+
+    async def ws_send_check(self, message):
+        if self.websocket is not None and self.websocket.open:
+            await self.websocket.send(message)
+            return await self.ws_recv_ack()
+        else:
+            self.websocket = None
+        return False
+
+    async def ws_send_until_success(self, message):
+        while not await self.ws_send_check(message):
+            logging.error("Failed to send command, retrying...")
+            time.sleep(0.05)
+
     async def send_command(self, command: str):
         parts = command.split(',')
         if len(parts) != 2:
@@ -53,6 +75,7 @@ class FaderClient(Commandable):
         })
 
         if self.websocket is not None and self.websocket.open:
+            # await self.ws_send_check(message)
             await self.websocket.send(message)
             logging.info(f"Sent command to {self.host}:{self.port} - {message}")
 
@@ -63,6 +86,7 @@ class FaderClient(Commandable):
                     "type": 5,
                     "data": pattern
                 })
+                # await self.ws_send_until_success(message)
                 await self.websocket.send(message)
                 logging.info(f"Sent a pattern to {self.host}:{self.port}")
             logging.info(f"Sent patterns to {self.host}:{self.port}")
