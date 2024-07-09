@@ -107,11 +107,18 @@ uint8_t WebSocketsCommander::handleWebSocketMessage(AwsFrameInfo *info, uint8_t 
         memset(messageBuffer, 0, messageBufferLength + 1);
     }
 
+    // check if message buffer is null or message too long
+    if (messageBuffer == nullptr || info->len > messageBufferLength)
+    {
+        ESP_LOGE(TAG, "Message buffer is null or message too long");
+        return 1;
+    }
+
     memcpy(messageBuffer + info->index, data, len);
 
     if ((info->index + len) == info->len && info->final)
     {
-        ESP_LOGE(TAG, "Received complete message: %s", messageBuffer);
+        ESP_LOGI(TAG, "Received complete message: %s", messageBuffer);
         DynamicJsonDocument jsonDoc(65535);
         DeserializationError error = deserializeJson(jsonDoc, messageBuffer);
         if (error)
