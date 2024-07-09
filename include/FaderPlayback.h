@@ -4,6 +4,8 @@
 #include <Adafruit_PWMServoDriver.h>
 #include <vector>
 #include "BezierPattern.h"
+#include <string>
+#include <map>
 
 class FaderPlayback {
 private:
@@ -26,15 +28,16 @@ private:
 
 
 public:
-    uint16_t patternIndex;
+    std::string currentPatternName;
     uint16_t frameRate;
-    std::vector<BezierPattern> patterns;
+    // std::vector<BezierPattern> patterns;
+    std::map<std::string, BezierPattern> patterns;
     FaderPlayback(uint16_t frameRate, uint8_t driverCount, uint8_t* driverAddresses) : frameRate(frameRate), driverCount(driverCount), driverAddresses(driverAddresses) {};
     void setup();
-    void goToPattern(uint16_t patternIndex);
+    void goToPattern(std::string patternName);
     void sendFrame();
     void setGain(uint16_t gain);
-    void setPatterns(std::vector<BezierPattern> patterns);
+    void setPatterns(std::map<std::string, BezierPattern> patterns);
 };
 
 #endif // PLAYBACK_H

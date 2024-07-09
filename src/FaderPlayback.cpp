@@ -24,10 +24,18 @@ void FaderPlayback::setup()
 
 void FaderPlayback::sendFrame()
 {
-    if(patternIndex >= patterns.size()) {
-        // ESP_LOGE(TAG, "Invalid pattern index %d", patternIndex);
+    if(patterns.size() == 0) {
+        // ESP_LOGE(TAG, "No patterns to send");
         return;
     }
+    const auto maybePattern = patterns.find(currentPatternName);
+    if (maybePattern == patterns.end())
+    {
+        ESP_LOGE(TAG, "Invalid pattern name %s", currentPatternName.c_str());
+        return;
+    }
+    // ESP_LOGI(TAG, "Sending frame for pattern %s", currentPatternName.c_str());
+    const auto pattern = maybePattern->second;
     const auto now = esp_timer_get_time();
     const auto deltaTime = (now - patternStartTime) / 1000000.0;
 
@@ -49,7 +57,6 @@ void FaderPlayback::sendFrame()
     //     return;
     // }
 
-    const auto pattern = patterns[patternIndex];
     const auto frame = pattern.getFrameAtTime(fmod(deltaTime, pattern.duration));
     for (uint8_t i = 0; i < pattern.numOutputs && i < availableOutputs; i++)
     {
@@ -68,16 +75,17 @@ void FaderPlayback::sendFrame()
     // frameIndex++;
 }
 
-void FaderPlayback::goToPattern(uint16_t patternIndex)
+void FaderPlayback::goToPattern(std::string patternName)
 {
-    if (patternIndex >= patterns.size())
+    ESP_LOGI(TAG, "Maybe changing to pattern %s", patternName.c_str());
+    if (patterns.find(patternName) == patterns.end())
     {
-        ESP_LOGE(TAG, "Invalid pattern index %d", patternIndex);
+        ESP_LOGE(TAG, "Invalid pattern name %s", patternName.c_str());
         return;
     }
-    this->patternIndex = patternIndex;
+    this->currentPatternName = patternName;
     this->patternStartTime = esp_timer_get_time();
-    ESP_LOGI(TAG, "Changed to pattern %d", patternIndex);
+    ESP_LOGI(TAG, "Changed to pattern %s", patternName.c_str());
     // Serial.println("Went to pattern " + String(patternIndex));
     // frameIndex = 0;
     // sendFrame();
@@ -91,9 +99,9 @@ void FaderPlayback::setGain(uint16_t gain)
     // sendFrame();
 }
 
-void FaderPlayback::setPatterns(std::vector<BezierPattern> patterns)
+void FaderPlayback::setPatterns(std::map<std::string, BezierPattern> patterns)
 {
     this->patterns = patterns;
-    ESP_LOGI(TAG, "Set patterns, count %d" , patterns.size());
+    ESP_LOGI(TAG, "Set patterns, count %d", patterns.size());
     // sendFrame();
 }

@@ -165,7 +165,7 @@ void setup()
   wifiCommander.init();
 
   faderPlayback.setup();
-  faderPlayback.goToPattern(0);
+  faderPlayback.goToPattern("test");
   faderPlayback.setGain(4095);
 }
 

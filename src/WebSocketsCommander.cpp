@@ -102,8 +102,8 @@ void WebSocketsCommander::handleWebSocketMessage(AwsFrameInfo *info, uint8_t *da
     memcpy(messageBuffer + info->index, data, len);
 
     if ((info->index + len) == info->len && info->final) {
-        ESP_LOGI(TAG, "Received complete message: %s", messageBuffer);
-        DynamicJsonDocument jsonDoc(65536);
+        // ESP_LOGI(TAG, "Received complete message: %s", messageBuffer);
+        DynamicJsonDocument jsonDoc(131072);
         DeserializationError error = deserializeJson(jsonDoc, messageBuffer);
         if (error) {
             ESP_LOGE(TAG, "deserializeJson() failed: %s", error.c_str());
@@ -120,6 +120,7 @@ void WebSocketsCommander::handleWebSocketMessage(AwsFrameInfo *info, uint8_t *da
         }
 
         onEvent(jsonDoc);
+        ESP_LOGE(TAG, "DELETING MESSAGE BUFFER");
         delete[] messageBuffer;
         messageBuffer = nullptr;
     }

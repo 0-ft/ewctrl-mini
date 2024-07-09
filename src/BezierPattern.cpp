@@ -1,6 +1,8 @@
 #include "BezierPattern.h"
 #include <limits>
+#include <esp_log.h>
 
+static const char* TAG = "BezierPattern";
 BezierPattern::BezierPattern(const std::vector<BezierEnvelope>& envelopes) : envelopes(envelopes) {
     duration = 0.0;
 
@@ -9,6 +11,7 @@ BezierPattern::BezierPattern(const std::vector<BezierEnvelope>& envelopes) : env
     }
 
     numOutputs = envelopes.size();
+    ESP_LOGI(TAG, "BezierPattern created with %d envelopes, duration %.2f, numOutputs %.2f", envelopes.size(), duration, numOutputs);
 }
 
 std::vector<uint16_t> BezierPattern::getFrameAtTime(double time) const {

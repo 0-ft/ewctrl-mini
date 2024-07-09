@@ -150,7 +150,7 @@ def sanitise_envelope(envelope):
 
     envelope = [[
         event["Time"],
-        event["Value"],
+        round(event["Value"] / 127.0, 4),
         round(event.get("CurveControl1X", 0), 4),
         round(event.get("CurveControl1Y", 0), 4),
         round(event.get("CurveControl2X", 0), 4),
@@ -203,15 +203,18 @@ for start_locator, end_locator in zip(locators, locators[1:]):
     }
 
 
-to_save = {
-    name: [
-        sanitise_envelope(envelope)
-        for envelope in envelopes.values()
-    ]
+to_save = [
+    {
+        "name" : name,
+        "data": [
+            sanitise_envelope(envelope)
+            for envelope in envelopes.values()
+        ]
+    }
     for name, envelopes in patterns.items()
-}
+]
 
-json_out = json.dumps(to_save, indent=2)
+json_out = json.dumps(to_save[:10], indent=2)
 open("patterns.json", "w").write(json_out)
 exit()
 

@@ -1,14 +1,21 @@
 #include "BezierEnvelope.h"
 #include <iostream> // For logging, assuming using std::cout for simplicity
+#include <esp_log.h>
+
+static const char *TAG = "BezierEnvelope";
 
 BezierEnvelope::BezierEnvelope(const std::vector<FloatEvent>& events) {
     bezierSegments = loadEnvelope(events);
-    duration = events.back().Time;
-
+    duration = events.empty() ? 0.0 : events.back().Time;
 }
 
 std::vector<BezierSegment> BezierEnvelope::loadEnvelope(const std::vector<FloatEvent>& events) {
     std::vector<BezierSegment> bezierSegments;
+
+    if(events.size() < 2) {
+        // ESP_LOGE(TAG, "At least two events are required to create a Bezier envelope");
+        return bezierSegments;
+    }
 
     for (size_t i = 0; i < events.size() - 1; ++i) {
         const FloatEvent& startEvent = events[i];
@@ -57,6 +64,7 @@ double BezierEnvelope::sampleAtTime(double time) const {
     }
 
     // If the time is not within any segment, return NaN
-    std::cerr << "Time " << time << " is not within any segment\n";
-    return std::numeric_limits<double>::quiet_NaN();
+    // std::cerr << "Time " << time << " is not within any segment\n";
+    ESP_LOGD(TAG, "Time %.2f is not within any segment", time);
+    return 0;
 }

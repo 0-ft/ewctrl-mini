@@ -45,7 +45,7 @@ class FaderClient(Commandable):
             return
 
         command_type = int(parts[0])
-        command_data = json.loads(parts[1])
+        command_data = parts[1]
 
         message = json.dumps({
             "type": command_type,
