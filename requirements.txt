@@ -1,6 +1,5 @@
 evdev
 pyudev
-subprocess
 requests
 websockets
 bezier
