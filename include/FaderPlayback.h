@@ -6,6 +6,7 @@
 #include "BezierPattern.h"
 #include <string>
 #include <map>
+#include <esp_log.h>
 
 class FaderPlayback {
 private:
@@ -21,8 +22,8 @@ private:
     uint16_t lastFrameIndex;
     uint16_t frameCount;
     uint8_t availableOutputs;
-    int64_t measTime;
-
+    int64_t measStartTime;
+    uint64_t measFramesWritten;
     void setPin(uint16_t value);
     void setAll(uint16_t* values);
 
@@ -38,6 +39,7 @@ public:
     void sendFrame();
     void setGain(uint16_t gain);
     void setPatterns(std::map<std::string, BezierPattern> patterns);
+    void addPattern(std::string patternName, BezierPattern pattern);
 };
 
 #endif // PLAYBACK_H

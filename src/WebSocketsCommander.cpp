@@ -1,7 +1,4 @@
 #include "WebSocketsCommander.h"
-#include <esp_task_wdt.h>
-#include <numeric>
-
 
 static const char *TAG = "WebSocketsCommander";
 
@@ -88,7 +85,7 @@ void WebSocketsCommander::listenForConnections() {
 }
 
 void WebSocketsCommander::handleWebSocketMessage(AwsFrameInfo *info, uint8_t *data, size_t len) {
-    ESP_LOGI(TAG, "Received message chunk, index %llu, len %llu, final %d", info->index, info->len, info->final);
+    // ESP_LOGI(TAG, "Received message chunk, index %llu, len %llu, final %d", info->index, info->len, info->final);
 
     if (info->index == 0) {
         if (messageBuffer != nullptr) {
@@ -120,7 +117,7 @@ void WebSocketsCommander::handleWebSocketMessage(AwsFrameInfo *info, uint8_t *da
         }
 
         onEvent(jsonDoc);
-        ESP_LOGE(TAG, "DELETING MESSAGE BUFFER");
+        // ESP_LOGE(TAG, "DELETING MESSAGE BUFFER");
         delete[] messageBuffer;
         messageBuffer = nullptr;
     }

@@ -6,6 +6,8 @@
 #include <ArduinoJson.h>
 #include <esp_log.h>
 #include <vector>
+#include <esp_task_wdt.h>
+#include <numeric>
 
 class WebSocketsCommander {
 public:
@@ -13,7 +15,8 @@ public:
         COMMAND_SET_PATTERN = 0x01,
         COMMAND_SET_GAIN = 0x02,
         COMMAND_SET_FRAMERATE = 0x03,
-        COMMAND_SET_PATTERNS = 0x04
+        COMMAND_SET_PATTERNS = 0x04,
+        COMMAND_ADD_PATTERN = 0x05
     };
     WebSocketsCommander(const char* ssid, const char* password, void (*onEvent)(JsonDocument& json), BaseType_t core);
     void init();

@@ -31,7 +31,7 @@ void FaderPlayback::sendFrame()
     const auto maybePattern = patterns.find(currentPatternName);
     if (maybePattern == patterns.end())
     {
-        ESP_LOGE(TAG, "Invalid pattern name %s", currentPatternName.c_str());
+        // ESP_LOGD(TAG, "Invalid pattern name %s", currentPatternName.c_str());
         return;
     }
     // ESP_LOGI(TAG, "Sending frame for pattern %s", currentPatternName.c_str());
@@ -66,18 +66,19 @@ void FaderPlayback::sendFrame()
         const uint16_t scaled = ((uint32_t)frame[i] * gain) >> 12;
         drivers[i / OUTPUTS_PER_DRIVER].setPWM(i % OUTPUTS_PER_DRIVER, 0, scaled);
     }
+    measFramesWritten++;
 
-    // if(deltaTime > 1000000) {
-    //     const auto fps = frameIndex / (deltaTime / 1000000.0);
-    //     ESP_LOGI(TAG, "FPS: %f", fps);
-    // }
-    // Serial.println();
-    // frameIndex++;
+    if(measFramesWritten == 100) {
+        const double fps = measFramesWritten / ((now - measStartTime) / 1000000.0);
+        ESP_LOGI(TAG, "FPS: %f", fps);
+        measFramesWritten = 0;
+        measStartTime = now;
+    }
 }
 
 void FaderPlayback::goToPattern(std::string patternName)
 {
-    ESP_LOGI(TAG, "Maybe changing to pattern %s", patternName.c_str());
+    // ESP_LOGI(TAG, "Maybe changing to pattern %s", patternName.c_str());
     if (patterns.find(patternName) == patterns.end())
     {
         ESP_LOGE(TAG, "Invalid pattern name %s", patternName.c_str());
@@ -103,5 +104,12 @@ void FaderPlayback::setPatterns(std::map<std::string, BezierPattern> patterns)
 {
     this->patterns = patterns;
     ESP_LOGI(TAG, "Set patterns, count %d", patterns.size());
+    // sendFrame();
+}
+
+void FaderPlayback::addPattern(std::string patternName, BezierPattern pattern)
+{
+    patterns.insert({patternName, pattern});
+    ESP_LOGI(TAG, "Added pattern %s", patternName.c_str());
     // sendFrame();
 }

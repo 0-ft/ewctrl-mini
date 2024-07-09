@@ -1,9 +1,11 @@
 #ifndef BEZIERPATTERN_H
 #define BEZIERPATTERN_H
 
+#include "BezierEnvelope.h"
 #include <vector>
 #include <cstdint>
-#include "BezierEnvelope.h"
+#include <limits>
+#include <esp_log.h>
 
 class BezierPattern {
 public:

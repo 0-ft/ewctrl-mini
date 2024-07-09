@@ -1,19 +1,11 @@
 #include "BezierJsonParser.h"
-#include <Arduino.h> // For String
-#include <esp_log.h>
 
 static const char* TAG = "BezierJsonParser";
 
-std::map<std::string, BezierPattern> parseJsonToBezierPatterns(const JsonArray& doc) {
-    std::map<std::string, BezierPattern> patterns;
-
-    ESP_LOGI(TAG, "Parsing JSON to BezierPatterns, array length %d", doc.size());
-
-    // Parse the JSON array of patterns
-    for (JsonObject patternObj : doc) {
+std::pair<std::string, BezierPattern> parseJsonToBezierPattern(const JsonObject &patternObj) {
         if (!patternObj.containsKey("name") || !patternObj.containsKey("data")) {
             ESP_LOGE(TAG, "Pattern object missing required keys");
-            continue;
+            return {"", BezierPattern(std::vector<BezierEnvelope>())};
         }
 
         String patternName = patternObj["name"].as<String>();
@@ -44,15 +36,26 @@ std::map<std::string, BezierPattern> parseJsonToBezierPatterns(const JsonArray& 
                     event.HasCurveControls = false;
                 }
 
-                ESP_LOGI(TAG, "Initialized event for pattern %s", patternName.c_str());
+                // ESP_LOGI(TAG, "Initialized event for pattern %s", patternName.c_str());
                 events.push_back(event);
             }
-            ESP_LOGI(TAG, "Initialized envelope for pattern %s", patternName.c_str());
+            // ESP_LOGI(TAG, "Initialized envelope for pattern %s", patternName.c_str());
             envelopes.push_back(BezierEnvelope(events));
         }
         ESP_LOGI(TAG, "Initialized pattern %s", patternName.c_str());
 
-        patterns.insert({patternName.c_str(), BezierPattern(envelopes)});
+        return {patternName.c_str(), BezierPattern(envelopes)};
+}
+
+std::map<std::string, BezierPattern> parseJsonToBezierPatterns(const JsonArray& doc) {
+    std::map<std::string, BezierPattern> patterns;
+
+    ESP_LOGI(TAG, "Parsing JSON to BezierPatterns, array length %d", doc.size());
+
+    // Parse the JSON array of patterns
+    for (JsonObject patternObj : doc) {
+        auto [patternName, pattern] = parseJsonToBezierPattern(patternObj);
+        patterns.insert({patternName, pattern});
     }
     ESP_LOGI(TAG, "JSON pattern parsing finished");
 

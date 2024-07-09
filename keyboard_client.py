@@ -58,11 +58,13 @@ class FaderClient(Commandable):
 
     async def send_patterns(self):
         if self.websocket is not None and self.websocket.open:
-            message = json.dumps({
-                "type": 4,
-                "data": self.patterns
-            })
-            await self.websocket.send(message)
+            for pattern in self.patterns:
+                message = json.dumps({
+                    "type": 5,
+                    "data": pattern
+                })
+                await self.websocket.send(message)
+                logging.info(f"Sent a pattern to {self.host}:{self.port}")
             logging.info(f"Sent patterns to {self.host}:{self.port}")
 
     async def connect_to_server(self):

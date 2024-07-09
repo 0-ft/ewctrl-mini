@@ -157,7 +157,7 @@ def sanitise_envelope(envelope):
         round(event.get("CurveControl2Y", 0), 4)
     ] if "CurveControl1X" in event else [
         event["Time"],
-        event["Value"],
+        round(event["Value"] / 127.0, 4),
     ] for event in envelope
     ]
 
@@ -214,7 +214,7 @@ to_save = [
     for name, envelopes in patterns.items()
 ]
 
-json_out = json.dumps(to_save[:10], indent=2)
+json_out = json.dumps(to_save, indent=2)
 open("patterns.json", "w").write(json_out)
 exit()
 

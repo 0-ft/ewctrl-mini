@@ -2,8 +2,8 @@ key,port,command
 key_a,7032,"2,0"
 key_z,7032,"2,4095"
 key_b,7032,"1,p0"
-key_n,7032,"1,p0"
-key_m,7032,"1,p0"
+key_n,7032,"1,p1"
+key_m,7032,"1,p2"
 key_comma,7032,"1,12"
 key_dot,7032,"1,13"
 

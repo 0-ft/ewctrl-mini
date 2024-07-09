@@ -124,11 +124,16 @@ FaderPlayback faderPlayback(60, 2, new uint8_t[2]{0x40, 0x41});
 //   }
 // }
 
+void receivePattern(const JsonObject &doc) {
+  ESP_LOGI(TAG, "Received pattern");
+  auto [patternName, pattern] = parseJsonToBezierPattern(doc);
+  faderPlayback.addPattern(patternName, pattern);
+}
+
 void handleWifiCommand(JsonDocument& doc)
 {
-  ESP_LOGI(TAG, "Handling WifiCommander command");
+  // ESP_LOGI(TAG, "Handling WifiCommander command");
   uint8_t type = doc["type"];
-  ESP_LOGI(TAG, "Handling WifiCommander command type %d", type);
   switch(type) {
     case WebSocketsCommander::COMMAND_SET_PATTERN:
       faderPlayback.goToPattern(doc["data"]);
@@ -145,10 +150,17 @@ void handleWifiCommand(JsonDocument& doc)
       faderPlayback.setPatterns(patterns);
       break;
     }
+    case WebSocketsCommander::COMMAND_ADD_PATTERN:
+    {
+      JsonObject data = doc["data"];
+      receivePattern(data);
+      break;
+    }
     default:
       ESP_LOGW(TAG, "Unknown event type");
       break;
   }
+  ESP_LOGI(TAG, "Handled WifiCommander command type %d", type);
 }
 
 
