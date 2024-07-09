@@ -1,0 +1,2 @@
+nmcli device wifi connect '190bpm hardcore steppas' password fungible
+nmcli con up Hotspot
