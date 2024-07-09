@@ -3,5 +3,4 @@ pyudev
 requests
 websockets
 bezier
-seaborn
 lxml

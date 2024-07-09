@@ -6,7 +6,7 @@ After=network.target
 ExecStart=/home/atlas/ewctrl-mini/venv/bin/python3 /home/atlas/ewctrl-mini/keyboard_client.py
 Restart=always
 User=atlas
-WorkingDirectory=/home/atlas/commander
+WorkingDirectory=/home/atlas/ewctrl-mini
 
 [Install]
 WantedBy=multi-user.target
