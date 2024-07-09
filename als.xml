@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Ableton MajorVersion="5" MinorVersion="11.0_433" Creator="Ableton Live 11.0.1" Revision="47ebb46dc97b6679928a7e2c509ef5b5c49eaaa7">
 	<LiveSet>
-		<NextPointeeId Value="40600" />
+		<NextPointeeId Value="41205" />
 		<OverwriteProtectionNumber Value="2816" />
 		<LomId Value="0" />
 		<LomIdView Value="0" />
@@ -4361,11 +4361,32 @@
 							<Automation>
 								<Events>
 									<FloatEvent Id="7403" Time="-63072000" Value="0" />
-									<FloatEvent Id="7404" Time="96" Value="0" />
 									<FloatEvent Id="7405" Time="112" Value="0" />
+									<FloatEvent Id="7638" Time="256" Value="0" />
+									<FloatEvent Id="7633" Time="260" Value="0" />
+									<FloatEvent Id="7648" Time="264" Value="0" />
+									<FloatEvent Id="7649" Time="268" Value="0" />
+									<FloatEvent Id="7654" Time="272" Value="0" />
+									<FloatEvent Id="7659" Time="276" Value="0" />
+									<FloatEvent Id="7664" Time="280" Value="0" />
 									<FloatEvent Id="7406" Time="284" Value="0" />
 									<FloatEvent Id="7407" Time="284" Value="127" />
 									<FloatEvent Id="7408" Time="285" Value="0" />
+									<FloatEvent Id="7669" Time="288" Value="0" />
+									<FloatEvent Id="7674" Time="292" Value="0" />
+									<FloatEvent Id="7679" Time="296" Value="0" />
+									<FloatEvent Id="7684" Time="300" Value="0" />
+									<FloatEvent Id="7689" Time="304" Value="0" />
+									<FloatEvent Id="7694" Time="308" Value="0" />
+									<FloatEvent Id="7699" Time="312" Value="0" />
+									<FloatEvent Id="7704" Time="316" Value="0" />
+									<FloatEvent Id="7709" Time="320" Value="0" />
+									<FloatEvent Id="7714" Time="324" Value="0" />
+									<FloatEvent Id="7719" Time="328" Value="0" />
+									<FloatEvent Id="7724" Time="332" Value="0" />
+									<FloatEvent Id="7729" Time="336" Value="0" />
+									<FloatEvent Id="7734" Time="340" Value="0" />
+									<FloatEvent Id="7739" Time="344" Value="0" />
 									<FloatEvent Id="7614" Time="348" Value="0" />
 									<FloatEvent Id="7613" Time="348" Value="127" />
 									<FloatEvent Id="7612" Time="348.0625" Value="0" />
@@ -4431,15 +4452,27 @@
 									<FloatEvent Id="7552" Time="349.9375" Value="0" />
 									<FloatEvent Id="7551" Time="349.9375" Value="3.96875" />
 									<FloatEvent Id="7550" Time="350" Value="0" />
+									<FloatEvent Id="7772" Time="352" Value="0" />
+									<FloatEvent Id="7773" Time="356" Value="0" />
+									<FloatEvent Id="7774" Time="360" Value="0" />
+									<FloatEvent Id="7775" Time="364" Value="0" />
+									<FloatEvent Id="7776" Time="368" Value="0" />
+									<FloatEvent Id="7777" Time="372" Value="0" />
+									<FloatEvent Id="7778" Time="376" Value="0" />
+									<FloatEvent Id="7779" Time="380" Value="0" />
+									<FloatEvent Id="7780" Time="384" Value="0" />
 									<FloatEvent Id="7625" Time="387.5" Value="0" />
 									<FloatEvent Id="7624" Time="387.5" Value="127" />
-									<FloatEvent Id="7623" Time="388" Value="0" />
+									<FloatEvent Id="7781" Time="388" Value="0" />
+									<FloatEvent Id="7792" Time="392" Value="0" />
 									<FloatEvent Id="7622" Time="395.5" Value="0" />
 									<FloatEvent Id="7621" Time="395.5" Value="127" />
 									<FloatEvent Id="7620" Time="396.5" Value="0" />
+									<FloatEvent Id="7786" Time="400" Value="0" />
 									<FloatEvent Id="7619" Time="404" Value="0" />
 									<FloatEvent Id="7618" Time="404" Value="127" />
 									<FloatEvent Id="7617" Time="405" Value="0" />
+									<FloatEvent Id="7791" Time="408" Value="0" />
 								</Events>
 								<AutomationTransformViewState>
 									<IsTransformPending Value="false" />
@@ -4458,6 +4491,21 @@
 									<FloatEvent Id="5449" Time="256" Value="0" />
 									<FloatEvent Id="5450" Time="256" Value="127" />
 									<FloatEvent Id="5451" Time="257" Value="0" />
+									<FloatEvent Id="9143" Time="260" Value="0" />
+									<FloatEvent Id="9144" Time="264" Value="0" />
+									<FloatEvent Id="9149" Time="268" Value="0" />
+									<FloatEvent Id="9154" Time="272" Value="0" />
+									<FloatEvent Id="9159" Time="276" Value="0" />
+									<FloatEvent Id="9164" Time="280" Value="0" />
+									<FloatEvent Id="9169" Time="284" Value="0" />
+									<FloatEvent Id="9174" Time="288" Value="0" />
+									<FloatEvent Id="9179" Time="292" Value="0" />
+									<FloatEvent Id="9113" Time="296" Value="0" />
+									<FloatEvent Id="9118" Time="300" Value="0" />
+									<FloatEvent Id="9123" Time="304" Value="0" />
+									<FloatEvent Id="9128" Time="308" Value="0" />
+									<FloatEvent Id="9133" Time="312" Value="0" />
+									<FloatEvent Id="9138" Time="316" Value="0" />
 									<FloatEvent Id="9092" Time="320" Value="0" />
 									<FloatEvent Id="9093" Time="320" Value="127" />
 									<FloatEvent Id="9091" Time="320.0625" Value="0" />
@@ -4523,12 +4571,29 @@
 									<FloatEvent Id="9031" Time="321.9375" Value="0" />
 									<FloatEvent Id="9030" Time="321.9375" Value="3.96875" />
 									<FloatEvent Id="9029" Time="322" Value="0" />
-									<FloatEvent Id="9101" Time="384" Value="0" />
-									<FloatEvent Id="9102" Time="384" Value="127" />
+									<FloatEvent Id="9180" Time="324" Value="0" />
+									<FloatEvent Id="9186" Time="328" Value="0" />
+									<FloatEvent Id="9192" Time="332" Value="0" />
+									<FloatEvent Id="9198" Time="336" Value="0" />
+									<FloatEvent Id="9204" Time="340" Value="0" />
+									<FloatEvent Id="9210" Time="344" Value="0" />
+									<FloatEvent Id="9216" Time="348" Value="0" />
+									<FloatEvent Id="9264" Time="352" Value="0" />
+									<FloatEvent Id="9270" Time="356" Value="0" />
+									<FloatEvent Id="9276" Time="360" Value="0" />
+									<FloatEvent Id="9282" Time="364" Value="0" />
+									<FloatEvent Id="9288" Time="368" Value="0" />
+									<FloatEvent Id="9294" Time="372" Value="0" />
+									<FloatEvent Id="9300" Time="376" Value="0" />
+									<FloatEvent Id="9306" Time="380" Value="0" />
+									<FloatEvent Id="9307" Time="384" Value="0" />
+									<FloatEvent Id="9309" Time="384" Value="127" />
 									<FloatEvent Id="9100" Time="385" Value="0" />
+									<FloatEvent Id="9310" Time="388" Value="0" />
 									<FloatEvent Id="9099" Time="392" Value="0" />
 									<FloatEvent Id="9098" Time="392" Value="127" />
 									<FloatEvent Id="9097" Time="393" Value="0" />
+									<FloatEvent Id="9315" Time="400" Value="0" />
 									<FloatEvent Id="9096" Time="407.5" Value="0" />
 									<FloatEvent Id="9095" Time="407.5" Value="127" />
 									<FloatEvent Id="9094" Time="408" Value="0" />
@@ -4575,9 +4640,25 @@
 								<Events>
 									<FloatEvent Id="5423" Time="-63072000" Value="0" />
 									<FloatEvent Id="5424" Time="112" Value="0" />
+									<FloatEvent Id="5679" Time="256" Value="0" />
 									<FloatEvent Id="5425" Time="260" Value="0" />
 									<FloatEvent Id="5426" Time="260" Value="127" />
 									<FloatEvent Id="5427" Time="261" Value="0" />
+									<FloatEvent Id="5725" Time="264" Value="0" />
+									<FloatEvent Id="5726" Time="268" Value="0" />
+									<FloatEvent Id="5731" Time="272" Value="0" />
+									<FloatEvent Id="5736" Time="276" Value="0" />
+									<FloatEvent Id="5741" Time="280" Value="0" />
+									<FloatEvent Id="5746" Time="284" Value="0" />
+									<FloatEvent Id="5680" Time="288" Value="0" />
+									<FloatEvent Id="5685" Time="292" Value="0" />
+									<FloatEvent Id="5690" Time="296" Value="0" />
+									<FloatEvent Id="5695" Time="300" Value="0" />
+									<FloatEvent Id="5700" Time="304" Value="0" />
+									<FloatEvent Id="5705" Time="308" Value="0" />
+									<FloatEvent Id="5710" Time="312" Value="0" />
+									<FloatEvent Id="5715" Time="316" Value="0" />
+									<FloatEvent Id="5720" Time="320" Value="0" />
 									<FloatEvent Id="5665" Time="324" Value="0" />
 									<FloatEvent Id="5664" Time="324" Value="127" />
 									<FloatEvent Id="5663" Time="324.0625" Value="0" />
@@ -4643,12 +4724,30 @@
 									<FloatEvent Id="5603" Time="325.9375" Value="0" />
 									<FloatEvent Id="5602" Time="325.9375" Value="3.96875" />
 									<FloatEvent Id="5601" Time="326" Value="0" />
+									<FloatEvent Id="5747" Time="328" Value="0" />
+									<FloatEvent Id="5753" Time="332" Value="0" />
+									<FloatEvent Id="5759" Time="336" Value="0" />
+									<FloatEvent Id="5765" Time="340" Value="0" />
+									<FloatEvent Id="5771" Time="344" Value="0" />
+									<FloatEvent Id="5777" Time="348" Value="0" />
+									<FloatEvent Id="5783" Time="352" Value="0" />
+									<FloatEvent Id="5789" Time="356" Value="0" />
+									<FloatEvent Id="5795" Time="360" Value="0" />
+									<FloatEvent Id="5801" Time="364" Value="0" />
+									<FloatEvent Id="5807" Time="368" Value="0" />
+									<FloatEvent Id="5813" Time="372" Value="0" />
+									<FloatEvent Id="5819" Time="376" Value="0" />
+									<FloatEvent Id="5825" Time="380" Value="0" />
+									<FloatEvent Id="5826" Time="384" Value="0" />
 									<FloatEvent Id="5676" Time="384.5" Value="0" />
 									<FloatEvent Id="5675" Time="384.5" Value="127" />
 									<FloatEvent Id="5674" Time="385.5" Value="0" />
+									<FloatEvent Id="5827" Time="388" Value="0" />
+									<FloatEvent Id="5837" Time="392" Value="0" />
 									<FloatEvent Id="5673" Time="392.5" Value="0" />
 									<FloatEvent Id="5672" Time="392.5" Value="127" />
 									<FloatEvent Id="5671" Time="393.5" Value="0" />
+									<FloatEvent Id="5832" Time="400" Value="0" />
 									<FloatEvent Id="5670" Time="407" Value="0" />
 									<FloatEvent Id="5669" Time="407" Value="127" />
 									<FloatEvent Id="5668" Time="408" Value="0" />
@@ -4695,9 +4794,26 @@
 								<Events>
 									<FloatEvent Id="12204" Time="-63072000" Value="0" />
 									<FloatEvent Id="12205" Time="112" Value="0" />
+									<FloatEvent Id="12461" Time="256" Value="0" />
+									<FloatEvent Id="12462" Time="260" Value="0" />
 									<FloatEvent Id="12206" Time="264" Value="0" />
 									<FloatEvent Id="12207" Time="264" Value="127" />
 									<FloatEvent Id="12208" Time="265" Value="0" />
+									<FloatEvent Id="12517" Time="268" Value="0" />
+									<FloatEvent Id="12518" Time="272" Value="0" />
+									<FloatEvent Id="12523" Time="276" Value="0" />
+									<FloatEvent Id="12528" Time="280" Value="0" />
+									<FloatEvent Id="12533" Time="284" Value="0" />
+									<FloatEvent Id="12467" Time="288" Value="0" />
+									<FloatEvent Id="12472" Time="292" Value="0" />
+									<FloatEvent Id="12477" Time="296" Value="0" />
+									<FloatEvent Id="12482" Time="300" Value="0" />
+									<FloatEvent Id="12487" Time="304" Value="0" />
+									<FloatEvent Id="12492" Time="308" Value="0" />
+									<FloatEvent Id="12497" Time="312" Value="0" />
+									<FloatEvent Id="12502" Time="316" Value="0" />
+									<FloatEvent Id="12507" Time="320" Value="0" />
+									<FloatEvent Id="12512" Time="324" Value="0" />
 									<FloatEvent Id="12447" Time="328" Value="0" />
 									<FloatEvent Id="12446" Time="328" Value="127" />
 									<FloatEvent Id="12445" Time="328.0625" Value="0" />
@@ -4763,15 +4879,33 @@
 									<FloatEvent Id="12385" Time="329.9375" Value="0" />
 									<FloatEvent Id="12384" Time="329.9375" Value="3.96875" />
 									<FloatEvent Id="12383" Time="330" Value="0" />
+									<FloatEvent Id="12534" Time="332" Value="0" />
+									<FloatEvent Id="12540" Time="336" Value="0" />
+									<FloatEvent Id="12546" Time="340" Value="0" />
+									<FloatEvent Id="12552" Time="344" Value="0" />
+									<FloatEvent Id="12558" Time="348" Value="0" />
+									<FloatEvent Id="12564" Time="352" Value="0" />
+									<FloatEvent Id="12570" Time="356" Value="0" />
+									<FloatEvent Id="12576" Time="360" Value="0" />
+									<FloatEvent Id="12582" Time="364" Value="0" />
+									<FloatEvent Id="12588" Time="368" Value="0" />
+									<FloatEvent Id="12594" Time="372" Value="0" />
+									<FloatEvent Id="12600" Time="376" Value="0" />
+									<FloatEvent Id="12606" Time="380" Value="0" />
+									<FloatEvent Id="12607" Time="384" Value="0" />
 									<FloatEvent Id="12458" Time="385" Value="0" />
 									<FloatEvent Id="12457" Time="385" Value="127" />
 									<FloatEvent Id="12456" Time="386" Value="0" />
+									<FloatEvent Id="12608" Time="388" Value="0" />
+									<FloatEvent Id="12619" Time="392" Value="0" />
 									<FloatEvent Id="12455" Time="393" Value="0" />
 									<FloatEvent Id="12454" Time="393" Value="127" />
 									<FloatEvent Id="12453" Time="394" Value="0" />
+									<FloatEvent Id="12613" Time="400" Value="0" />
 									<FloatEvent Id="12452" Time="406.5" Value="0" />
 									<FloatEvent Id="12451" Time="406.5" Value="127" />
 									<FloatEvent Id="12450" Time="407.5" Value="0" />
+									<FloatEvent Id="12618" Time="408" Value="0" />
 								</Events>
 								<AutomationTransformViewState>
 									<IsTransformPending Value="false" />
@@ -4787,9 +4921,27 @@
 								<Events>
 									<FloatEvent Id="13436" Time="-63072000" Value="0" />
 									<FloatEvent Id="13437" Time="112" Value="0" />
+									<FloatEvent Id="13694" Time="256" Value="0" />
+									<FloatEvent Id="13695" Time="260" Value="0" />
+									<FloatEvent Id="13706" Time="264" Value="0" />
 									<FloatEvent Id="13438" Time="268" Value="0" />
 									<FloatEvent Id="13439" Time="268" Value="127" />
 									<FloatEvent Id="13440" Time="269" Value="0" />
+									<FloatEvent Id="13762" Time="272" Value="0" />
+									<FloatEvent Id="13763" Time="276" Value="0" />
+									<FloatEvent Id="13764" Time="280" Value="0" />
+									<FloatEvent Id="13765" Time="284" Value="0" />
+									<FloatEvent Id="13707" Time="288" Value="0" />
+									<FloatEvent Id="13712" Time="292" Value="0" />
+									<FloatEvent Id="13717" Time="296" Value="0" />
+									<FloatEvent Id="13722" Time="300" Value="0" />
+									<FloatEvent Id="13727" Time="304" Value="0" />
+									<FloatEvent Id="13732" Time="308" Value="0" />
+									<FloatEvent Id="13737" Time="312" Value="0" />
+									<FloatEvent Id="13742" Time="316" Value="0" />
+									<FloatEvent Id="13747" Time="320" Value="0" />
+									<FloatEvent Id="13752" Time="324" Value="0" />
+									<FloatEvent Id="13757" Time="328" Value="0" />
 									<FloatEvent Id="13680" Time="332" Value="0" />
 									<FloatEvent Id="13679" Time="332" Value="127" />
 									<FloatEvent Id="13678" Time="332.0625" Value="0" />
@@ -4855,15 +5007,32 @@
 									<FloatEvent Id="13618" Time="333.9375" Value="0" />
 									<FloatEvent Id="13617" Time="333.9375" Value="3.96875" />
 									<FloatEvent Id="13616" Time="334" Value="0" />
+									<FloatEvent Id="13766" Time="336" Value="0" />
+									<FloatEvent Id="13772" Time="340" Value="0" />
+									<FloatEvent Id="13778" Time="344" Value="0" />
+									<FloatEvent Id="13784" Time="348" Value="0" />
+									<FloatEvent Id="13796" Time="352" Value="0" />
+									<FloatEvent Id="13802" Time="356" Value="0" />
+									<FloatEvent Id="13808" Time="360" Value="0" />
+									<FloatEvent Id="13814" Time="364" Value="0" />
+									<FloatEvent Id="13820" Time="368" Value="0" />
+									<FloatEvent Id="13826" Time="372" Value="0" />
+									<FloatEvent Id="13832" Time="376" Value="0" />
+									<FloatEvent Id="13838" Time="380" Value="0" />
+									<FloatEvent Id="13839" Time="384" Value="0" />
 									<FloatEvent Id="13691" Time="385.5" Value="0" />
 									<FloatEvent Id="13690" Time="385.5" Value="127" />
 									<FloatEvent Id="13689" Time="386.5" Value="0" />
+									<FloatEvent Id="13840" Time="388" Value="0" />
+									<FloatEvent Id="13851" Time="392" Value="0" />
 									<FloatEvent Id="13688" Time="393.5" Value="0" />
 									<FloatEvent Id="13687" Time="393.5" Value="127" />
 									<FloatEvent Id="13686" Time="394.5" Value="0" />
+									<FloatEvent Id="13845" Time="400" Value="0" />
 									<FloatEvent Id="13685" Time="406" Value="0" />
 									<FloatEvent Id="13684" Time="406" Value="127" />
 									<FloatEvent Id="13683" Time="407" Value="0" />
+									<FloatEvent Id="13850" Time="408" Value="0" />
 								</Events>
 								<AutomationTransformViewState>
 									<IsTransformPending Value="false" />
@@ -4879,9 +5048,28 @@
 								<Events>
 									<FloatEvent Id="17038" Time="-63072000" Value="0" />
 									<FloatEvent Id="17039" Time="112" Value="0" />
+									<FloatEvent Id="17295" Time="256" Value="0" />
+									<FloatEvent Id="17296" Time="260" Value="0" />
+									<FloatEvent Id="17301" Time="264" Value="0" />
+									<FloatEvent Id="17302" Time="268" Value="0" />
 									<FloatEvent Id="17040" Time="272" Value="0" />
 									<FloatEvent Id="17041" Time="272" Value="127" />
 									<FloatEvent Id="17042" Time="273" Value="0" />
+									<FloatEvent Id="17370" Time="276" Value="0" />
+									<FloatEvent Id="17369" Time="280" Value="0" />
+									<FloatEvent Id="17368" Time="284" Value="0" />
+									<FloatEvent Id="17307" Time="288" Value="0" />
+									<FloatEvent Id="17312" Time="292" Value="0" />
+									<FloatEvent Id="17317" Time="296" Value="0" />
+									<FloatEvent Id="17322" Time="300" Value="0" />
+									<FloatEvent Id="17327" Time="304" Value="0" />
+									<FloatEvent Id="17332" Time="308" Value="0" />
+									<FloatEvent Id="17337" Time="312" Value="0" />
+									<FloatEvent Id="17342" Time="316" Value="0" />
+									<FloatEvent Id="17347" Time="320" Value="0" />
+									<FloatEvent Id="17352" Time="324" Value="0" />
+									<FloatEvent Id="17357" Time="328" Value="0" />
+									<FloatEvent Id="17362" Time="332" Value="0" />
 									<FloatEvent Id="17281" Time="336" Value="0" />
 									<FloatEvent Id="17280" Time="336" Value="127" />
 									<FloatEvent Id="17279" Time="336.0625" Value="0" />
@@ -4947,15 +5135,31 @@
 									<FloatEvent Id="17219" Time="337.9375" Value="0" />
 									<FloatEvent Id="17218" Time="337.9375" Value="3.96875" />
 									<FloatEvent Id="17217" Time="338" Value="0" />
+									<FloatEvent Id="17371" Time="340" Value="0" />
+									<FloatEvent Id="17377" Time="344" Value="0" />
+									<FloatEvent Id="17383" Time="348" Value="0" />
+									<FloatEvent Id="17389" Time="352" Value="0" />
+									<FloatEvent Id="17395" Time="356" Value="0" />
+									<FloatEvent Id="17401" Time="360" Value="0" />
+									<FloatEvent Id="17407" Time="364" Value="0" />
+									<FloatEvent Id="17413" Time="368" Value="0" />
+									<FloatEvent Id="17419" Time="372" Value="0" />
+									<FloatEvent Id="17425" Time="376" Value="0" />
+									<FloatEvent Id="17431" Time="380" Value="0" />
+									<FloatEvent Id="17432" Time="384" Value="0" />
 									<FloatEvent Id="17292" Time="386" Value="0" />
 									<FloatEvent Id="17291" Time="386" Value="127" />
 									<FloatEvent Id="17290" Time="387" Value="0" />
+									<FloatEvent Id="17433" Time="388" Value="0" />
+									<FloatEvent Id="17444" Time="392" Value="0" />
 									<FloatEvent Id="17289" Time="394" Value="0" />
 									<FloatEvent Id="17288" Time="394" Value="127" />
 									<FloatEvent Id="17287" Time="395" Value="0" />
+									<FloatEvent Id="17438" Time="400" Value="0" />
 									<FloatEvent Id="17286" Time="405.5" Value="0" />
 									<FloatEvent Id="17285" Time="405.5" Value="127" />
 									<FloatEvent Id="17284" Time="406.5" Value="0" />
+									<FloatEvent Id="17443" Time="408" Value="0" />
 								</Events>
 								<AutomationTransformViewState>
 									<IsTransformPending Value="false" />
@@ -4971,9 +5175,29 @@
 								<Events>
 									<FloatEvent Id="15010" Time="-63072000" Value="0" />
 									<FloatEvent Id="15011" Time="112" Value="0" />
+									<FloatEvent Id="15199" Time="256" Value="0" />
+									<FloatEvent Id="15204" Time="260" Value="0" />
+									<FloatEvent Id="15209" Time="264" Value="0" />
+									<FloatEvent Id="15210" Time="268" Value="0" />
+									<FloatEvent Id="15215" Time="272" Value="0" />
 									<FloatEvent Id="15012" Time="276" Value="0" />
 									<FloatEvent Id="15013" Time="276" Value="127" />
 									<FloatEvent Id="15014" Time="277" Value="0" />
+									<FloatEvent Id="15285" Time="280" Value="0" />
+									<FloatEvent Id="15286" Time="284" Value="0" />
+									<FloatEvent Id="15220" Time="288" Value="0" />
+									<FloatEvent Id="15225" Time="292" Value="0" />
+									<FloatEvent Id="15230" Time="296" Value="0" />
+									<FloatEvent Id="15235" Time="300" Value="0" />
+									<FloatEvent Id="15240" Time="304" Value="0" />
+									<FloatEvent Id="15245" Time="308" Value="0" />
+									<FloatEvent Id="15250" Time="312" Value="0" />
+									<FloatEvent Id="15255" Time="316" Value="0" />
+									<FloatEvent Id="15260" Time="320" Value="0" />
+									<FloatEvent Id="15265" Time="324" Value="0" />
+									<FloatEvent Id="15270" Time="328" Value="0" />
+									<FloatEvent Id="15275" Time="332" Value="0" />
+									<FloatEvent Id="15280" Time="336" Value="0" />
 									<FloatEvent Id="15185" Time="340" Value="0" />
 									<FloatEvent Id="15184" Time="340" Value="127" />
 									<FloatEvent Id="15183" Time="340.0625" Value="0" />
@@ -5039,15 +5263,30 @@
 									<FloatEvent Id="15123" Time="341.9375" Value="0" />
 									<FloatEvent Id="15122" Time="341.9375" Value="3.96875" />
 									<FloatEvent Id="15121" Time="342" Value="0" />
+									<FloatEvent Id="15287" Time="344" Value="0" />
+									<FloatEvent Id="15293" Time="348" Value="0" />
+									<FloatEvent Id="15299" Time="352" Value="0" />
+									<FloatEvent Id="15305" Time="356" Value="0" />
+									<FloatEvent Id="15311" Time="360" Value="0" />
+									<FloatEvent Id="15317" Time="364" Value="0" />
+									<FloatEvent Id="15323" Time="368" Value="0" />
+									<FloatEvent Id="15329" Time="372" Value="0" />
+									<FloatEvent Id="15335" Time="376" Value="0" />
+									<FloatEvent Id="15341" Time="380" Value="0" />
+									<FloatEvent Id="15342" Time="384" Value="0" />
 									<FloatEvent Id="15196" Time="386.5" Value="0" />
 									<FloatEvent Id="15195" Time="386.5" Value="127" />
 									<FloatEvent Id="15194" Time="387.5" Value="0" />
+									<FloatEvent Id="15343" Time="388" Value="0" />
+									<FloatEvent Id="15354" Time="392" Value="0" />
 									<FloatEvent Id="15193" Time="394.5" Value="0" />
 									<FloatEvent Id="15192" Time="394.5" Value="127" />
 									<FloatEvent Id="15191" Time="395.5" Value="0" />
+									<FloatEvent Id="15348" Time="400" Value="0" />
 									<FloatEvent Id="15190" Time="405" Value="0" />
 									<FloatEvent Id="15189" Time="405" Value="127" />
 									<FloatEvent Id="15188" Time="406" Value="0" />
+									<FloatEvent Id="15353" Time="408" Value="0" />
 								</Events>
 								<AutomationTransformViewState>
 									<IsTransformPending Value="false" />
@@ -5063,9 +5302,30 @@
 								<Events>
 									<FloatEvent Id="7157" Time="-63072000" Value="0" />
 									<FloatEvent Id="7158" Time="112" Value="0" />
+									<FloatEvent Id="7346" Time="256" Value="0" />
+									<FloatEvent Id="7351" Time="260" Value="0" />
+									<FloatEvent Id="7356" Time="264" Value="0" />
+									<FloatEvent Id="7357" Time="268" Value="0" />
+									<FloatEvent Id="7362" Time="272" Value="0" />
+									<FloatEvent Id="7367" Time="276" Value="0" />
 									<FloatEvent Id="7159" Time="280" Value="0" />
 									<FloatEvent Id="7160" Time="280" Value="127" />
 									<FloatEvent Id="7161" Time="281" Value="0" />
+									<FloatEvent Id="7442" Time="284" Value="0" />
+									<FloatEvent Id="7372" Time="288" Value="0" />
+									<FloatEvent Id="7377" Time="292" Value="0" />
+									<FloatEvent Id="7382" Time="296" Value="0" />
+									<FloatEvent Id="7387" Time="300" Value="0" />
+									<FloatEvent Id="7392" Time="304" Value="0" />
+									<FloatEvent Id="7397" Time="308" Value="0" />
+									<FloatEvent Id="7402" Time="312" Value="0" />
+									<FloatEvent Id="7407" Time="316" Value="0" />
+									<FloatEvent Id="7412" Time="320" Value="0" />
+									<FloatEvent Id="7417" Time="324" Value="0" />
+									<FloatEvent Id="7422" Time="328" Value="0" />
+									<FloatEvent Id="7427" Time="332" Value="0" />
+									<FloatEvent Id="7432" Time="336" Value="0" />
+									<FloatEvent Id="7437" Time="340" Value="0" />
 									<FloatEvent Id="7332" Time="344" Value="0" />
 									<FloatEvent Id="7331" Time="344" Value="127" />
 									<FloatEvent Id="7330" Time="344.0625" Value="0" />
@@ -5131,15 +5391,28 @@
 									<FloatEvent Id="7270" Time="345.9375" Value="0" />
 									<FloatEvent Id="7269" Time="345.9375" Value="3.96875" />
 									<FloatEvent Id="7268" Time="346" Value="0" />
+									<FloatEvent Id="7443" Time="348" Value="0" />
+									<FloatEvent Id="7449" Time="352" Value="0" />
+									<FloatEvent Id="7455" Time="356" Value="0" />
+									<FloatEvent Id="7461" Time="360" Value="0" />
+									<FloatEvent Id="7467" Time="364" Value="0" />
+									<FloatEvent Id="7473" Time="368" Value="0" />
+									<FloatEvent Id="7479" Time="372" Value="0" />
+									<FloatEvent Id="7485" Time="376" Value="0" />
+									<FloatEvent Id="7491" Time="380" Value="0" />
+									<FloatEvent Id="7492" Time="384" Value="0" />
 									<FloatEvent Id="7343" Time="387" Value="0" />
 									<FloatEvent Id="7342" Time="387" Value="127" />
-									<FloatEvent Id="7341" Time="388" Value="0" />
+									<FloatEvent Id="7493" Time="388" Value="0" />
+									<FloatEvent Id="7504" Time="392" Value="0" />
 									<FloatEvent Id="7340" Time="395" Value="0" />
 									<FloatEvent Id="7339" Time="395" Value="127" />
 									<FloatEvent Id="7338" Time="396" Value="0" />
+									<FloatEvent Id="7498" Time="400" Value="0" />
 									<FloatEvent Id="7337" Time="404.5" Value="0" />
 									<FloatEvent Id="7336" Time="404.5" Value="127" />
 									<FloatEvent Id="7335" Time="405.5" Value="0" />
+									<FloatEvent Id="7503" Time="408" Value="0" />
 								</Events>
 								<AutomationTransformViewState>
 									<IsTransformPending Value="false" />
@@ -5219,7 +5492,7 @@
 							<AutomationLane Id="10">
 								<SelectedDevice Value="1" />
 								<SelectedEnvelope Value="8" />
-								<IsContentSelectedInDocument Value="false" />
+								<IsContentSelectedInDocument Value="true" />
 								<LaneHeight Value="17" />
 							</AutomationLane>
 						</AutomationLanes>
@@ -6565,7 +6838,7 @@
 														</IdRefList>
 														<BlobSlot>
 															<Value>
-																<MxDBlob Id="104">
+																<MxDBlob Id="105">
 																	<Blob>
 																		7B0D0A09224D617822203A205B20313030205D2C0D0A09224D61785B31305D22203A205B20313030
 																		205D2C0D0A09224D61785B31315D22203A205B20313030205D2C0D0A09224D61785B31325D22203A
@@ -7489,83 +7762,116 @@
 								<Events>
 									<FloatEvent Id="12199" Time="-63072000" Value="0" />
 									<FloatEvent Id="12200" Time="112" Value="0" />
+									<FloatEvent Id="12399" Time="256" Value="0" />
+									<FloatEvent Id="12404" Time="260" Value="0" />
+									<FloatEvent Id="12409" Time="264" Value="0" />
+									<FloatEvent Id="12414" Time="268" Value="0" />
+									<FloatEvent Id="12419" Time="272" Value="0" />
+									<FloatEvent Id="12424" Time="276" Value="0" />
+									<FloatEvent Id="12429" Time="280" Value="0" />
+									<FloatEvent Id="12434" Time="284" Value="0" />
+									<FloatEvent Id="12439" Time="288" Value="0" />
+									<FloatEvent Id="12444" Time="292" Value="0" />
+									<FloatEvent Id="12449" Time="296" Value="0" />
+									<FloatEvent Id="12454" Time="300" Value="0" />
+									<FloatEvent Id="12459" Time="304" Value="0" />
+									<FloatEvent Id="12464" Time="308" Value="0" />
 									<FloatEvent Id="12201" Time="312" Value="0" />
 									<FloatEvent Id="12202" Time="312" Value="127" />
 									<FloatEvent Id="12203" Time="313" Value="0" />
-									<FloatEvent Id="12375" Time="376" Value="0" />
-									<FloatEvent Id="12374" Time="376" Value="127" />
-									<FloatEvent Id="12373" Time="376.0625" Value="0" />
-									<FloatEvent Id="12372" Time="376.0625" Value="123.03125" />
-									<FloatEvent Id="12371" Time="376.125" Value="0" />
-									<FloatEvent Id="12370" Time="376.125" Value="119.0625" />
-									<FloatEvent Id="12369" Time="376.1875" Value="0" />
-									<FloatEvent Id="12368" Time="376.1875" Value="115.09375" />
-									<FloatEvent Id="12367" Time="376.25" Value="0" />
-									<FloatEvent Id="12366" Time="376.25" Value="111.125" />
-									<FloatEvent Id="12365" Time="376.3125" Value="0" />
-									<FloatEvent Id="12364" Time="376.3125" Value="107.15625" />
-									<FloatEvent Id="12363" Time="376.375" Value="0" />
-									<FloatEvent Id="12362" Time="376.375" Value="103.1875" />
-									<FloatEvent Id="12361" Time="376.4375" Value="0" />
-									<FloatEvent Id="12360" Time="376.4375" Value="99.21875" />
-									<FloatEvent Id="12359" Time="376.5" Value="0" />
-									<FloatEvent Id="12358" Time="376.5" Value="95.25" />
-									<FloatEvent Id="12357" Time="376.5625" Value="0" />
-									<FloatEvent Id="12356" Time="376.5625" Value="91.28125" />
-									<FloatEvent Id="12355" Time="376.625" Value="0" />
-									<FloatEvent Id="12354" Time="376.625" Value="87.3125" />
-									<FloatEvent Id="12353" Time="376.6875" Value="0" />
-									<FloatEvent Id="12352" Time="376.6875" Value="83.34375" />
-									<FloatEvent Id="12351" Time="376.75" Value="0" />
-									<FloatEvent Id="12350" Time="376.75" Value="79.375" />
-									<FloatEvent Id="12349" Time="376.8125" Value="0" />
-									<FloatEvent Id="12348" Time="376.8125" Value="75.40625" />
-									<FloatEvent Id="12347" Time="376.875" Value="0" />
-									<FloatEvent Id="12346" Time="376.875" Value="71.4375" />
-									<FloatEvent Id="12345" Time="376.9375" Value="0" />
-									<FloatEvent Id="12344" Time="376.9375" Value="67.46875" />
-									<FloatEvent Id="12343" Time="377" Value="0" />
-									<FloatEvent Id="12342" Time="377" Value="63.5" />
-									<FloatEvent Id="12341" Time="377.0625" Value="0" />
-									<FloatEvent Id="12340" Time="377.0625" Value="59.53125" />
-									<FloatEvent Id="12339" Time="377.125" Value="0" />
-									<FloatEvent Id="12338" Time="377.125" Value="55.5625" />
-									<FloatEvent Id="12337" Time="377.1875" Value="0" />
-									<FloatEvent Id="12336" Time="377.1875" Value="51.59375" />
-									<FloatEvent Id="12335" Time="377.25" Value="0" />
-									<FloatEvent Id="12334" Time="377.25" Value="47.625" />
-									<FloatEvent Id="12333" Time="377.3125" Value="0" />
-									<FloatEvent Id="12332" Time="377.3125" Value="43.65625" />
-									<FloatEvent Id="12331" Time="377.375" Value="0" />
-									<FloatEvent Id="12330" Time="377.375" Value="39.6875" />
-									<FloatEvent Id="12329" Time="377.4375" Value="0" />
-									<FloatEvent Id="12328" Time="377.4375" Value="35.71875" />
-									<FloatEvent Id="12327" Time="377.5" Value="0" />
-									<FloatEvent Id="12326" Time="377.5" Value="31.75" />
-									<FloatEvent Id="12325" Time="377.5625" Value="0" />
-									<FloatEvent Id="12324" Time="377.5625" Value="27.78125" />
-									<FloatEvent Id="12323" Time="377.625" Value="0" />
-									<FloatEvent Id="12322" Time="377.625" Value="23.8125" />
-									<FloatEvent Id="12321" Time="377.6875" Value="0" />
-									<FloatEvent Id="12320" Time="377.6875" Value="19.84375" />
-									<FloatEvent Id="12319" Time="377.75" Value="0" />
-									<FloatEvent Id="12318" Time="377.75" Value="15.875" />
-									<FloatEvent Id="12317" Time="377.8125" Value="0" />
-									<FloatEvent Id="12316" Time="377.8125" Value="11.90625" />
-									<FloatEvent Id="12315" Time="377.875" Value="0" />
-									<FloatEvent Id="12314" Time="377.875" Value="7.9375" />
-									<FloatEvent Id="12313" Time="377.9375" Value="0" />
-									<FloatEvent Id="12312" Time="377.9375" Value="3.96875" />
-									<FloatEvent Id="12311" Time="378" Value="0" />
+									<FloatEvent Id="12509" Time="316" Value="0" />
+									<FloatEvent Id="12510" Time="320" Value="0" />
+									<FloatEvent Id="12474" Time="324" Value="0" />
+									<FloatEvent Id="12479" Time="328" Value="0" />
+									<FloatEvent Id="12484" Time="332" Value="0" />
+									<FloatEvent Id="12489" Time="336" Value="0" />
+									<FloatEvent Id="12494" Time="340" Value="0" />
+									<FloatEvent Id="12499" Time="344" Value="0" />
+									<FloatEvent Id="12504" Time="348" Value="0" />
+									<FloatEvent Id="12515" Time="352" Value="0" />
+									<FloatEvent Id="12516" Time="356" Value="0" />
+									<FloatEvent Id="12517" Time="360" Value="0" />
+									<FloatEvent Id="12518" Time="364" Value="0" />
+									<FloatEvent Id="12519" Time="368" Value="0" />
+									<FloatEvent Id="12520" Time="372" Value="0" />
+									<FloatEvent Id="12521" Time="376" Value="0" />
+									<FloatEvent Id="12522" Time="376" Value="127" />
+									<FloatEvent Id="12523" Time="376.0625" Value="0" />
+									<FloatEvent Id="12524" Time="376.0625" Value="123.03125" />
+									<FloatEvent Id="12525" Time="376.125" Value="0" />
+									<FloatEvent Id="12526" Time="376.125" Value="119.0625" />
+									<FloatEvent Id="12527" Time="376.1875" Value="0" />
+									<FloatEvent Id="12528" Time="376.1875" Value="115.09375" />
+									<FloatEvent Id="12529" Time="376.25" Value="0" />
+									<FloatEvent Id="12530" Time="376.25" Value="111.125" />
+									<FloatEvent Id="12531" Time="376.3125" Value="0" />
+									<FloatEvent Id="12532" Time="376.3125" Value="107.15625" />
+									<FloatEvent Id="12533" Time="376.375" Value="0" />
+									<FloatEvent Id="12534" Time="376.375" Value="103.1875" />
+									<FloatEvent Id="12535" Time="376.4375" Value="0" />
+									<FloatEvent Id="12536" Time="376.4375" Value="99.21875" />
+									<FloatEvent Id="12537" Time="376.5" Value="0" />
+									<FloatEvent Id="12538" Time="376.5" Value="95.25" />
+									<FloatEvent Id="12539" Time="376.5625" Value="0" />
+									<FloatEvent Id="12540" Time="376.5625" Value="91.28125" />
+									<FloatEvent Id="12541" Time="376.625" Value="0" />
+									<FloatEvent Id="12542" Time="376.625" Value="87.3125" />
+									<FloatEvent Id="12543" Time="376.6875" Value="0" />
+									<FloatEvent Id="12544" Time="376.6875" Value="83.34375" />
+									<FloatEvent Id="12545" Time="376.75" Value="0" />
+									<FloatEvent Id="12546" Time="376.75" Value="79.375" />
+									<FloatEvent Id="12547" Time="376.8125" Value="0" />
+									<FloatEvent Id="12548" Time="376.8125" Value="75.40625" />
+									<FloatEvent Id="12549" Time="376.875" Value="0" />
+									<FloatEvent Id="12550" Time="376.875" Value="71.4375" />
+									<FloatEvent Id="12551" Time="376.9375" Value="0" />
+									<FloatEvent Id="12552" Time="376.9375" Value="67.46875" />
+									<FloatEvent Id="12553" Time="377" Value="0" />
+									<FloatEvent Id="12554" Time="377" Value="63.5" />
+									<FloatEvent Id="12555" Time="377.0625" Value="0" />
+									<FloatEvent Id="12556" Time="377.0625" Value="59.53125" />
+									<FloatEvent Id="12557" Time="377.125" Value="0" />
+									<FloatEvent Id="12558" Time="377.125" Value="55.5625" />
+									<FloatEvent Id="12559" Time="377.1875" Value="0" />
+									<FloatEvent Id="12560" Time="377.1875" Value="51.59375" />
+									<FloatEvent Id="12561" Time="377.25" Value="0" />
+									<FloatEvent Id="12562" Time="377.25" Value="47.625" />
+									<FloatEvent Id="12563" Time="377.3125" Value="0" />
+									<FloatEvent Id="12564" Time="377.3125" Value="43.65625" />
+									<FloatEvent Id="12565" Time="377.375" Value="0" />
+									<FloatEvent Id="12566" Time="377.375" Value="39.6875" />
+									<FloatEvent Id="12567" Time="377.4375" Value="0" />
+									<FloatEvent Id="12568" Time="377.4375" Value="35.71875" />
+									<FloatEvent Id="12569" Time="377.5" Value="0" />
+									<FloatEvent Id="12570" Time="377.5" Value="31.75" />
+									<FloatEvent Id="12571" Time="377.5625" Value="0" />
+									<FloatEvent Id="12572" Time="377.5625" Value="27.78125" />
+									<FloatEvent Id="12573" Time="377.625" Value="0" />
+									<FloatEvent Id="12574" Time="377.625" Value="23.8125" />
+									<FloatEvent Id="12575" Time="377.6875" Value="0" />
+									<FloatEvent Id="12576" Time="377.6875" Value="19.84375" />
+									<FloatEvent Id="12577" Time="377.75" Value="0" />
+									<FloatEvent Id="12578" Time="377.75" Value="15.875" />
+									<FloatEvent Id="12579" Time="377.8125" Value="0" />
+									<FloatEvent Id="12580" Time="377.8125" Value="11.90625" />
+									<FloatEvent Id="12581" Time="377.875" Value="0" />
+									<FloatEvent Id="12582" Time="377.875" Value="7.9375" />
+									<FloatEvent Id="12583" Time="377.9375" Value="0" />
+									<FloatEvent Id="12584" Time="377.9375" Value="3.96875" />
+									<FloatEvent Id="12585" Time="378" Value="0" />
+									<FloatEvent Id="12586" Time="380" Value="0" />
+									<FloatEvent Id="12587" Time="384" Value="0" />
 									<FloatEvent Id="12386" Time="388.5" Value="0" />
 									<FloatEvent Id="12385" Time="388.5" Value="127" />
 									<FloatEvent Id="12384" Time="389.5" Value="0" />
+									<FloatEvent Id="12588" Time="392" Value="0" />
 									<FloatEvent Id="12383" Time="399" Value="0" />
 									<FloatEvent Id="12382" Time="399" Value="127" />
 									<FloatEvent Id="12381" Time="400" Value="0" />
 									<FloatEvent Id="12380" Time="400.5" Value="0" />
 									<FloatEvent Id="12379" Time="400.5" Value="127" />
 									<FloatEvent Id="12378" Time="401.5" Value="0" />
+									<FloatEvent Id="12593" Time="408" Value="0" />
 								</Events>
 								<AutomationTransformViewState>
 									<IsTransformPending Value="false" />
@@ -7581,83 +7887,116 @@
 								<Events>
 									<FloatEvent Id="6978" Time="-63072000" Value="0" />
 									<FloatEvent Id="6979" Time="112" Value="0" />
+									<FloatEvent Id="7177" Time="256" Value="0" />
+									<FloatEvent Id="7182" Time="260" Value="0" />
+									<FloatEvent Id="7187" Time="264" Value="0" />
+									<FloatEvent Id="7192" Time="268" Value="0" />
+									<FloatEvent Id="7197" Time="272" Value="0" />
+									<FloatEvent Id="7202" Time="276" Value="0" />
+									<FloatEvent Id="7207" Time="280" Value="0" />
+									<FloatEvent Id="7212" Time="284" Value="0" />
+									<FloatEvent Id="7217" Time="288" Value="0" />
 									<FloatEvent Id="6980" Time="292" Value="0" />
 									<FloatEvent Id="6981" Time="292" Value="127" />
 									<FloatEvent Id="6982" Time="293" Value="0" />
-									<FloatEvent Id="7153" Time="356" Value="0" />
-									<FloatEvent Id="7152" Time="356" Value="127" />
-									<FloatEvent Id="7151" Time="356.0625" Value="0" />
-									<FloatEvent Id="7150" Time="356.0625" Value="123.03125" />
-									<FloatEvent Id="7149" Time="356.125" Value="0" />
-									<FloatEvent Id="7148" Time="356.125" Value="119.0625" />
-									<FloatEvent Id="7147" Time="356.1875" Value="0" />
-									<FloatEvent Id="7146" Time="356.1875" Value="115.09375" />
-									<FloatEvent Id="7145" Time="356.25" Value="0" />
-									<FloatEvent Id="7144" Time="356.25" Value="111.125" />
-									<FloatEvent Id="7143" Time="356.3125" Value="0" />
-									<FloatEvent Id="7142" Time="356.3125" Value="107.15625" />
-									<FloatEvent Id="7141" Time="356.375" Value="0" />
-									<FloatEvent Id="7140" Time="356.375" Value="103.1875" />
-									<FloatEvent Id="7139" Time="356.4375" Value="0" />
-									<FloatEvent Id="7138" Time="356.4375" Value="99.21875" />
-									<FloatEvent Id="7137" Time="356.5" Value="0" />
-									<FloatEvent Id="7136" Time="356.5" Value="95.25" />
-									<FloatEvent Id="7135" Time="356.5625" Value="0" />
-									<FloatEvent Id="7134" Time="356.5625" Value="91.28125" />
-									<FloatEvent Id="7133" Time="356.625" Value="0" />
-									<FloatEvent Id="7132" Time="356.625" Value="87.3125" />
-									<FloatEvent Id="7131" Time="356.6875" Value="0" />
-									<FloatEvent Id="7130" Time="356.6875" Value="83.34375" />
-									<FloatEvent Id="7129" Time="356.75" Value="0" />
-									<FloatEvent Id="7128" Time="356.75" Value="79.375" />
-									<FloatEvent Id="7127" Time="356.8125" Value="0" />
-									<FloatEvent Id="7126" Time="356.8125" Value="75.40625" />
-									<FloatEvent Id="7125" Time="356.875" Value="0" />
-									<FloatEvent Id="7124" Time="356.875" Value="71.4375" />
-									<FloatEvent Id="7123" Time="356.9375" Value="0" />
-									<FloatEvent Id="7122" Time="356.9375" Value="67.46875" />
-									<FloatEvent Id="7121" Time="357" Value="0" />
-									<FloatEvent Id="7120" Time="357" Value="63.5" />
-									<FloatEvent Id="7119" Time="357.0625" Value="0" />
-									<FloatEvent Id="7118" Time="357.0625" Value="59.53125" />
-									<FloatEvent Id="7117" Time="357.125" Value="0" />
-									<FloatEvent Id="7116" Time="357.125" Value="55.5625" />
-									<FloatEvent Id="7115" Time="357.1875" Value="0" />
-									<FloatEvent Id="7114" Time="357.1875" Value="51.59375" />
-									<FloatEvent Id="7113" Time="357.25" Value="0" />
-									<FloatEvent Id="7112" Time="357.25" Value="47.625" />
-									<FloatEvent Id="7111" Time="357.3125" Value="0" />
-									<FloatEvent Id="7110" Time="357.3125" Value="43.65625" />
-									<FloatEvent Id="7109" Time="357.375" Value="0" />
-									<FloatEvent Id="7108" Time="357.375" Value="39.6875" />
-									<FloatEvent Id="7107" Time="357.4375" Value="0" />
-									<FloatEvent Id="7106" Time="357.4375" Value="35.71875" />
-									<FloatEvent Id="7105" Time="357.5" Value="0" />
-									<FloatEvent Id="7104" Time="357.5" Value="31.75" />
-									<FloatEvent Id="7103" Time="357.5625" Value="0" />
-									<FloatEvent Id="7102" Time="357.5625" Value="27.78125" />
-									<FloatEvent Id="7101" Time="357.625" Value="0" />
-									<FloatEvent Id="7100" Time="357.625" Value="23.8125" />
-									<FloatEvent Id="7099" Time="357.6875" Value="0" />
-									<FloatEvent Id="7098" Time="357.6875" Value="19.84375" />
-									<FloatEvent Id="7097" Time="357.75" Value="0" />
-									<FloatEvent Id="7096" Time="357.75" Value="15.875" />
-									<FloatEvent Id="7095" Time="357.8125" Value="0" />
-									<FloatEvent Id="7094" Time="357.8125" Value="11.90625" />
-									<FloatEvent Id="7093" Time="357.875" Value="0" />
-									<FloatEvent Id="7092" Time="357.875" Value="7.9375" />
-									<FloatEvent Id="7091" Time="357.9375" Value="0" />
-									<FloatEvent Id="7090" Time="357.9375" Value="3.96875" />
-									<FloatEvent Id="7089" Time="358" Value="0" />
+									<FloatEvent Id="7262" Time="296" Value="0" />
+									<FloatEvent Id="7263" Time="300" Value="0" />
+									<FloatEvent Id="7268" Time="304" Value="0" />
+									<FloatEvent Id="7273" Time="308" Value="0" />
+									<FloatEvent Id="7278" Time="312" Value="0" />
+									<FloatEvent Id="7283" Time="316" Value="0" />
+									<FloatEvent Id="7222" Time="320" Value="0" />
+									<FloatEvent Id="7227" Time="324" Value="0" />
+									<FloatEvent Id="7232" Time="328" Value="0" />
+									<FloatEvent Id="7237" Time="332" Value="0" />
+									<FloatEvent Id="7242" Time="336" Value="0" />
+									<FloatEvent Id="7247" Time="340" Value="0" />
+									<FloatEvent Id="7252" Time="344" Value="0" />
+									<FloatEvent Id="7257" Time="348" Value="0" />
+									<FloatEvent Id="7284" Time="352" Value="0" />
+									<FloatEvent Id="7285" Time="356" Value="0" />
+									<FloatEvent Id="7286" Time="356" Value="127" />
+									<FloatEvent Id="7287" Time="356.0625" Value="0" />
+									<FloatEvent Id="7288" Time="356.0625" Value="123.03125" />
+									<FloatEvent Id="7289" Time="356.125" Value="0" />
+									<FloatEvent Id="7290" Time="356.125" Value="119.0625" />
+									<FloatEvent Id="7291" Time="356.1875" Value="0" />
+									<FloatEvent Id="7292" Time="356.1875" Value="115.09375" />
+									<FloatEvent Id="7293" Time="356.25" Value="0" />
+									<FloatEvent Id="7294" Time="356.25" Value="111.125" />
+									<FloatEvent Id="7295" Time="356.3125" Value="0" />
+									<FloatEvent Id="7296" Time="356.3125" Value="107.15625" />
+									<FloatEvent Id="7297" Time="356.375" Value="0" />
+									<FloatEvent Id="7298" Time="356.375" Value="103.1875" />
+									<FloatEvent Id="7299" Time="356.4375" Value="0" />
+									<FloatEvent Id="7300" Time="356.4375" Value="99.21875" />
+									<FloatEvent Id="7301" Time="356.5" Value="0" />
+									<FloatEvent Id="7302" Time="356.5" Value="95.25" />
+									<FloatEvent Id="7303" Time="356.5625" Value="0" />
+									<FloatEvent Id="7304" Time="356.5625" Value="91.28125" />
+									<FloatEvent Id="7305" Time="356.625" Value="0" />
+									<FloatEvent Id="7306" Time="356.625" Value="87.3125" />
+									<FloatEvent Id="7307" Time="356.6875" Value="0" />
+									<FloatEvent Id="7308" Time="356.6875" Value="83.34375" />
+									<FloatEvent Id="7309" Time="356.75" Value="0" />
+									<FloatEvent Id="7310" Time="356.75" Value="79.375" />
+									<FloatEvent Id="7311" Time="356.8125" Value="0" />
+									<FloatEvent Id="7312" Time="356.8125" Value="75.40625" />
+									<FloatEvent Id="7313" Time="356.875" Value="0" />
+									<FloatEvent Id="7314" Time="356.875" Value="71.4375" />
+									<FloatEvent Id="7315" Time="356.9375" Value="0" />
+									<FloatEvent Id="7316" Time="356.9375" Value="67.46875" />
+									<FloatEvent Id="7317" Time="357" Value="0" />
+									<FloatEvent Id="7318" Time="357" Value="63.5" />
+									<FloatEvent Id="7319" Time="357.0625" Value="0" />
+									<FloatEvent Id="7320" Time="357.0625" Value="59.53125" />
+									<FloatEvent Id="7321" Time="357.125" Value="0" />
+									<FloatEvent Id="7322" Time="357.125" Value="55.5625" />
+									<FloatEvent Id="7323" Time="357.1875" Value="0" />
+									<FloatEvent Id="7324" Time="357.1875" Value="51.59375" />
+									<FloatEvent Id="7325" Time="357.25" Value="0" />
+									<FloatEvent Id="7326" Time="357.25" Value="47.625" />
+									<FloatEvent Id="7327" Time="357.3125" Value="0" />
+									<FloatEvent Id="7328" Time="357.3125" Value="43.65625" />
+									<FloatEvent Id="7329" Time="357.375" Value="0" />
+									<FloatEvent Id="7330" Time="357.375" Value="39.6875" />
+									<FloatEvent Id="7331" Time="357.4375" Value="0" />
+									<FloatEvent Id="7332" Time="357.4375" Value="35.71875" />
+									<FloatEvent Id="7333" Time="357.5" Value="0" />
+									<FloatEvent Id="7334" Time="357.5" Value="31.75" />
+									<FloatEvent Id="7335" Time="357.5625" Value="0" />
+									<FloatEvent Id="7336" Time="357.5625" Value="27.78125" />
+									<FloatEvent Id="7337" Time="357.625" Value="0" />
+									<FloatEvent Id="7338" Time="357.625" Value="23.8125" />
+									<FloatEvent Id="7339" Time="357.6875" Value="0" />
+									<FloatEvent Id="7340" Time="357.6875" Value="19.84375" />
+									<FloatEvent Id="7341" Time="357.75" Value="0" />
+									<FloatEvent Id="7342" Time="357.75" Value="15.875" />
+									<FloatEvent Id="7343" Time="357.8125" Value="0" />
+									<FloatEvent Id="7344" Time="357.8125" Value="11.90625" />
+									<FloatEvent Id="7345" Time="357.875" Value="0" />
+									<FloatEvent Id="7346" Time="357.875" Value="7.9375" />
+									<FloatEvent Id="7347" Time="357.9375" Value="0" />
+									<FloatEvent Id="7348" Time="357.9375" Value="3.96875" />
+									<FloatEvent Id="7349" Time="358" Value="0" />
+									<FloatEvent Id="7350" Time="360" Value="0" />
+									<FloatEvent Id="7351" Time="364" Value="0" />
+									<FloatEvent Id="7352" Time="368" Value="0" />
+									<FloatEvent Id="7353" Time="372" Value="0" />
+									<FloatEvent Id="7354" Time="376" Value="0" />
+									<FloatEvent Id="7355" Time="380" Value="0" />
+									<FloatEvent Id="7356" Time="384" Value="0" />
 									<FloatEvent Id="7164" Time="391" Value="0" />
 									<FloatEvent Id="7163" Time="391" Value="127" />
-									<FloatEvent Id="7162" Time="392" Value="0" />
+									<FloatEvent Id="7357" Time="392" Value="0" />
 									<FloatEvent Id="7161" Time="396.5" Value="0" />
 									<FloatEvent Id="7160" Time="396.5" Value="127" />
 									<FloatEvent Id="7159" Time="397.5" Value="0" />
+									<FloatEvent Id="7367" Time="400" Value="0" />
 									<FloatEvent Id="7158" Time="403" Value="0" />
 									<FloatEvent Id="7157" Time="403" Value="127" />
 									<FloatEvent Id="7156" Time="404" Value="0" />
+									<FloatEvent Id="7362" Time="408" Value="0" />
 								</Events>
 								<AutomationTransformViewState>
 									<IsTransformPending Value="false" />
@@ -7673,83 +8012,117 @@
 								<Events>
 									<FloatEvent Id="12902" Time="-63072000" Value="0" />
 									<FloatEvent Id="12903" Time="112" Value="0" />
+									<FloatEvent Id="13101" Time="256" Value="0" />
+									<FloatEvent Id="13106" Time="260" Value="0" />
+									<FloatEvent Id="13111" Time="264" Value="0" />
+									<FloatEvent Id="13116" Time="268" Value="0" />
+									<FloatEvent Id="13121" Time="272" Value="0" />
+									<FloatEvent Id="13126" Time="276" Value="0" />
+									<FloatEvent Id="13131" Time="280" Value="0" />
+									<FloatEvent Id="13136" Time="284" Value="0" />
+									<FloatEvent Id="13141" Time="288" Value="0" />
+									<FloatEvent Id="13146" Time="292" Value="0" />
 									<FloatEvent Id="12904" Time="296" Value="0" />
 									<FloatEvent Id="12905" Time="296" Value="127" />
 									<FloatEvent Id="12906" Time="297" Value="0" />
-									<FloatEvent Id="13077" Time="360" Value="0" />
-									<FloatEvent Id="13076" Time="360" Value="127" />
-									<FloatEvent Id="13075" Time="360.0625" Value="0" />
-									<FloatEvent Id="13074" Time="360.0625" Value="123.03125" />
-									<FloatEvent Id="13073" Time="360.125" Value="0" />
-									<FloatEvent Id="13072" Time="360.125" Value="119.0625" />
-									<FloatEvent Id="13071" Time="360.1875" Value="0" />
-									<FloatEvent Id="13070" Time="360.1875" Value="115.09375" />
-									<FloatEvent Id="13069" Time="360.25" Value="0" />
-									<FloatEvent Id="13068" Time="360.25" Value="111.125" />
-									<FloatEvent Id="13067" Time="360.3125" Value="0" />
-									<FloatEvent Id="13066" Time="360.3125" Value="107.15625" />
-									<FloatEvent Id="13065" Time="360.375" Value="0" />
-									<FloatEvent Id="13064" Time="360.375" Value="103.1875" />
-									<FloatEvent Id="13063" Time="360.4375" Value="0" />
-									<FloatEvent Id="13062" Time="360.4375" Value="99.21875" />
-									<FloatEvent Id="13061" Time="360.5" Value="0" />
-									<FloatEvent Id="13060" Time="360.5" Value="95.25" />
-									<FloatEvent Id="13059" Time="360.5625" Value="0" />
-									<FloatEvent Id="13058" Time="360.5625" Value="91.28125" />
-									<FloatEvent Id="13057" Time="360.625" Value="0" />
-									<FloatEvent Id="13056" Time="360.625" Value="87.3125" />
-									<FloatEvent Id="13055" Time="360.6875" Value="0" />
-									<FloatEvent Id="13054" Time="360.6875" Value="83.34375" />
-									<FloatEvent Id="13053" Time="360.75" Value="0" />
-									<FloatEvent Id="13052" Time="360.75" Value="79.375" />
-									<FloatEvent Id="13051" Time="360.8125" Value="0" />
-									<FloatEvent Id="13050" Time="360.8125" Value="75.40625" />
-									<FloatEvent Id="13049" Time="360.875" Value="0" />
-									<FloatEvent Id="13048" Time="360.875" Value="71.4375" />
-									<FloatEvent Id="13047" Time="360.9375" Value="0" />
-									<FloatEvent Id="13046" Time="360.9375" Value="67.46875" />
-									<FloatEvent Id="13045" Time="361" Value="0" />
-									<FloatEvent Id="13044" Time="361" Value="63.5" />
-									<FloatEvent Id="13043" Time="361.0625" Value="0" />
-									<FloatEvent Id="13042" Time="361.0625" Value="59.53125" />
-									<FloatEvent Id="13041" Time="361.125" Value="0" />
-									<FloatEvent Id="13040" Time="361.125" Value="55.5625" />
-									<FloatEvent Id="13039" Time="361.1875" Value="0" />
-									<FloatEvent Id="13038" Time="361.1875" Value="51.59375" />
-									<FloatEvent Id="13037" Time="361.25" Value="0" />
-									<FloatEvent Id="13036" Time="361.25" Value="47.625" />
-									<FloatEvent Id="13035" Time="361.3125" Value="0" />
-									<FloatEvent Id="13034" Time="361.3125" Value="43.65625" />
-									<FloatEvent Id="13033" Time="361.375" Value="0" />
-									<FloatEvent Id="13032" Time="361.375" Value="39.6875" />
-									<FloatEvent Id="13031" Time="361.4375" Value="0" />
-									<FloatEvent Id="13030" Time="361.4375" Value="35.71875" />
-									<FloatEvent Id="13029" Time="361.5" Value="0" />
-									<FloatEvent Id="13028" Time="361.5" Value="31.75" />
-									<FloatEvent Id="13027" Time="361.5625" Value="0" />
-									<FloatEvent Id="13026" Time="361.5625" Value="27.78125" />
-									<FloatEvent Id="13025" Time="361.625" Value="0" />
-									<FloatEvent Id="13024" Time="361.625" Value="23.8125" />
-									<FloatEvent Id="13023" Time="361.6875" Value="0" />
-									<FloatEvent Id="13022" Time="361.6875" Value="19.84375" />
-									<FloatEvent Id="13021" Time="361.75" Value="0" />
-									<FloatEvent Id="13020" Time="361.75" Value="15.875" />
-									<FloatEvent Id="13019" Time="361.8125" Value="0" />
-									<FloatEvent Id="13018" Time="361.8125" Value="11.90625" />
-									<FloatEvent Id="13017" Time="361.875" Value="0" />
-									<FloatEvent Id="13016" Time="361.875" Value="7.9375" />
-									<FloatEvent Id="13015" Time="361.9375" Value="0" />
-									<FloatEvent Id="13014" Time="361.9375" Value="3.96875" />
-									<FloatEvent Id="13013" Time="362" Value="0" />
+									<FloatEvent Id="13191" Time="300" Value="0" />
+									<FloatEvent Id="13193" Time="304" Value="0" />
+									<FloatEvent Id="13199" Time="308" Value="0" />
+									<FloatEvent Id="13205" Time="312" Value="0" />
+									<FloatEvent Id="13211" Time="316" Value="0" />
+									<FloatEvent Id="13212" Time="320" Value="0" />
+									<FloatEvent Id="13156" Time="324" Value="0" />
+									<FloatEvent Id="13161" Time="328" Value="0" />
+									<FloatEvent Id="13166" Time="332" Value="0" />
+									<FloatEvent Id="13171" Time="336" Value="0" />
+									<FloatEvent Id="13176" Time="340" Value="0" />
+									<FloatEvent Id="13181" Time="344" Value="0" />
+									<FloatEvent Id="13186" Time="348" Value="0" />
+									<FloatEvent Id="13217" Time="352" Value="0" />
+									<FloatEvent Id="13218" Time="356" Value="0" />
+									<FloatEvent Id="13219" Time="360" Value="0" />
+									<FloatEvent Id="13220" Time="360" Value="127" />
+									<FloatEvent Id="13221" Time="360.0625" Value="0" />
+									<FloatEvent Id="13222" Time="360.0625" Value="123.03125" />
+									<FloatEvent Id="13223" Time="360.125" Value="0" />
+									<FloatEvent Id="13224" Time="360.125" Value="119.0625" />
+									<FloatEvent Id="13225" Time="360.1875" Value="0" />
+									<FloatEvent Id="13226" Time="360.1875" Value="115.09375" />
+									<FloatEvent Id="13227" Time="360.25" Value="0" />
+									<FloatEvent Id="13228" Time="360.25" Value="111.125" />
+									<FloatEvent Id="13229" Time="360.3125" Value="0" />
+									<FloatEvent Id="13230" Time="360.3125" Value="107.15625" />
+									<FloatEvent Id="13231" Time="360.375" Value="0" />
+									<FloatEvent Id="13232" Time="360.375" Value="103.1875" />
+									<FloatEvent Id="13233" Time="360.4375" Value="0" />
+									<FloatEvent Id="13234" Time="360.4375" Value="99.21875" />
+									<FloatEvent Id="13235" Time="360.5" Value="0" />
+									<FloatEvent Id="13236" Time="360.5" Value="95.25" />
+									<FloatEvent Id="13237" Time="360.5625" Value="0" />
+									<FloatEvent Id="13238" Time="360.5625" Value="91.28125" />
+									<FloatEvent Id="13239" Time="360.625" Value="0" />
+									<FloatEvent Id="13240" Time="360.625" Value="87.3125" />
+									<FloatEvent Id="13241" Time="360.6875" Value="0" />
+									<FloatEvent Id="13242" Time="360.6875" Value="83.34375" />
+									<FloatEvent Id="13243" Time="360.75" Value="0" />
+									<FloatEvent Id="13244" Time="360.75" Value="79.375" />
+									<FloatEvent Id="13245" Time="360.8125" Value="0" />
+									<FloatEvent Id="13246" Time="360.8125" Value="75.40625" />
+									<FloatEvent Id="13247" Time="360.875" Value="0" />
+									<FloatEvent Id="13248" Time="360.875" Value="71.4375" />
+									<FloatEvent Id="13249" Time="360.9375" Value="0" />
+									<FloatEvent Id="13250" Time="360.9375" Value="67.46875" />
+									<FloatEvent Id="13251" Time="361" Value="0" />
+									<FloatEvent Id="13252" Time="361" Value="63.5" />
+									<FloatEvent Id="13253" Time="361.0625" Value="0" />
+									<FloatEvent Id="13254" Time="361.0625" Value="59.53125" />
+									<FloatEvent Id="13255" Time="361.125" Value="0" />
+									<FloatEvent Id="13256" Time="361.125" Value="55.5625" />
+									<FloatEvent Id="13257" Time="361.1875" Value="0" />
+									<FloatEvent Id="13258" Time="361.1875" Value="51.59375" />
+									<FloatEvent Id="13259" Time="361.25" Value="0" />
+									<FloatEvent Id="13260" Time="361.25" Value="47.625" />
+									<FloatEvent Id="13261" Time="361.3125" Value="0" />
+									<FloatEvent Id="13262" Time="361.3125" Value="43.65625" />
+									<FloatEvent Id="13263" Time="361.375" Value="0" />
+									<FloatEvent Id="13264" Time="361.375" Value="39.6875" />
+									<FloatEvent Id="13265" Time="361.4375" Value="0" />
+									<FloatEvent Id="13266" Time="361.4375" Value="35.71875" />
+									<FloatEvent Id="13267" Time="361.5" Value="0" />
+									<FloatEvent Id="13268" Time="361.5" Value="31.75" />
+									<FloatEvent Id="13269" Time="361.5625" Value="0" />
+									<FloatEvent Id="13270" Time="361.5625" Value="27.78125" />
+									<FloatEvent Id="13271" Time="361.625" Value="0" />
+									<FloatEvent Id="13272" Time="361.625" Value="23.8125" />
+									<FloatEvent Id="13273" Time="361.6875" Value="0" />
+									<FloatEvent Id="13274" Time="361.6875" Value="19.84375" />
+									<FloatEvent Id="13275" Time="361.75" Value="0" />
+									<FloatEvent Id="13276" Time="361.75" Value="15.875" />
+									<FloatEvent Id="13277" Time="361.8125" Value="0" />
+									<FloatEvent Id="13278" Time="361.8125" Value="11.90625" />
+									<FloatEvent Id="13279" Time="361.875" Value="0" />
+									<FloatEvent Id="13280" Time="361.875" Value="7.9375" />
+									<FloatEvent Id="13281" Time="361.9375" Value="0" />
+									<FloatEvent Id="13282" Time="361.9375" Value="3.96875" />
+									<FloatEvent Id="13283" Time="362" Value="0" />
+									<FloatEvent Id="13284" Time="364" Value="0" />
+									<FloatEvent Id="13285" Time="368" Value="0" />
+									<FloatEvent Id="13286" Time="372" Value="0" />
+									<FloatEvent Id="13287" Time="376" Value="0" />
+									<FloatEvent Id="13288" Time="380" Value="0" />
+									<FloatEvent Id="13289" Time="384" Value="0" />
 									<FloatEvent Id="13088" Time="390.5" Value="0" />
 									<FloatEvent Id="13087" Time="390.5" Value="127" />
 									<FloatEvent Id="13086" Time="391.5" Value="0" />
+									<FloatEvent Id="13290" Time="392" Value="0" />
 									<FloatEvent Id="13085" Time="397" Value="0" />
 									<FloatEvent Id="13084" Time="397" Value="127" />
 									<FloatEvent Id="13083" Time="398" Value="0" />
+									<FloatEvent Id="13300" Time="400" Value="0" />
 									<FloatEvent Id="13082" Time="402.5" Value="0" />
 									<FloatEvent Id="13081" Time="402.5" Value="127" />
 									<FloatEvent Id="13080" Time="403.5" Value="0" />
+									<FloatEvent Id="13295" Time="408" Value="0" />
 								</Events>
 								<AutomationTransformViewState>
 									<IsTransformPending Value="false" />
@@ -7765,83 +8138,117 @@
 								<Events>
 									<FloatEvent Id="16407" Time="-63072000" Value="0" />
 									<FloatEvent Id="16408" Time="112" Value="0" />
+									<FloatEvent Id="16606" Time="256" Value="0" />
+									<FloatEvent Id="16611" Time="260" Value="0" />
+									<FloatEvent Id="16616" Time="264" Value="0" />
+									<FloatEvent Id="16621" Time="268" Value="0" />
+									<FloatEvent Id="16626" Time="272" Value="0" />
+									<FloatEvent Id="16631" Time="276" Value="0" />
+									<FloatEvent Id="16636" Time="280" Value="0" />
+									<FloatEvent Id="16641" Time="284" Value="0" />
+									<FloatEvent Id="16646" Time="288" Value="0" />
+									<FloatEvent Id="16651" Time="292" Value="0" />
+									<FloatEvent Id="16656" Time="296" Value="0" />
 									<FloatEvent Id="16409" Time="300" Value="0" />
 									<FloatEvent Id="16410" Time="300" Value="127" />
 									<FloatEvent Id="16411" Time="301" Value="0" />
-									<FloatEvent Id="16582" Time="364" Value="0" />
-									<FloatEvent Id="16581" Time="364" Value="127" />
-									<FloatEvent Id="16580" Time="364.0625" Value="0" />
-									<FloatEvent Id="16579" Time="364.0625" Value="123.03125" />
-									<FloatEvent Id="16578" Time="364.125" Value="0" />
-									<FloatEvent Id="16577" Time="364.125" Value="119.0625" />
-									<FloatEvent Id="16576" Time="364.1875" Value="0" />
-									<FloatEvent Id="16575" Time="364.1875" Value="115.09375" />
-									<FloatEvent Id="16574" Time="364.25" Value="0" />
-									<FloatEvent Id="16573" Time="364.25" Value="111.125" />
-									<FloatEvent Id="16572" Time="364.3125" Value="0" />
-									<FloatEvent Id="16571" Time="364.3125" Value="107.15625" />
-									<FloatEvent Id="16570" Time="364.375" Value="0" />
-									<FloatEvent Id="16569" Time="364.375" Value="103.1875" />
-									<FloatEvent Id="16568" Time="364.4375" Value="0" />
-									<FloatEvent Id="16567" Time="364.4375" Value="99.21875" />
-									<FloatEvent Id="16566" Time="364.5" Value="0" />
-									<FloatEvent Id="16565" Time="364.5" Value="95.25" />
-									<FloatEvent Id="16564" Time="364.5625" Value="0" />
-									<FloatEvent Id="16563" Time="364.5625" Value="91.28125" />
-									<FloatEvent Id="16562" Time="364.625" Value="0" />
-									<FloatEvent Id="16561" Time="364.625" Value="87.3125" />
-									<FloatEvent Id="16560" Time="364.6875" Value="0" />
-									<FloatEvent Id="16559" Time="364.6875" Value="83.34375" />
-									<FloatEvent Id="16558" Time="364.75" Value="0" />
-									<FloatEvent Id="16557" Time="364.75" Value="79.375" />
-									<FloatEvent Id="16556" Time="364.8125" Value="0" />
-									<FloatEvent Id="16555" Time="364.8125" Value="75.40625" />
-									<FloatEvent Id="16554" Time="364.875" Value="0" />
-									<FloatEvent Id="16553" Time="364.875" Value="71.4375" />
-									<FloatEvent Id="16552" Time="364.9375" Value="0" />
-									<FloatEvent Id="16551" Time="364.9375" Value="67.46875" />
-									<FloatEvent Id="16550" Time="365" Value="0" />
-									<FloatEvent Id="16549" Time="365" Value="63.5" />
-									<FloatEvent Id="16548" Time="365.0625" Value="0" />
-									<FloatEvent Id="16547" Time="365.0625" Value="59.53125" />
-									<FloatEvent Id="16546" Time="365.125" Value="0" />
-									<FloatEvent Id="16545" Time="365.125" Value="55.5625" />
-									<FloatEvent Id="16544" Time="365.1875" Value="0" />
-									<FloatEvent Id="16543" Time="365.1875" Value="51.59375" />
-									<FloatEvent Id="16542" Time="365.25" Value="0" />
-									<FloatEvent Id="16541" Time="365.25" Value="47.625" />
-									<FloatEvent Id="16540" Time="365.3125" Value="0" />
-									<FloatEvent Id="16539" Time="365.3125" Value="43.65625" />
-									<FloatEvent Id="16538" Time="365.375" Value="0" />
-									<FloatEvent Id="16537" Time="365.375" Value="39.6875" />
-									<FloatEvent Id="16536" Time="365.4375" Value="0" />
-									<FloatEvent Id="16535" Time="365.4375" Value="35.71875" />
-									<FloatEvent Id="16534" Time="365.5" Value="0" />
-									<FloatEvent Id="16533" Time="365.5" Value="31.75" />
-									<FloatEvent Id="16532" Time="365.5625" Value="0" />
-									<FloatEvent Id="16531" Time="365.5625" Value="27.78125" />
-									<FloatEvent Id="16530" Time="365.625" Value="0" />
-									<FloatEvent Id="16529" Time="365.625" Value="23.8125" />
-									<FloatEvent Id="16528" Time="365.6875" Value="0" />
-									<FloatEvent Id="16527" Time="365.6875" Value="19.84375" />
-									<FloatEvent Id="16526" Time="365.75" Value="0" />
-									<FloatEvent Id="16525" Time="365.75" Value="15.875" />
-									<FloatEvent Id="16524" Time="365.8125" Value="0" />
-									<FloatEvent Id="16523" Time="365.8125" Value="11.90625" />
-									<FloatEvent Id="16522" Time="365.875" Value="0" />
-									<FloatEvent Id="16521" Time="365.875" Value="7.9375" />
-									<FloatEvent Id="16520" Time="365.9375" Value="0" />
-									<FloatEvent Id="16519" Time="365.9375" Value="3.96875" />
-									<FloatEvent Id="16518" Time="366" Value="0" />
+									<FloatEvent Id="16701" Time="304" Value="0" />
+									<FloatEvent Id="16707" Time="308" Value="0" />
+									<FloatEvent Id="16713" Time="312" Value="0" />
+									<FloatEvent Id="16719" Time="316" Value="0" />
+									<FloatEvent Id="16720" Time="320" Value="0" />
+									<FloatEvent Id="16666" Time="324" Value="0" />
+									<FloatEvent Id="16671" Time="328" Value="0" />
+									<FloatEvent Id="16676" Time="332" Value="0" />
+									<FloatEvent Id="16681" Time="336" Value="0" />
+									<FloatEvent Id="16686" Time="340" Value="0" />
+									<FloatEvent Id="16691" Time="344" Value="0" />
+									<FloatEvent Id="16696" Time="348" Value="0" />
+									<FloatEvent Id="16725" Time="352" Value="0" />
+									<FloatEvent Id="16726" Time="356" Value="0" />
+									<FloatEvent Id="16727" Time="360" Value="0" />
+									<FloatEvent Id="16728" Time="364" Value="0" />
+									<FloatEvent Id="16729" Time="364" Value="127" />
+									<FloatEvent Id="16730" Time="364.0625" Value="0" />
+									<FloatEvent Id="16731" Time="364.0625" Value="123.03125" />
+									<FloatEvent Id="16732" Time="364.125" Value="0" />
+									<FloatEvent Id="16733" Time="364.125" Value="119.0625" />
+									<FloatEvent Id="16734" Time="364.1875" Value="0" />
+									<FloatEvent Id="16735" Time="364.1875" Value="115.09375" />
+									<FloatEvent Id="16736" Time="364.25" Value="0" />
+									<FloatEvent Id="16737" Time="364.25" Value="111.125" />
+									<FloatEvent Id="16738" Time="364.3125" Value="0" />
+									<FloatEvent Id="16739" Time="364.3125" Value="107.15625" />
+									<FloatEvent Id="16740" Time="364.375" Value="0" />
+									<FloatEvent Id="16741" Time="364.375" Value="103.1875" />
+									<FloatEvent Id="16742" Time="364.4375" Value="0" />
+									<FloatEvent Id="16743" Time="364.4375" Value="99.21875" />
+									<FloatEvent Id="16744" Time="364.5" Value="0" />
+									<FloatEvent Id="16745" Time="364.5" Value="95.25" />
+									<FloatEvent Id="16746" Time="364.5625" Value="0" />
+									<FloatEvent Id="16747" Time="364.5625" Value="91.28125" />
+									<FloatEvent Id="16748" Time="364.625" Value="0" />
+									<FloatEvent Id="16749" Time="364.625" Value="87.3125" />
+									<FloatEvent Id="16750" Time="364.6875" Value="0" />
+									<FloatEvent Id="16751" Time="364.6875" Value="83.34375" />
+									<FloatEvent Id="16752" Time="364.75" Value="0" />
+									<FloatEvent Id="16753" Time="364.75" Value="79.375" />
+									<FloatEvent Id="16754" Time="364.8125" Value="0" />
+									<FloatEvent Id="16755" Time="364.8125" Value="75.40625" />
+									<FloatEvent Id="16756" Time="364.875" Value="0" />
+									<FloatEvent Id="16757" Time="364.875" Value="71.4375" />
+									<FloatEvent Id="16758" Time="364.9375" Value="0" />
+									<FloatEvent Id="16759" Time="364.9375" Value="67.46875" />
+									<FloatEvent Id="16760" Time="365" Value="0" />
+									<FloatEvent Id="16761" Time="365" Value="63.5" />
+									<FloatEvent Id="16762" Time="365.0625" Value="0" />
+									<FloatEvent Id="16763" Time="365.0625" Value="59.53125" />
+									<FloatEvent Id="16764" Time="365.125" Value="0" />
+									<FloatEvent Id="16765" Time="365.125" Value="55.5625" />
+									<FloatEvent Id="16766" Time="365.1875" Value="0" />
+									<FloatEvent Id="16767" Time="365.1875" Value="51.59375" />
+									<FloatEvent Id="16768" Time="365.25" Value="0" />
+									<FloatEvent Id="16769" Time="365.25" Value="47.625" />
+									<FloatEvent Id="16770" Time="365.3125" Value="0" />
+									<FloatEvent Id="16771" Time="365.3125" Value="43.65625" />
+									<FloatEvent Id="16772" Time="365.375" Value="0" />
+									<FloatEvent Id="16773" Time="365.375" Value="39.6875" />
+									<FloatEvent Id="16774" Time="365.4375" Value="0" />
+									<FloatEvent Id="16775" Time="365.4375" Value="35.71875" />
+									<FloatEvent Id="16776" Time="365.5" Value="0" />
+									<FloatEvent Id="16777" Time="365.5" Value="31.75" />
+									<FloatEvent Id="16778" Time="365.5625" Value="0" />
+									<FloatEvent Id="16779" Time="365.5625" Value="27.78125" />
+									<FloatEvent Id="16780" Time="365.625" Value="0" />
+									<FloatEvent Id="16781" Time="365.625" Value="23.8125" />
+									<FloatEvent Id="16782" Time="365.6875" Value="0" />
+									<FloatEvent Id="16783" Time="365.6875" Value="19.84375" />
+									<FloatEvent Id="16784" Time="365.75" Value="0" />
+									<FloatEvent Id="16785" Time="365.75" Value="15.875" />
+									<FloatEvent Id="16786" Time="365.8125" Value="0" />
+									<FloatEvent Id="16787" Time="365.8125" Value="11.90625" />
+									<FloatEvent Id="16788" Time="365.875" Value="0" />
+									<FloatEvent Id="16789" Time="365.875" Value="7.9375" />
+									<FloatEvent Id="16790" Time="365.9375" Value="0" />
+									<FloatEvent Id="16791" Time="365.9375" Value="3.96875" />
+									<FloatEvent Id="16792" Time="366" Value="0" />
+									<FloatEvent Id="16793" Time="368" Value="0" />
+									<FloatEvent Id="16794" Time="372" Value="0" />
+									<FloatEvent Id="16795" Time="376" Value="0" />
+									<FloatEvent Id="16796" Time="380" Value="0" />
+									<FloatEvent Id="16797" Time="384" Value="0" />
 									<FloatEvent Id="16593" Time="390" Value="0" />
 									<FloatEvent Id="16592" Time="390" Value="127" />
 									<FloatEvent Id="16591" Time="391" Value="0" />
+									<FloatEvent Id="16798" Time="392" Value="0" />
 									<FloatEvent Id="16590" Time="397.5" Value="0" />
 									<FloatEvent Id="16589" Time="397.5" Value="127" />
 									<FloatEvent Id="16588" Time="398.5" Value="0" />
+									<FloatEvent Id="16808" Time="400" Value="0" />
 									<FloatEvent Id="16587" Time="402" Value="0" />
 									<FloatEvent Id="16586" Time="402" Value="127" />
 									<FloatEvent Id="16585" Time="403" Value="0" />
+									<FloatEvent Id="16803" Time="408" Value="0" />
 								</Events>
 								<AutomationTransformViewState>
 									<IsTransformPending Value="false" />
@@ -7857,83 +8264,117 @@
 								<Events>
 									<FloatEvent Id="9718" Time="-63072000" Value="0" />
 									<FloatEvent Id="9719" Time="112" Value="0" />
+									<FloatEvent Id="9916" Time="256" Value="0" />
+									<FloatEvent Id="9921" Time="260" Value="0" />
+									<FloatEvent Id="9926" Time="264" Value="0" />
+									<FloatEvent Id="9931" Time="268" Value="0" />
+									<FloatEvent Id="9936" Time="272" Value="0" />
+									<FloatEvent Id="9941" Time="276" Value="0" />
+									<FloatEvent Id="9946" Time="280" Value="0" />
+									<FloatEvent Id="9951" Time="284" Value="0" />
+									<FloatEvent Id="9956" Time="288" Value="0" />
+									<FloatEvent Id="9961" Time="292" Value="0" />
+									<FloatEvent Id="9966" Time="296" Value="0" />
+									<FloatEvent Id="9971" Time="300" Value="0" />
 									<FloatEvent Id="9720" Time="304" Value="0" />
 									<FloatEvent Id="9721" Time="304" Value="127" />
 									<FloatEvent Id="9722" Time="305" Value="0" />
-									<FloatEvent Id="9892" Time="368" Value="0" />
-									<FloatEvent Id="9891" Time="368" Value="127" />
-									<FloatEvent Id="9890" Time="368.0625" Value="0" />
-									<FloatEvent Id="9889" Time="368.0625" Value="123.03125" />
-									<FloatEvent Id="9888" Time="368.125" Value="0" />
-									<FloatEvent Id="9887" Time="368.125" Value="119.0625" />
-									<FloatEvent Id="9886" Time="368.1875" Value="0" />
-									<FloatEvent Id="9885" Time="368.1875" Value="115.09375" />
-									<FloatEvent Id="9884" Time="368.25" Value="0" />
-									<FloatEvent Id="9883" Time="368.25" Value="111.125" />
-									<FloatEvent Id="9882" Time="368.3125" Value="0" />
-									<FloatEvent Id="9881" Time="368.3125" Value="107.15625" />
-									<FloatEvent Id="9880" Time="368.375" Value="0" />
-									<FloatEvent Id="9879" Time="368.375" Value="103.1875" />
-									<FloatEvent Id="9878" Time="368.4375" Value="0" />
-									<FloatEvent Id="9877" Time="368.4375" Value="99.21875" />
-									<FloatEvent Id="9876" Time="368.5" Value="0" />
-									<FloatEvent Id="9875" Time="368.5" Value="95.25" />
-									<FloatEvent Id="9874" Time="368.5625" Value="0" />
-									<FloatEvent Id="9873" Time="368.5625" Value="91.28125" />
-									<FloatEvent Id="9872" Time="368.625" Value="0" />
-									<FloatEvent Id="9871" Time="368.625" Value="87.3125" />
-									<FloatEvent Id="9870" Time="368.6875" Value="0" />
-									<FloatEvent Id="9869" Time="368.6875" Value="83.34375" />
-									<FloatEvent Id="9868" Time="368.75" Value="0" />
-									<FloatEvent Id="9867" Time="368.75" Value="79.375" />
-									<FloatEvent Id="9866" Time="368.8125" Value="0" />
-									<FloatEvent Id="9865" Time="368.8125" Value="75.40625" />
-									<FloatEvent Id="9864" Time="368.875" Value="0" />
-									<FloatEvent Id="9863" Time="368.875" Value="71.4375" />
-									<FloatEvent Id="9862" Time="368.9375" Value="0" />
-									<FloatEvent Id="9861" Time="368.9375" Value="67.46875" />
-									<FloatEvent Id="9860" Time="369" Value="0" />
-									<FloatEvent Id="9859" Time="369" Value="63.5" />
-									<FloatEvent Id="9858" Time="369.0625" Value="0" />
-									<FloatEvent Id="9857" Time="369.0625" Value="59.53125" />
-									<FloatEvent Id="9856" Time="369.125" Value="0" />
-									<FloatEvent Id="9855" Time="369.125" Value="55.5625" />
-									<FloatEvent Id="9854" Time="369.1875" Value="0" />
-									<FloatEvent Id="9853" Time="369.1875" Value="51.59375" />
-									<FloatEvent Id="9852" Time="369.25" Value="0" />
-									<FloatEvent Id="9851" Time="369.25" Value="47.625" />
-									<FloatEvent Id="9850" Time="369.3125" Value="0" />
-									<FloatEvent Id="9849" Time="369.3125" Value="43.65625" />
-									<FloatEvent Id="9848" Time="369.375" Value="0" />
-									<FloatEvent Id="9847" Time="369.375" Value="39.6875" />
-									<FloatEvent Id="9846" Time="369.4375" Value="0" />
-									<FloatEvent Id="9845" Time="369.4375" Value="35.71875" />
-									<FloatEvent Id="9844" Time="369.5" Value="0" />
-									<FloatEvent Id="9843" Time="369.5" Value="31.75" />
-									<FloatEvent Id="9842" Time="369.5625" Value="0" />
-									<FloatEvent Id="9841" Time="369.5625" Value="27.78125" />
-									<FloatEvent Id="9840" Time="369.625" Value="0" />
-									<FloatEvent Id="9839" Time="369.625" Value="23.8125" />
-									<FloatEvent Id="9838" Time="369.6875" Value="0" />
-									<FloatEvent Id="9837" Time="369.6875" Value="19.84375" />
-									<FloatEvent Id="9836" Time="369.75" Value="0" />
-									<FloatEvent Id="9835" Time="369.75" Value="15.875" />
-									<FloatEvent Id="9834" Time="369.8125" Value="0" />
-									<FloatEvent Id="9833" Time="369.8125" Value="11.90625" />
-									<FloatEvent Id="9832" Time="369.875" Value="0" />
-									<FloatEvent Id="9831" Time="369.875" Value="7.9375" />
-									<FloatEvent Id="9830" Time="369.9375" Value="0" />
-									<FloatEvent Id="9829" Time="369.9375" Value="3.96875" />
-									<FloatEvent Id="9828" Time="370" Value="0" />
+									<FloatEvent Id="10016" Time="308" Value="0" />
+									<FloatEvent Id="10022" Time="312" Value="0" />
+									<FloatEvent Id="10028" Time="316" Value="0" />
+									<FloatEvent Id="10029" Time="320" Value="0" />
+									<FloatEvent Id="9981" Time="324" Value="0" />
+									<FloatEvent Id="9986" Time="328" Value="0" />
+									<FloatEvent Id="9991" Time="332" Value="0" />
+									<FloatEvent Id="9996" Time="336" Value="0" />
+									<FloatEvent Id="10001" Time="340" Value="0" />
+									<FloatEvent Id="10006" Time="344" Value="0" />
+									<FloatEvent Id="10011" Time="348" Value="0" />
+									<FloatEvent Id="10034" Time="352" Value="0" />
+									<FloatEvent Id="10035" Time="356" Value="0" />
+									<FloatEvent Id="10036" Time="360" Value="0" />
+									<FloatEvent Id="10037" Time="364" Value="0" />
+									<FloatEvent Id="10038" Time="368" Value="0" />
+									<FloatEvent Id="10039" Time="368" Value="127" />
+									<FloatEvent Id="10040" Time="368.0625" Value="0" />
+									<FloatEvent Id="10041" Time="368.0625" Value="123.03125" />
+									<FloatEvent Id="10042" Time="368.125" Value="0" />
+									<FloatEvent Id="10043" Time="368.125" Value="119.0625" />
+									<FloatEvent Id="10044" Time="368.1875" Value="0" />
+									<FloatEvent Id="10045" Time="368.1875" Value="115.09375" />
+									<FloatEvent Id="10046" Time="368.25" Value="0" />
+									<FloatEvent Id="10047" Time="368.25" Value="111.125" />
+									<FloatEvent Id="10048" Time="368.3125" Value="0" />
+									<FloatEvent Id="10049" Time="368.3125" Value="107.15625" />
+									<FloatEvent Id="10050" Time="368.375" Value="0" />
+									<FloatEvent Id="10051" Time="368.375" Value="103.1875" />
+									<FloatEvent Id="10052" Time="368.4375" Value="0" />
+									<FloatEvent Id="10053" Time="368.4375" Value="99.21875" />
+									<FloatEvent Id="10054" Time="368.5" Value="0" />
+									<FloatEvent Id="10055" Time="368.5" Value="95.25" />
+									<FloatEvent Id="10056" Time="368.5625" Value="0" />
+									<FloatEvent Id="10057" Time="368.5625" Value="91.28125" />
+									<FloatEvent Id="10058" Time="368.625" Value="0" />
+									<FloatEvent Id="10059" Time="368.625" Value="87.3125" />
+									<FloatEvent Id="10060" Time="368.6875" Value="0" />
+									<FloatEvent Id="10061" Time="368.6875" Value="83.34375" />
+									<FloatEvent Id="10062" Time="368.75" Value="0" />
+									<FloatEvent Id="10063" Time="368.75" Value="79.375" />
+									<FloatEvent Id="10064" Time="368.8125" Value="0" />
+									<FloatEvent Id="10065" Time="368.8125" Value="75.40625" />
+									<FloatEvent Id="10066" Time="368.875" Value="0" />
+									<FloatEvent Id="10067" Time="368.875" Value="71.4375" />
+									<FloatEvent Id="10068" Time="368.9375" Value="0" />
+									<FloatEvent Id="10069" Time="368.9375" Value="67.46875" />
+									<FloatEvent Id="10070" Time="369" Value="0" />
+									<FloatEvent Id="10071" Time="369" Value="63.5" />
+									<FloatEvent Id="10072" Time="369.0625" Value="0" />
+									<FloatEvent Id="10073" Time="369.0625" Value="59.53125" />
+									<FloatEvent Id="10074" Time="369.125" Value="0" />
+									<FloatEvent Id="10075" Time="369.125" Value="55.5625" />
+									<FloatEvent Id="10076" Time="369.1875" Value="0" />
+									<FloatEvent Id="10077" Time="369.1875" Value="51.59375" />
+									<FloatEvent Id="10078" Time="369.25" Value="0" />
+									<FloatEvent Id="10079" Time="369.25" Value="47.625" />
+									<FloatEvent Id="10080" Time="369.3125" Value="0" />
+									<FloatEvent Id="10081" Time="369.3125" Value="43.65625" />
+									<FloatEvent Id="10082" Time="369.375" Value="0" />
+									<FloatEvent Id="10083" Time="369.375" Value="39.6875" />
+									<FloatEvent Id="10084" Time="369.4375" Value="0" />
+									<FloatEvent Id="10085" Time="369.4375" Value="35.71875" />
+									<FloatEvent Id="10086" Time="369.5" Value="0" />
+									<FloatEvent Id="10087" Time="369.5" Value="31.75" />
+									<FloatEvent Id="10088" Time="369.5625" Value="0" />
+									<FloatEvent Id="10089" Time="369.5625" Value="27.78125" />
+									<FloatEvent Id="10090" Time="369.625" Value="0" />
+									<FloatEvent Id="10091" Time="369.625" Value="23.8125" />
+									<FloatEvent Id="10092" Time="369.6875" Value="0" />
+									<FloatEvent Id="10093" Time="369.6875" Value="19.84375" />
+									<FloatEvent Id="10094" Time="369.75" Value="0" />
+									<FloatEvent Id="10095" Time="369.75" Value="15.875" />
+									<FloatEvent Id="10096" Time="369.8125" Value="0" />
+									<FloatEvent Id="10097" Time="369.8125" Value="11.90625" />
+									<FloatEvent Id="10098" Time="369.875" Value="0" />
+									<FloatEvent Id="10099" Time="369.875" Value="7.9375" />
+									<FloatEvent Id="10100" Time="369.9375" Value="0" />
+									<FloatEvent Id="10101" Time="369.9375" Value="3.96875" />
+									<FloatEvent Id="10102" Time="370" Value="0" />
+									<FloatEvent Id="10103" Time="372" Value="0" />
+									<FloatEvent Id="10104" Time="376" Value="0" />
+									<FloatEvent Id="10105" Time="380" Value="0" />
+									<FloatEvent Id="10106" Time="384" Value="0" />
 									<FloatEvent Id="9903" Time="389.5" Value="0" />
 									<FloatEvent Id="9902" Time="389.5" Value="127" />
 									<FloatEvent Id="9901" Time="390.5" Value="0" />
+									<FloatEvent Id="10107" Time="392" Value="0" />
 									<FloatEvent Id="9900" Time="398" Value="0" />
 									<FloatEvent Id="9899" Time="398" Value="127" />
 									<FloatEvent Id="9898" Time="399" Value="0" />
+									<FloatEvent Id="10117" Time="400" Value="0" />
 									<FloatEvent Id="9897" Time="401.5" Value="0" />
 									<FloatEvent Id="9896" Time="401.5" Value="127" />
 									<FloatEvent Id="9895" Time="402.5" Value="0" />
+									<FloatEvent Id="10112" Time="408" Value="0" />
 								</Events>
 								<AutomationTransformViewState>
 									<IsTransformPending Value="false" />
@@ -7949,83 +8390,117 @@
 								<Events>
 									<FloatEvent Id="11306" Time="-63072000" Value="0" />
 									<FloatEvent Id="11307" Time="112" Value="0" />
+									<FloatEvent Id="11505" Time="256" Value="0" />
+									<FloatEvent Id="11510" Time="260" Value="0" />
+									<FloatEvent Id="11515" Time="264" Value="0" />
+									<FloatEvent Id="11520" Time="268" Value="0" />
+									<FloatEvent Id="11525" Time="272" Value="0" />
+									<FloatEvent Id="11530" Time="276" Value="0" />
+									<FloatEvent Id="11535" Time="280" Value="0" />
+									<FloatEvent Id="11540" Time="284" Value="0" />
+									<FloatEvent Id="11545" Time="288" Value="0" />
+									<FloatEvent Id="11550" Time="292" Value="0" />
+									<FloatEvent Id="11555" Time="296" Value="0" />
+									<FloatEvent Id="11560" Time="300" Value="0" />
+									<FloatEvent Id="11565" Time="304" Value="0" />
 									<FloatEvent Id="11308" Time="308" Value="0" />
 									<FloatEvent Id="11309" Time="308" Value="127" />
 									<FloatEvent Id="11310" Time="309" Value="0" />
-									<FloatEvent Id="11481" Time="372" Value="0" />
-									<FloatEvent Id="11480" Time="372" Value="127" />
-									<FloatEvent Id="11479" Time="372.0625" Value="0" />
-									<FloatEvent Id="11478" Time="372.0625" Value="123.03125" />
-									<FloatEvent Id="11477" Time="372.125" Value="0" />
-									<FloatEvent Id="11476" Time="372.125" Value="119.0625" />
-									<FloatEvent Id="11475" Time="372.1875" Value="0" />
-									<FloatEvent Id="11474" Time="372.1875" Value="115.09375" />
-									<FloatEvent Id="11473" Time="372.25" Value="0" />
-									<FloatEvent Id="11472" Time="372.25" Value="111.125" />
-									<FloatEvent Id="11471" Time="372.3125" Value="0" />
-									<FloatEvent Id="11470" Time="372.3125" Value="107.15625" />
-									<FloatEvent Id="11469" Time="372.375" Value="0" />
-									<FloatEvent Id="11468" Time="372.375" Value="103.1875" />
-									<FloatEvent Id="11467" Time="372.4375" Value="0" />
-									<FloatEvent Id="11466" Time="372.4375" Value="99.21875" />
-									<FloatEvent Id="11465" Time="372.5" Value="0" />
-									<FloatEvent Id="11464" Time="372.5" Value="95.25" />
-									<FloatEvent Id="11463" Time="372.5625" Value="0" />
-									<FloatEvent Id="11462" Time="372.5625" Value="91.28125" />
-									<FloatEvent Id="11461" Time="372.625" Value="0" />
-									<FloatEvent Id="11460" Time="372.625" Value="87.3125" />
-									<FloatEvent Id="11459" Time="372.6875" Value="0" />
-									<FloatEvent Id="11458" Time="372.6875" Value="83.34375" />
-									<FloatEvent Id="11457" Time="372.75" Value="0" />
-									<FloatEvent Id="11456" Time="372.75" Value="79.375" />
-									<FloatEvent Id="11455" Time="372.8125" Value="0" />
-									<FloatEvent Id="11454" Time="372.8125" Value="75.40625" />
-									<FloatEvent Id="11453" Time="372.875" Value="0" />
-									<FloatEvent Id="11452" Time="372.875" Value="71.4375" />
-									<FloatEvent Id="11451" Time="372.9375" Value="0" />
-									<FloatEvent Id="11450" Time="372.9375" Value="67.46875" />
-									<FloatEvent Id="11449" Time="373" Value="0" />
-									<FloatEvent Id="11448" Time="373" Value="63.5" />
-									<FloatEvent Id="11447" Time="373.0625" Value="0" />
-									<FloatEvent Id="11446" Time="373.0625" Value="59.53125" />
-									<FloatEvent Id="11445" Time="373.125" Value="0" />
-									<FloatEvent Id="11444" Time="373.125" Value="55.5625" />
-									<FloatEvent Id="11443" Time="373.1875" Value="0" />
-									<FloatEvent Id="11442" Time="373.1875" Value="51.59375" />
-									<FloatEvent Id="11441" Time="373.25" Value="0" />
-									<FloatEvent Id="11440" Time="373.25" Value="47.625" />
-									<FloatEvent Id="11439" Time="373.3125" Value="0" />
-									<FloatEvent Id="11438" Time="373.3125" Value="43.65625" />
-									<FloatEvent Id="11437" Time="373.375" Value="0" />
-									<FloatEvent Id="11436" Time="373.375" Value="39.6875" />
-									<FloatEvent Id="11435" Time="373.4375" Value="0" />
-									<FloatEvent Id="11434" Time="373.4375" Value="35.71875" />
-									<FloatEvent Id="11433" Time="373.5" Value="0" />
-									<FloatEvent Id="11432" Time="373.5" Value="31.75" />
-									<FloatEvent Id="11431" Time="373.5625" Value="0" />
-									<FloatEvent Id="11430" Time="373.5625" Value="27.78125" />
-									<FloatEvent Id="11429" Time="373.625" Value="0" />
-									<FloatEvent Id="11428" Time="373.625" Value="23.8125" />
-									<FloatEvent Id="11427" Time="373.6875" Value="0" />
-									<FloatEvent Id="11426" Time="373.6875" Value="19.84375" />
-									<FloatEvent Id="11425" Time="373.75" Value="0" />
-									<FloatEvent Id="11424" Time="373.75" Value="15.875" />
-									<FloatEvent Id="11423" Time="373.8125" Value="0" />
-									<FloatEvent Id="11422" Time="373.8125" Value="11.90625" />
-									<FloatEvent Id="11421" Time="373.875" Value="0" />
-									<FloatEvent Id="11420" Time="373.875" Value="7.9375" />
-									<FloatEvent Id="11419" Time="373.9375" Value="0" />
-									<FloatEvent Id="11418" Time="373.9375" Value="3.96875" />
-									<FloatEvent Id="11417" Time="374" Value="0" />
+									<FloatEvent Id="11610" Time="312" Value="0" />
+									<FloatEvent Id="11611" Time="316" Value="0" />
+									<FloatEvent Id="11570" Time="320" Value="0" />
+									<FloatEvent Id="11575" Time="324" Value="0" />
+									<FloatEvent Id="11580" Time="328" Value="0" />
+									<FloatEvent Id="11585" Time="332" Value="0" />
+									<FloatEvent Id="11590" Time="336" Value="0" />
+									<FloatEvent Id="11595" Time="340" Value="0" />
+									<FloatEvent Id="11600" Time="344" Value="0" />
+									<FloatEvent Id="11605" Time="348" Value="0" />
+									<FloatEvent Id="11616" Time="352" Value="0" />
+									<FloatEvent Id="11617" Time="356" Value="0" />
+									<FloatEvent Id="11618" Time="360" Value="0" />
+									<FloatEvent Id="11619" Time="364" Value="0" />
+									<FloatEvent Id="11620" Time="368" Value="0" />
+									<FloatEvent Id="11621" Time="372" Value="0" />
+									<FloatEvent Id="11622" Time="372" Value="127" />
+									<FloatEvent Id="11623" Time="372.0625" Value="0" />
+									<FloatEvent Id="11624" Time="372.0625" Value="123.03125" />
+									<FloatEvent Id="11625" Time="372.125" Value="0" />
+									<FloatEvent Id="11626" Time="372.125" Value="119.0625" />
+									<FloatEvent Id="11627" Time="372.1875" Value="0" />
+									<FloatEvent Id="11628" Time="372.1875" Value="115.09375" />
+									<FloatEvent Id="11629" Time="372.25" Value="0" />
+									<FloatEvent Id="11630" Time="372.25" Value="111.125" />
+									<FloatEvent Id="11631" Time="372.3125" Value="0" />
+									<FloatEvent Id="11632" Time="372.3125" Value="107.15625" />
+									<FloatEvent Id="11633" Time="372.375" Value="0" />
+									<FloatEvent Id="11634" Time="372.375" Value="103.1875" />
+									<FloatEvent Id="11635" Time="372.4375" Value="0" />
+									<FloatEvent Id="11636" Time="372.4375" Value="99.21875" />
+									<FloatEvent Id="11637" Time="372.5" Value="0" />
+									<FloatEvent Id="11638" Time="372.5" Value="95.25" />
+									<FloatEvent Id="11639" Time="372.5625" Value="0" />
+									<FloatEvent Id="11640" Time="372.5625" Value="91.28125" />
+									<FloatEvent Id="11641" Time="372.625" Value="0" />
+									<FloatEvent Id="11642" Time="372.625" Value="87.3125" />
+									<FloatEvent Id="11643" Time="372.6875" Value="0" />
+									<FloatEvent Id="11644" Time="372.6875" Value="83.34375" />
+									<FloatEvent Id="11645" Time="372.75" Value="0" />
+									<FloatEvent Id="11646" Time="372.75" Value="79.375" />
+									<FloatEvent Id="11647" Time="372.8125" Value="0" />
+									<FloatEvent Id="11648" Time="372.8125" Value="75.40625" />
+									<FloatEvent Id="11649" Time="372.875" Value="0" />
+									<FloatEvent Id="11650" Time="372.875" Value="71.4375" />
+									<FloatEvent Id="11651" Time="372.9375" Value="0" />
+									<FloatEvent Id="11652" Time="372.9375" Value="67.46875" />
+									<FloatEvent Id="11653" Time="373" Value="0" />
+									<FloatEvent Id="11654" Time="373" Value="63.5" />
+									<FloatEvent Id="11655" Time="373.0625" Value="0" />
+									<FloatEvent Id="11656" Time="373.0625" Value="59.53125" />
+									<FloatEvent Id="11657" Time="373.125" Value="0" />
+									<FloatEvent Id="11658" Time="373.125" Value="55.5625" />
+									<FloatEvent Id="11659" Time="373.1875" Value="0" />
+									<FloatEvent Id="11660" Time="373.1875" Value="51.59375" />
+									<FloatEvent Id="11661" Time="373.25" Value="0" />
+									<FloatEvent Id="11662" Time="373.25" Value="47.625" />
+									<FloatEvent Id="11663" Time="373.3125" Value="0" />
+									<FloatEvent Id="11664" Time="373.3125" Value="43.65625" />
+									<FloatEvent Id="11665" Time="373.375" Value="0" />
+									<FloatEvent Id="11666" Time="373.375" Value="39.6875" />
+									<FloatEvent Id="11667" Time="373.4375" Value="0" />
+									<FloatEvent Id="11668" Time="373.4375" Value="35.71875" />
+									<FloatEvent Id="11669" Time="373.5" Value="0" />
+									<FloatEvent Id="11670" Time="373.5" Value="31.75" />
+									<FloatEvent Id="11671" Time="373.5625" Value="0" />
+									<FloatEvent Id="11672" Time="373.5625" Value="27.78125" />
+									<FloatEvent Id="11673" Time="373.625" Value="0" />
+									<FloatEvent Id="11674" Time="373.625" Value="23.8125" />
+									<FloatEvent Id="11675" Time="373.6875" Value="0" />
+									<FloatEvent Id="11676" Time="373.6875" Value="19.84375" />
+									<FloatEvent Id="11677" Time="373.75" Value="0" />
+									<FloatEvent Id="11678" Time="373.75" Value="15.875" />
+									<FloatEvent Id="11679" Time="373.8125" Value="0" />
+									<FloatEvent Id="11680" Time="373.8125" Value="11.90625" />
+									<FloatEvent Id="11681" Time="373.875" Value="0" />
+									<FloatEvent Id="11682" Time="373.875" Value="7.9375" />
+									<FloatEvent Id="11683" Time="373.9375" Value="0" />
+									<FloatEvent Id="11684" Time="373.9375" Value="3.96875" />
+									<FloatEvent Id="11685" Time="374" Value="0" />
+									<FloatEvent Id="11686" Time="376" Value="0" />
+									<FloatEvent Id="11687" Time="380" Value="0" />
+									<FloatEvent Id="11688" Time="384" Value="0" />
 									<FloatEvent Id="11492" Time="389" Value="0" />
 									<FloatEvent Id="11491" Time="389" Value="127" />
 									<FloatEvent Id="11490" Time="390" Value="0" />
+									<FloatEvent Id="11689" Time="392" Value="0" />
 									<FloatEvent Id="11489" Time="398.5" Value="0" />
 									<FloatEvent Id="11488" Time="398.5" Value="127" />
 									<FloatEvent Id="11487" Time="399.5" Value="0" />
+									<FloatEvent Id="11699" Time="400" Value="0" />
 									<FloatEvent Id="11486" Time="401" Value="0" />
 									<FloatEvent Id="11485" Time="401" Value="127" />
 									<FloatEvent Id="11484" Time="402" Value="0" />
+									<FloatEvent Id="11694" Time="408" Value="0" />
 								</Events>
 								<AutomationTransformViewState>
 									<IsTransformPending Value="false" />
@@ -8041,82 +8516,232 @@
 								<Events>
 									<FloatEvent Id="11190" Time="-63072000" Value="0" />
 									<FloatEvent Id="11191" Time="112" Value="0" />
+									<FloatEvent Id="11375" Time="256" Value="0" />
+									<FloatEvent Id="11380" Time="260" Value="0" />
+									<FloatEvent Id="11385" Time="264" Value="0" />
+									<FloatEvent Id="11390" Time="268" Value="0" />
+									<FloatEvent Id="11395" Time="272" Value="0" />
+									<FloatEvent Id="11400" Time="276" Value="0" />
+									<FloatEvent Id="11405" Time="280" Value="0" />
+									<FloatEvent Id="11410" Time="284" Value="0" />
+									<FloatEvent Id="11415" Time="288" Value="0" />
+									<FloatEvent Id="11420" Time="292" Value="0" />
+									<FloatEvent Id="11425" Time="296" Value="0" />
+									<FloatEvent Id="11430" Time="300" Value="0" />
+									<FloatEvent Id="11435" Time="304" Value="0" />
+									<FloatEvent Id="11440" Time="308" Value="0" />
+									<FloatEvent Id="11445" Time="312" Value="0" />
 									<FloatEvent Id="11192" Time="316" Value="0" />
 									<FloatEvent Id="11193" Time="316" Value="127" />
 									<FloatEvent Id="11194" Time="317" Value="0" />
-									<FloatEvent Id="11362" Time="380" Value="0" />
-									<FloatEvent Id="11361" Time="380" Value="127" />
-									<FloatEvent Id="11360" Time="380.0625" Value="0" />
-									<FloatEvent Id="11359" Time="380.0625" Value="123.03125" />
-									<FloatEvent Id="11358" Time="380.125" Value="0" />
-									<FloatEvent Id="11357" Time="380.125" Value="119.0625" />
-									<FloatEvent Id="11356" Time="380.1875" Value="0" />
-									<FloatEvent Id="11355" Time="380.1875" Value="115.09375" />
-									<FloatEvent Id="11354" Time="380.25" Value="0" />
-									<FloatEvent Id="11353" Time="380.25" Value="111.125" />
-									<FloatEvent Id="11352" Time="380.3125" Value="0" />
-									<FloatEvent Id="11351" Time="380.3125" Value="107.15625" />
-									<FloatEvent Id="11350" Time="380.375" Value="0" />
-									<FloatEvent Id="11349" Time="380.375" Value="103.1875" />
-									<FloatEvent Id="11348" Time="380.4375" Value="0" />
-									<FloatEvent Id="11347" Time="380.4375" Value="99.21875" />
-									<FloatEvent Id="11346" Time="380.5" Value="0" />
-									<FloatEvent Id="11345" Time="380.5" Value="95.25" />
-									<FloatEvent Id="11344" Time="380.5625" Value="0" />
-									<FloatEvent Id="11343" Time="380.5625" Value="91.28125" />
-									<FloatEvent Id="11342" Time="380.625" Value="0" />
-									<FloatEvent Id="11341" Time="380.625" Value="87.3125" />
-									<FloatEvent Id="11340" Time="380.6875" Value="0" />
-									<FloatEvent Id="11339" Time="380.6875" Value="83.34375" />
-									<FloatEvent Id="11338" Time="380.75" Value="0" />
-									<FloatEvent Id="11337" Time="380.75" Value="79.375" />
-									<FloatEvent Id="11336" Time="380.8125" Value="0" />
-									<FloatEvent Id="11335" Time="380.8125" Value="75.40625" />
-									<FloatEvent Id="11334" Time="380.875" Value="0" />
-									<FloatEvent Id="11333" Time="380.875" Value="71.4375" />
-									<FloatEvent Id="11332" Time="380.9375" Value="0" />
-									<FloatEvent Id="11331" Time="380.9375" Value="67.46875" />
-									<FloatEvent Id="11330" Time="381" Value="0" />
-									<FloatEvent Id="11329" Time="381" Value="63.5" />
-									<FloatEvent Id="11328" Time="381.0625" Value="0" />
-									<FloatEvent Id="11327" Time="381.0625" Value="59.53125" />
-									<FloatEvent Id="11326" Time="381.125" Value="0" />
-									<FloatEvent Id="11325" Time="381.125" Value="55.5625" />
-									<FloatEvent Id="11324" Time="381.1875" Value="0" />
-									<FloatEvent Id="11323" Time="381.1875" Value="51.59375" />
-									<FloatEvent Id="11322" Time="381.25" Value="0" />
-									<FloatEvent Id="11321" Time="381.25" Value="47.625" />
-									<FloatEvent Id="11320" Time="381.3125" Value="0" />
-									<FloatEvent Id="11319" Time="381.3125" Value="43.65625" />
-									<FloatEvent Id="11318" Time="381.375" Value="0" />
-									<FloatEvent Id="11317" Time="381.375" Value="39.6875" />
-									<FloatEvent Id="11316" Time="381.4375" Value="0" />
-									<FloatEvent Id="11315" Time="381.4375" Value="35.71875" />
-									<FloatEvent Id="11314" Time="381.5" Value="0" />
-									<FloatEvent Id="11313" Time="381.5" Value="31.75" />
-									<FloatEvent Id="11312" Time="381.5625" Value="0" />
-									<FloatEvent Id="11311" Time="381.5625" Value="27.78125" />
-									<FloatEvent Id="11310" Time="381.625" Value="0" />
-									<FloatEvent Id="11309" Time="381.625" Value="23.8125" />
-									<FloatEvent Id="11308" Time="381.6875" Value="0" />
-									<FloatEvent Id="11307" Time="381.6875" Value="19.84375" />
-									<FloatEvent Id="11306" Time="381.75" Value="0" />
-									<FloatEvent Id="11305" Time="381.75" Value="15.875" />
-									<FloatEvent Id="11304" Time="381.8125" Value="0" />
-									<FloatEvent Id="11303" Time="381.8125" Value="11.90625" />
-									<FloatEvent Id="11302" Time="381.875" Value="0" />
-									<FloatEvent Id="11301" Time="381.875" Value="7.9375" />
-									<FloatEvent Id="11300" Time="381.9375" Value="0" />
-									<FloatEvent Id="11299" Time="381.9375" Value="3.96875" />
-									<FloatEvent Id="11298" Time="382" Value="0" />
+									<FloatEvent Id="11450" Time="320" Value="0" />
+									<FloatEvent Id="11455" Time="324" Value="0" />
+									<FloatEvent Id="11460" Time="328" Value="0" />
+									<FloatEvent Id="11465" Time="332" Value="0" />
+									<FloatEvent Id="11470" Time="336" Value="0" />
+									<FloatEvent Id="11475" Time="340" Value="0" />
+									<FloatEvent Id="11480" Time="344" Value="0" />
+									<FloatEvent Id="11485" Time="348" Value="0" />
+									<FloatEvent Id="11490" Time="352" Value="0" />
+									<FloatEvent Id="11491" Time="356" Value="0" />
+									<FloatEvent Id="11492" Time="360" Value="0" />
+									<FloatEvent Id="11493" Time="364" Value="0" />
+									<FloatEvent Id="11494" Time="368" Value="0" />
+									<FloatEvent Id="11495" Time="372" Value="0" />
+									<FloatEvent Id="11496" Time="376" Value="0" />
+									<FloatEvent Id="11497" Time="380" Value="0" />
+									<FloatEvent Id="11498" Time="380" Value="127" />
+									<FloatEvent Id="11499" Time="380.0625" Value="0" />
+									<FloatEvent Id="11500" Time="380.0625" Value="123.03125" />
+									<FloatEvent Id="11501" Time="380.125" Value="0" />
+									<FloatEvent Id="11502" Time="380.125" Value="119.0625" />
+									<FloatEvent Id="11503" Time="380.1875" Value="0" />
+									<FloatEvent Id="11504" Time="380.1875" Value="115.09375" />
+									<FloatEvent Id="11505" Time="380.25" Value="0" />
+									<FloatEvent Id="11506" Time="380.25" Value="111.125" />
+									<FloatEvent Id="11507" Time="380.3125" Value="0" />
+									<FloatEvent Id="11508" Time="380.3125" Value="107.15625" />
+									<FloatEvent Id="11509" Time="380.375" Value="0" />
+									<FloatEvent Id="11510" Time="380.375" Value="103.1875" />
+									<FloatEvent Id="11511" Time="380.4375" Value="0" />
+									<FloatEvent Id="11512" Time="380.4375" Value="99.21875" />
+									<FloatEvent Id="11513" Time="380.5" Value="0" />
+									<FloatEvent Id="11514" Time="380.5" Value="95.25" />
+									<FloatEvent Id="11515" Time="380.5625" Value="0" />
+									<FloatEvent Id="11516" Time="380.5625" Value="91.28125" />
+									<FloatEvent Id="11517" Time="380.625" Value="0" />
+									<FloatEvent Id="11518" Time="380.625" Value="87.3125" />
+									<FloatEvent Id="11519" Time="380.6875" Value="0" />
+									<FloatEvent Id="11520" Time="380.6875" Value="83.34375" />
+									<FloatEvent Id="11521" Time="380.75" Value="0" />
+									<FloatEvent Id="11522" Time="380.75" Value="79.375" />
+									<FloatEvent Id="11523" Time="380.8125" Value="0" />
+									<FloatEvent Id="11524" Time="380.8125" Value="75.40625" />
+									<FloatEvent Id="11525" Time="380.875" Value="0" />
+									<FloatEvent Id="11526" Time="380.875" Value="71.4375" />
+									<FloatEvent Id="11527" Time="380.9375" Value="0" />
+									<FloatEvent Id="11528" Time="380.9375" Value="67.46875" />
+									<FloatEvent Id="11529" Time="381" Value="0" />
+									<FloatEvent Id="11530" Time="381" Value="63.5" />
+									<FloatEvent Id="11531" Time="381.0625" Value="0" />
+									<FloatEvent Id="11532" Time="381.0625" Value="59.53125" />
+									<FloatEvent Id="11533" Time="381.125" Value="0" />
+									<FloatEvent Id="11534" Time="381.125" Value="55.5625" />
+									<FloatEvent Id="11535" Time="381.1875" Value="0" />
+									<FloatEvent Id="11536" Time="381.1875" Value="51.59375" />
+									<FloatEvent Id="11537" Time="381.25" Value="0" />
+									<FloatEvent Id="11538" Time="381.25" Value="47.625" />
+									<FloatEvent Id="11539" Time="381.3125" Value="0" />
+									<FloatEvent Id="11540" Time="381.3125" Value="43.65625" />
+									<FloatEvent Id="11541" Time="381.375" Value="0" />
+									<FloatEvent Id="11542" Time="381.375" Value="39.6875" />
+									<FloatEvent Id="11543" Time="381.4375" Value="0" />
+									<FloatEvent Id="11544" Time="381.4375" Value="35.71875" />
+									<FloatEvent Id="11545" Time="381.5" Value="0" />
+									<FloatEvent Id="11546" Time="381.5" Value="31.75" />
+									<FloatEvent Id="11547" Time="381.5625" Value="0" />
+									<FloatEvent Id="11548" Time="381.5625" Value="27.78125" />
+									<FloatEvent Id="11549" Time="381.625" Value="0" />
+									<FloatEvent Id="11550" Time="381.625" Value="23.8125" />
+									<FloatEvent Id="11551" Time="381.6875" Value="0" />
+									<FloatEvent Id="11552" Time="381.6875" Value="19.84375" />
+									<FloatEvent Id="11553" Time="381.75" Value="0" />
+									<FloatEvent Id="11554" Time="381.75" Value="15.875" />
+									<FloatEvent Id="11555" Time="381.8125" Value="0" />
+									<FloatEvent Id="11556" Time="381.8125" Value="11.90625" />
+									<FloatEvent Id="11557" Time="381.875" Value="0" />
+									<FloatEvent Id="11558" Time="381.875" Value="7.9375" />
+									<FloatEvent Id="11559" Time="381.9375" Value="0" />
+									<FloatEvent Id="11560" Time="381.9375" Value="3.96875" />
+									<FloatEvent Id="11561" Time="382" Value="0" />
+									<FloatEvent Id="11562" Time="384" Value="0" />
 									<FloatEvent Id="11372" Time="388" Value="0" />
 									<FloatEvent Id="11371" Time="388" Value="127" />
 									<FloatEvent Id="11370" Time="389" Value="0" />
+									<FloatEvent Id="11563" Time="392" Value="0" />
 									<FloatEvent Id="11369" Time="399.5" Value="0" />
 									<FloatEvent Id="11368" Time="399.5" Value="127" />
 									<FloatEvent Id="11367" Time="400" Value="0" />
 									<FloatEvent Id="11366" Time="400" Value="127" />
 									<FloatEvent Id="11365" Time="401" Value="0" />
+									<FloatEvent Id="11568" Time="408" Value="0" />
+								</Events>
+								<AutomationTransformViewState>
+									<IsTransformPending Value="false" />
+									<TimeAndValueTransforms />
+								</AutomationTransformViewState>
+							</Automation>
+						</AutomationEnvelope>
+						<AutomationEnvelope Id="77">
+							<EnvelopeTarget>
+								<PointeeId Value="34337" />
+							</EnvelopeTarget>
+							<Automation>
+								<Events>
+									<FloatEvent Id="0" Time="-63072000" Value="0" />
+									<FloatEvent Id="229" Time="112" Value="0" />
+									<FloatEvent Id="81" Time="256" Value="0" />
+									<FloatEvent Id="86" Time="260" Value="0" />
+									<FloatEvent Id="91" Time="264" Value="0" />
+									<FloatEvent Id="96" Time="268" Value="0" />
+									<FloatEvent Id="101" Time="272" Value="0" />
+									<FloatEvent Id="106" Time="276" Value="0" />
+									<FloatEvent Id="111" Time="280" Value="0" />
+									<FloatEvent Id="116" Time="284" Value="0" />
+									<FloatEvent Id="1" Time="288" Value="0" />
+									<FloatEvent Id="75" Time="288" Value="127" />
+									<FloatEvent Id="2" Time="289" Value="0" />
+									<FloatEvent Id="230" Time="292" Value="0" />
+									<FloatEvent Id="231" Time="296" Value="0" />
+									<FloatEvent Id="236" Time="300" Value="0" />
+									<FloatEvent Id="241" Time="304" Value="0" />
+									<FloatEvent Id="246" Time="308" Value="0" />
+									<FloatEvent Id="251" Time="312" Value="0" />
+									<FloatEvent Id="256" Time="316" Value="0" />
+									<FloatEvent Id="121" Time="320" Value="0" />
+									<FloatEvent Id="126" Time="324" Value="0" />
+									<FloatEvent Id="131" Time="328" Value="0" />
+									<FloatEvent Id="136" Time="332" Value="0" />
+									<FloatEvent Id="141" Time="336" Value="0" />
+									<FloatEvent Id="146" Time="340" Value="0" />
+									<FloatEvent Id="151" Time="344" Value="0" />
+									<FloatEvent Id="156" Time="348" Value="0" />
+									<FloatEvent Id="329" Time="352" Value="0" />
+									<FloatEvent Id="257" Time="352" Value="127" />
+									<FloatEvent Id="258" Time="352.0625" Value="0" />
+									<FloatEvent Id="259" Time="352.0625" Value="123.03125" />
+									<FloatEvent Id="260" Time="352.125" Value="0" />
+									<FloatEvent Id="261" Time="352.125" Value="119.0625" />
+									<FloatEvent Id="262" Time="352.1875" Value="0" />
+									<FloatEvent Id="263" Time="352.1875" Value="115.09375" />
+									<FloatEvent Id="264" Time="352.25" Value="0" />
+									<FloatEvent Id="265" Time="352.25" Value="111.125" />
+									<FloatEvent Id="266" Time="352.3125" Value="0" />
+									<FloatEvent Id="267" Time="352.3125" Value="107.15625" />
+									<FloatEvent Id="268" Time="352.375" Value="0" />
+									<FloatEvent Id="269" Time="352.375" Value="103.1875" />
+									<FloatEvent Id="270" Time="352.4375" Value="0" />
+									<FloatEvent Id="271" Time="352.4375" Value="99.21875" />
+									<FloatEvent Id="272" Time="352.5" Value="0" />
+									<FloatEvent Id="273" Time="352.5" Value="95.25" />
+									<FloatEvent Id="274" Time="352.5625" Value="0" />
+									<FloatEvent Id="275" Time="352.5625" Value="91.28125" />
+									<FloatEvent Id="276" Time="352.625" Value="0" />
+									<FloatEvent Id="277" Time="352.625" Value="87.3125" />
+									<FloatEvent Id="278" Time="352.6875" Value="0" />
+									<FloatEvent Id="279" Time="352.6875" Value="83.34375" />
+									<FloatEvent Id="280" Time="352.75" Value="0" />
+									<FloatEvent Id="281" Time="352.75" Value="79.375" />
+									<FloatEvent Id="282" Time="352.8125" Value="0" />
+									<FloatEvent Id="283" Time="352.8125" Value="75.40625" />
+									<FloatEvent Id="284" Time="352.875" Value="0" />
+									<FloatEvent Id="285" Time="352.875" Value="71.4375" />
+									<FloatEvent Id="286" Time="352.9375" Value="0" />
+									<FloatEvent Id="287" Time="352.9375" Value="67.46875" />
+									<FloatEvent Id="288" Time="353" Value="0" />
+									<FloatEvent Id="289" Time="353" Value="63.5" />
+									<FloatEvent Id="290" Time="353.0625" Value="0" />
+									<FloatEvent Id="291" Time="353.0625" Value="59.53125" />
+									<FloatEvent Id="292" Time="353.125" Value="0" />
+									<FloatEvent Id="293" Time="353.125" Value="55.5625" />
+									<FloatEvent Id="294" Time="353.1875" Value="0" />
+									<FloatEvent Id="295" Time="353.1875" Value="51.59375" />
+									<FloatEvent Id="296" Time="353.25" Value="0" />
+									<FloatEvent Id="297" Time="353.25" Value="47.625" />
+									<FloatEvent Id="298" Time="353.3125" Value="0" />
+									<FloatEvent Id="299" Time="353.3125" Value="43.65625" />
+									<FloatEvent Id="300" Time="353.375" Value="0" />
+									<FloatEvent Id="301" Time="353.375" Value="39.6875" />
+									<FloatEvent Id="302" Time="353.4375" Value="0" />
+									<FloatEvent Id="303" Time="353.4375" Value="35.71875" />
+									<FloatEvent Id="304" Time="353.5" Value="0" />
+									<FloatEvent Id="305" Time="353.5" Value="31.75" />
+									<FloatEvent Id="306" Time="353.5625" Value="0" />
+									<FloatEvent Id="307" Time="353.5625" Value="27.78125" />
+									<FloatEvent Id="308" Time="353.625" Value="0" />
+									<FloatEvent Id="309" Time="353.625" Value="23.8125" />
+									<FloatEvent Id="310" Time="353.6875" Value="0" />
+									<FloatEvent Id="311" Time="353.6875" Value="19.84375" />
+									<FloatEvent Id="312" Time="353.75" Value="0" />
+									<FloatEvent Id="313" Time="353.75" Value="15.875" />
+									<FloatEvent Id="314" Time="353.8125" Value="0" />
+									<FloatEvent Id="315" Time="353.8125" Value="11.90625" />
+									<FloatEvent Id="316" Time="353.875" Value="0" />
+									<FloatEvent Id="317" Time="353.875" Value="7.9375" />
+									<FloatEvent Id="318" Time="353.9375" Value="0" />
+									<FloatEvent Id="319" Time="353.9375" Value="3.96875" />
+									<FloatEvent Id="320" Time="354" Value="0" />
+									<FloatEvent Id="321" Time="356" Value="0" />
+									<FloatEvent Id="322" Time="360" Value="0" />
+									<FloatEvent Id="323" Time="364" Value="0" />
+									<FloatEvent Id="324" Time="368" Value="0" />
+									<FloatEvent Id="325" Time="372" Value="0" />
+									<FloatEvent Id="326" Time="376" Value="0" />
+									<FloatEvent Id="327" Time="380" Value="0" />
+									<FloatEvent Id="328" Time="384" Value="0" />
+									<FloatEvent Id="330" Time="392" Value="0" />
+									<FloatEvent Id="340" Time="400" Value="0" />
+									<FloatEvent Id="335" Time="408" Value="0" />
 								</Events>
 								<AutomationTransformViewState>
 									<IsTransformPending Value="false" />
@@ -8148,7 +8773,7 @@
 							<AutomationLane Id="0">
 								<SelectedDevice Value="1" />
 								<SelectedEnvelope Value="1" />
-								<IsContentSelectedInDocument Value="true" />
+								<IsContentSelectedInDocument Value="false" />
 								<LaneHeight Value="17" />
 							</AutomationLane>
 							<AutomationLane Id="25">
@@ -9614,7 +10239,7 @@
 														</IdRefList>
 														<BlobSlot>
 															<Value>
-																<MxDBlob Id="379">
+																<MxDBlob Id="380">
 																	<Blob>
 																		7B0D0A09224D617822203A205B20313030205D2C0D0A09224D61785B31305D22203A205B20313030
 																		205D2C0D0A09224D61785B31315D22203A205B20313030205D2C0D0A09224D61785B31325D22203A
@@ -12508,7 +13133,7 @@
 			<LoopStart Value="192" />
 			<LoopLength Value="1" />
 			<LoopIsSongStart Value="false" />
-			<CurrentTime Value="384" />
+			<CurrentTime Value="408" />
 			<PunchIn Value="false" />
 			<PunchOut Value="false" />
 			<MetronomeTickDuration Value="0" />
@@ -12544,14 +13169,14 @@
 		<InKey Value="false" />
 		<SmpteFormat Value="0" />
 		<TimeSelection>
-			<AnchorTime Value="384" />
-			<OtherTime Value="384" />
+			<AnchorTime Value="408" />
+			<OtherTime Value="408" />
 		</TimeSelection>
 		<SequencerNavigator>
 			<BeatTimeHelper>
-				<CurrentZoom Value="0.298369833690103725" />
+				<CurrentZoom Value="0.130406621086721852" />
 			</BeatTimeHelper>
-			<ScrollerPos X="-600" Y="0" />
+			<ScrollerPos X="-1793" Y="0" />
 			<ClientSize X="1221" Y="704" />
 		</SequencerNavigator>
 		<ViewStateExtendedClipProperties Value="false" />
@@ -12868,7 +13493,7 @@
 		<SoloInPlace Value="true" />
 		<CrossfadeCurve Value="2" />
 		<LatencyCompensation Value="1" />
-		<HighlightedTrackIndex Value="3" />
+		<HighlightedTrackIndex Value="2" />
 		<GroovePool>
 			<LomId Value="0" />
 			<Grooves />

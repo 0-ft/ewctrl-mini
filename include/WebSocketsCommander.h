@@ -32,8 +32,8 @@ private:
     size_t messageBufferLength;
     
     static void WiFiEvent(WiFiEvent_t event);
-    static void listenForConnectionsTask(void* pvParameters);
-    void listenForConnections();
+    // static void listenForConnectionsTask(void* pvParameters);
+    // void listenForConnections();
     uint8_t handleWebSocketMessage(AwsFrameInfo *info, uint8_t *data, size_t len);
     void onWebSocketEvent(AsyncWebSocket *server, AsyncWebSocketClient *client, AwsEventType type, void *arg, uint8_t *data, size_t len);
     static WebSocketsCommander* instance; // Singleton instance

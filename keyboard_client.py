@@ -14,9 +14,12 @@ import errno
 import requests
 import json
 import socket
-
+from readals import generate_patterns
 # Ports for different servers
-SERVERS = [('192.168.0.20', 80), 7032]  # Example: WLED at a specific IP and fader device to be discovered
+SERVERS = {
+    "ewctrl": 7032,
+    "wled": 80
+}
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -29,6 +32,9 @@ class Commandable:
         raise NotImplementedError("This method should be overridden by subclasses")
 
 class FaderClient(Commandable):
+    RETRY_DELAY = 2
+    
+    
     def __init__(self, host, port, command_queue):
         self.host = host
         self.port = port
@@ -76,18 +82,34 @@ class FaderClient(Commandable):
 
         if self.websocket is not None and self.websocket.open:
             # await self.ws_send_check(message)
-            await self.websocket.send(message)
+            await self.websocket.send(message.replace(" ", ""))
             logging.info(f"Sent command to {self.host}:{self.port} - {message}")
 
     async def send_patterns(self):
+        # url = f"http://{self.host}:{self.port}/patterns"
+        # logging.info(f"Sending patterns to {url}")
+        # while True:
+        #     try:
+        #         response = requests.post(url, json=self.patterns)
+        #         if response.status_code == 200:
+        #             logging.info(f"Sent patterns to {self.host}:{self.port}")
+        #         else:
+        #             logging.error(f"Failed to send patterns: HTTP {response.status_code}")
+        #     except Exception as e:
+        #         logging.error(f"Error sending patterns: {e}")
+        #     logging.info(f"Retrying in {self.RETRY_DELAY} seconds...")
+        #     time.sleep(self.RETRY_DELAY)
+                    
+        
         if self.websocket is not None and self.websocket.open:
+            logging.info(f"sending {len(self.patterns)} patterns to {self.host}:{self.port}")
             for pattern in self.patterns:
                 message = json.dumps({
                     "type": 5,
                     "data": pattern
                 })
                 # await self.ws_send_until_success(message)
-                await self.websocket.send(message)
+                await self.websocket.send(message.replace(" ", ""))
                 logging.info(f"Sent a pattern to {self.host}:{self.port}")
             logging.info(f"Sent patterns to {self.host}:{self.port}")
 
@@ -95,7 +117,7 @@ class FaderClient(Commandable):
         ws_url = f"ws://{self.host}:{self.port}/ws"
         logging.info(f"Connecting to WebSocket at {ws_url}")
         try:
-            self.websocket = await websockets.connect(ws_url, max_size=None, ping_interval=2)
+            self.websocket = await websockets.connect(ws_url, max_size=None, ping_interval=2, ping_timeout=2)
             logging.info(f"Connected to WebSocket server at {self.host}:{self.port}")
             await self.send_patterns()
             while True:
@@ -187,18 +209,20 @@ class WLEDClient(Commandable):
         return self.websocket is not None and self.websocket.open
 
 class ServerManager:
-    def __init__(self, servers):
+    def __init__(self):
         self.clients = {}
         self.command_queues = {}
-        for server in servers:
-            if isinstance(server, tuple):
-                ip, port = server
-                self.command_queues[port] = queue.Queue(maxsize=3)
-                threading.Thread(target=self.manage_port_connection, args=(port, ip), daemon=True).start()
-            else:
-                port = server
-                self.command_queues[port] = queue.Queue(maxsize=3)
-                threading.Thread(target=self.manage_port_connection, args=(port,), daemon=True).start()
+        for name, port in SERVERS.items():
+            self.command_queues[name] = queue.Queue(maxsize=3)
+            threading.Thread(target=self.manage_port_connection, args=(name,), daemon=True).start()
+            # if isinstance(server, tuple):
+            #     ip, port = server
+            #     self.command_queues[port] = queue.Queue(maxsize=3)
+            #     threading.Thread(target=self.manage_port_connection, args=(port, ip), daemon=True).start()
+            # else:
+            #     port = server
+            #     self.command_queues[port] = queue.Queue(maxsize=3)
+            #     threading.Thread(target=self.manage_port_connection, args=(port,), daemon=True).start()
 
     def get_lan_devices(self):
         result = subprocess.run(['arp', '-an'], capture_output=True, text=True)
@@ -226,28 +250,28 @@ class ServerManager:
         logging.debug(f"Server not found on the LAN for port {port}.")
         return None
 
-    def manage_port_connection(self, port, ip=None):
+    def manage_port_connection(self, name):
         while True:
-            if port not in self.clients or not self.clients[port].is_connected():
-                server_ip = ip if ip else self.find_server(port)
+            if name not in self.clients or not self.clients[name].is_connected():
+                server_ip = self.find_server(SERVERS[name])
                 if server_ip:
-                    if port == 80:
-                        self.clients[port] = WLEDClient(server_ip, port, self.command_queues[port])
+                    if name == "wled":
+                        self.clients[name] = WLEDClient(server_ip, SERVERS[name], self.command_queues[name])
                     else:
-                        self.clients[port] = FaderClient(server_ip, port, self.command_queues[port])
-                    self.clients[port].connection_thread.join()
+                        self.clients[name] = FaderClient(server_ip, SERVERS[name], self.command_queues[name])
+                    self.clients[name].connection_thread.join()
                 else:
-                    logging.debug(f"Could not find the server on the LAN for port {port}. Retrying...")
+                    logging.debug(f"Could not find the server on the LAN for port {SERVERS[name]}. Retrying...")
             time.sleep(0.5)  # Retry every half second
 
-    def queue_command(self, port, command: str):
-        if port in self.clients and self.clients[port].is_connected():
-            if not self.command_queues[port].full():
-                self.command_queues[port].put(command)
+    def queue_command(self, target_name, command: str):
+        if target_name in self.clients and self.clients[target_name].is_connected():
+            if not self.command_queues[target_name].full():
+                self.command_queues[target_name].put(command)
             else:
-                logging.warning(f"Command queue for port {port} is full. Dropping command.")
+                logging.warning(f"Command queue for server {target_name} is full. Dropping command.")
         else:
-            logging.warning(f"No active connection to server on port {port}. Command discarded.")
+            logging.warning(f"No active connection to server {target_name}. Command discarded.")
 
 class KeyboardCommander:
     DEBOUNCE_TIME = 0.3  # Time in seconds to debounce udev events
@@ -270,11 +294,23 @@ class KeyboardCommander:
         with open(filename, mode='r') as file:
             reader = csv.DictReader(file)
             for row in reader:
-                key = row['key']
-                keymap[key] = {
-                    'port': int(row['port']),
-                    'command': row['command']
-                }
+                key = row['key'].lower()
+                # keymap[key] = {
+                #     'port': int(row['port']),
+                #     'command': row['command']
+                # }
+                keymap[key] = []
+                print(row)
+                if(row["ewctrl"]):
+                    keymap[key].append({
+                        'target': "ewctrl",
+                        'command': f"1,{row['ewctrl']}"
+                    })
+                if(row["wled"]):
+                    keymap[key].append({
+                        'target': "wled",
+                        'command': row['wled']
+                    })
         return keymap
 
     def find_keyboards(self):
@@ -345,18 +381,23 @@ class KeyboardCommander:
                                 if key in self.keymap:
                                     if key_event.keystate == key_event.key_down:
                                         event = self.keymap[key]
-                                        port = event['port']
-                                        command = event['command']
-                                        self.server_manager.queue_command(port, command)
-                                        logging.info(f"Key {key} pressed, sent command {command} to port {port}")
+                                        for target in event:
+                                            self.server_manager.queue_command(target['target'], target['command'])
+                                            logging.info(f"Key {key} pressed, sent command {target['command']} to {target['target']}")
+                                        # port = event['port']
+                                        # command = event['command']
+                                        # self.server_manager.queue_command(port, command)
+                                        # logging.info(f"Key {key} pressed, sent command {command} to port {port}")
                 except OSError as e:
                     if e.errno == errno.ENODEV:
                         logging.warning(f"Device {device.path} removed.")
                         del self.devices[fd]
 
 def main():
-    server_manager = ServerManager(SERVERS)
-    keyboard_commander = KeyboardCommander('keymap.csv', server_manager)
+    # generate_patterns("pridelx_3.als")
+    generate_patterns("/boot/ewctrl/lx.als")
+    server_manager = ServerManager()
+    keyboard_commander = KeyboardCommander('patterns_map.csv', server_manager)
     keyboard_commander.start()
 
 if __name__ == "__main__":

@@ -163,6 +163,24 @@ void handleWifiCommand(JsonDocument& doc)
   ESP_LOGI(TAG, "Handled WifiCommander command type %d", type);
 }
 
+// void handlePostCommand(JsonDocument& doc)
+// {
+//   // ESP_LOGI(TAG, "Handling WifiCommander post");
+//   uint8_t type = doc["type"];
+//   switch(type) {
+//     case WebSocketsCommander::COMMAND_SET_PATTERNS:
+//     {
+//       auto patterns = parseJsonToBezierPatterns(doc["data"]);
+//       faderPlayback.setPatterns(patterns);
+//       break;
+//     }
+//     default:
+//       ESP_LOGW(TAG, "bad POST with event type %d", type);
+//       break;
+//   }
+//   ESP_LOGI(TAG, "Handled WifiCommander post type %d", type);
+// }
+
 
 WebSocketsCommander wifiCommander("COMMANDER", "fadercommand", handleWifiCommand, 0);
 // WiFiCommander wifiCommander("Queens", "trlguest021275", handleWifiCommand);

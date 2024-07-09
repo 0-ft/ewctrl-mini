@@ -35,15 +35,15 @@ void WebSocketsCommander::init()
     server.begin();
     ESP_LOGI(TAG, "WebSocket server started");
 
-    xTaskCreatePinnedToCore(
-        WebSocketsCommander::listenForConnectionsTask,
-        "ListenTask",
-        4096,
-        this,
-        configMAX_PRIORITIES - 1,
-        NULL,
-        core);
-    ESP_LOGI(TAG, "Listening task created and pinned to core %d", core);
+    // xTaskCreatePinnedToCore(
+    //     WebSocketsCommander::listenForConnectionsTask,
+    //     "ListenTask",
+    //     4096,
+    //     this,
+    //     configMAX_PRIORITIES - 1,
+    //     NULL,
+    //     core);
+    // ESP_LOGI(TAG, "Listening task created and pinned to core %d", core);
 }
 
 void WebSocketsCommander::WiFiEvent(WiFiEvent_t event)
@@ -66,32 +66,63 @@ void WebSocketsCommander::WiFiEvent(WiFiEvent_t event)
     }
 }
 
-void WebSocketsCommander::listenForConnectionsTask(void *pvParameters)
-{
-    WebSocketsCommander *commander = static_cast<WebSocketsCommander *>(pvParameters);
-    commander->listenForConnections();
-}
+// void WebSocketsCommander::listenForConnectionsTask(void *pvParameters)
+// {
+//     WebSocketsCommander *commander = static_cast<WebSocketsCommander *>(pvParameters);
+//     commander->listenForConnections();
+// }
 
-void WebSocketsCommander::listenForConnections()
-{
-    esp_task_wdt_add(NULL);
-    while (true)
-    {
-        if (WiFi.status() != WL_CONNECTED)
-        {
-            ESP_LOGI(TAG, "WiFi disconnected, waiting to reconnect...");
-            delay(1000);
-            continue;
-        }
-        ws.cleanupClients();
-        esp_task_wdt_reset();
-        vTaskDelay(1 / portTICK_PERIOD_MS);
-    }
-    esp_task_wdt_delete(NULL);
-}
+// void WebSocketsCommander::listenForConnections()
+// {
+//     esp_task_wdt_add(NULL);
+//     while (true)
+//     {
+//         if (WiFi.status() != WL_CONNECTED)
+//         {
+//             ESP_LOGI(TAG, "WiFi disconnected, waiting to reconnect...");
+//             delay(1000);
+//             continue;
+//         }
+//         ws.cleanupClients();
+//         esp_task_wdt_reset();
+//         vTaskDelay(1 / portTICK_PERIOD_MS);
+//     }
+//     esp_task_wdt_delete(NULL);
+// }
 
 uint8_t WebSocketsCommander::handleWebSocketMessage(AwsFrameInfo *info, uint8_t *data, size_t len)
 {
+
+    // if(info->final && info->index == 0 && info->len == len){
+    //   // the whole message is in a single frame and we got all of its data (max. 1450 bytes)
+    //   if(info->opcode == WS_TEXT) {
+    //     DynamicJsonDocument jsonDoc(65535);
+    //     DeserializationError error = deserializeJson(jsonDoc, data);
+    //     if (error)
+    //     {
+    //         ESP_LOGE(TAG, "deserializeJson() failed: %s", error.c_str());
+    //         delete[] messageBuffer;
+    //         messageBuffer = nullptr;
+    //         return 1;
+    //     }
+
+    //     if (!jsonDoc.containsKey("type") || !jsonDoc.containsKey("data"))
+    //     {
+    //         ESP_LOGE(TAG, "Invalid JSON format");
+    //         delete[] messageBuffer;
+    //         messageBuffer = nullptr;
+    //         return 1;
+    //     }
+
+    //     onEvent(jsonDoc);
+
+    //   } else {
+    //     ESP_LOGE(TAG, "Received non-text frame");
+    //   }
+    // } else {
+    //     ESP_LOGE(TAG, "Received fragmented frame");
+    // }
+    // return 0;
     // ESP_LOGI(TAG, "Received message chunk, index %llu, len %llu, final %d", info->index, info->len, info->final);
 
     if (info->index == 0)
@@ -100,13 +131,13 @@ uint8_t WebSocketsCommander::handleWebSocketMessage(AwsFrameInfo *info, uint8_t 
         {
             delete[] messageBuffer;
         }
-        messageBufferLength = info->len;
+        messageBufferLength = info->len + 1024;
         messageBuffer = new char[messageBufferLength + 1];
         memset(messageBuffer, 0, messageBufferLength + 1);
     }
 
     // check if message buffer is null or message too long
-    if (messageBuffer == nullptr || info->len > messageBufferLength)
+    if (messageBuffer == nullptr || info->index + len > messageBufferLength)
     {
         ESP_LOGE(TAG, "Message buffer is null or message too long");
         return 1;
@@ -117,7 +148,15 @@ uint8_t WebSocketsCommander::handleWebSocketMessage(AwsFrameInfo *info, uint8_t 
     if ((info->index + len) == info->len && info->final)
     {
         ESP_LOGI(TAG, "Received complete message: %s", messageBuffer);
-        DynamicJsonDocument jsonDoc(65535);
+        // check if message is empty
+        if (strlen(messageBuffer) == 0)
+        {
+            ESP_LOGE(TAG, "Message is empty");
+            delete[] messageBuffer;
+            messageBuffer = nullptr;
+            return 1;
+        }
+        DynamicJsonDocument jsonDoc(8192);
         DeserializationError error = deserializeJson(jsonDoc, messageBuffer);
         if (error)
         {
@@ -156,15 +195,6 @@ void WebSocketsCommander::onWebSocketEvent(AsyncWebSocket *server, AsyncWebSocke
         break;
     case WS_EVT_DATA:
     {
-        // uint8_t result = handleWebSocketMessage((AwsFrameInfo *)arg, data, len);
-        // if (result == 0)
-        // {
-        //     client->text("0");
-        // }
-        // else if (result == 1)
-        // {
-        //     client->text("1");
-        // }
         handleWebSocketMessage((AwsFrameInfo *)arg, data, len);
         break;
     }

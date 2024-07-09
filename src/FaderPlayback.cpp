@@ -117,5 +117,5 @@ void FaderPlayback::setPatterns(std::map<std::string, BezierPattern> patterns)
 void FaderPlayback::addPattern(std::string patternName, BezierPattern pattern)
 {
     patterns.insert({patternName, pattern});
-    ESP_LOGI(TAG, "Added pattern %s", patternName.c_str());
+    ESP_LOGE(TAG, "Added pattern %s, now have %d total", patternName.c_str(), patterns.size());
 }

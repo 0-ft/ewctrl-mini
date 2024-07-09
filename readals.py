@@ -15,32 +15,6 @@ def load_als(filepath):
     root = tree.getroot()
     return root
 
-
-
-
-# def create_macro_display_map(audio_effect_group_device):
-#     # Initialize the result dictionary
-#     macro_display_map = {}
-
-#     # Get all MacroDisplayNames elements
-#     macro_display_names = audio_effect_group_device.findall('.//MacroDisplayNames.*')
-    
-#     # Get all MxDFloatParameter elements
-#     mxdfloat_parameters = audio_effect_group_device.findall('.//MxDFloatParameter')
-    
-#     # Create the map
-#     for i, macro_display in enumerate(macro_display_names):
-#         display_name = macro_display.attrib['Value']
-#         # Assuming the index of MacroDisplayNames corresponds to the index of MxDFloatParameter
-#         if i < len(mxdfloat_parameters):
-#             automation_target = mxdfloat_parameters[i].find('.//AutomationTarget')
-#             if automation_target is not None:
-#                 automation_id = automation_target.attrib['Id']
-#                 macro_display_map[display_name] = int(automation_id)
-    
-#     return macro_display_map
-
-
 def find_locators(root):
     locator_elements = root.findall('.//Locator')
     locators = []
@@ -118,121 +92,87 @@ def cut_envelope(envelope, start_time, end_time):
         cut.pop()
     return cut
 
-# #split envelope into multiple envelopes based on locators
-# def split_envelope(envelope, locators):
-#     splits = {}
-#     envelope = sorted(envelope, key=lambda event: event["Time"])
-#     for event in envelope:
-#         for start_locator, end_locator in zip(locators.items(), list(locators.items())[1:]):
-#             start_time = start_locator[1]
-#             start_name = start_locator[0]
-#             end_time = end_locator[1]
-#             if event["Time"] >= start_time and event["Time"] <= end_time:
-#                 splits.setdefault(start_name, []).append(event)
-#     return splits
-
-
 def sanitise_envelope(envelope):
-    # remove points with negative time
     envelope = [event for event in envelope if event["Time"] >= 0]
     
-    # envelope = [{
-    #     "Time": event["Time"],
-    #     "Value": event["Value"],
-    #     "CurveControl1X": event.get("CurveControl1X", 0),
-    #     "CurveControl1Y": event.get("CurveControl1Y", 0),
-    #     "CurveControl2X": event.get("CurveControl2X", 0),
-    #     "CurveControl2Y": event.get("CurveControl2Y", 0)
-    # } if "CurveControl1X" in event else {
-    #     "Time": event["Time"],
-    #     "Value": event["Value"]
-    # } for event in envelope]
-
+    rounding = 2
     envelope = [[
         event["Time"],
-        round(event["Value"] / 127.0, 4),
-        round(event.get("CurveControl1X", 0), 4),
-        round(event.get("CurveControl1Y", 0), 4),
-        round(event.get("CurveControl2X", 0), 4),
-        round(event.get("CurveControl2Y", 0), 4)
+        round(event["Value"] / 127.0, rounding),
+        round(event.get("CurveControl1X", 0), rounding),
+        round(event.get("CurveControl1Y", 0), rounding),
+        round(event.get("CurveControl2X", 0), rounding),
+        round(event.get("CurveControl2Y", 0), rounding)
     ] if "CurveControl1X" in event else [
         event["Time"],
-        round(event["Value"] / 127.0, 4),
+        round(event["Value"] / 127.0, rounding),
     ] for event in envelope
     ]
 
-    # envelope = [{
-    #     "T": event["Time"] - start_time,
-    #     "V": event["Value"],
-    #     "C1X": round(event.get("CurveControl1X", 0), 4),
-    #     "C1Y": round(event.get("CurveControl1Y", 0), 4),
-    #     "C2X": round(event.get("CurveControl2X", 0), 4),
-    #     "C2Y": round(event.get("CurveControl2Y", 0), 4)
-    # } if "CurveControl1X" in event else {
-    #     "T": event["Time"] - start_time,
-    #     "V": event["Value"]
-    # } for event in envelope]
-
-
     return envelope
 
-root = load_als(argv[1])
-pointee_envelopes = read_envelopes(root)
-name_pointees = extract_macro_mappings(root)
+def generate_patterns(filepath):
+    root = load_als(filepath)
+    pointee_envelopes = read_envelopes(root)
+    name_pointees = extract_macro_mappings(root)
 
-name_envelopes = {
-    name: pointee_envelopes[pointee]
-    for name, pointee in name_pointees.items()
-    if pointee in pointee_envelopes
-}
-print(f"Found {len(name_envelopes)} envelopes: {list(name_envelopes.keys())}")
-
-locators = find_locators(root)
-print(f"Found {len(locators)} locators: {locators}")
-
-patterns = {}
-for start_locator, end_locator in zip(locators, locators[1:]):
-    start_name = start_locator[0]
-    start_time = start_locator[1]
-    # end_name = end_locator[0]
-    end_time = end_locator[1]
-    print(f"Pattern {start_name} from {start_time} to {end_time}")
-    patterns[start_name] = {
-        envelope_name: cut_envelope(envelope, start_time, end_time)
-        for envelope_name, envelope in name_envelopes.items()
+    name_envelopes = {
+        name: pointee_envelopes[pointee]
+        for name, pointee in name_pointees.items()
+        if pointee in pointee_envelopes
     }
+    print(f"Found {len(name_envelopes)} envelopes: {list(name_envelopes.keys())}")
+
+    locators = find_locators(root)
+    print(f"Found {len(locators)} locators: {locators}")
+
+    patterns = {}
+    for start_locator, end_locator in zip(locators, locators[1:]):
+        start_name = start_locator[0]
+        start_time = start_locator[1]
+        # end_name = end_locator[0]
+        end_time = end_locator[1]
+        print(f"Pattern {start_name} from {start_time} to {end_time}")
+        patterns[start_name] = {
+            envelope_name: cut_envelope(envelope, start_time, end_time)
+            for envelope_name, envelope in name_envelopes.items()
+        }
+
+    print(patterns)
+
+    to_save = [
+        {
+            "name" : name,
+            "data": [
+                sanitise_envelope(envelope)
+                for name, envelope in sorted(list(envelopes.items()), key=lambda x: x[0])
+            ]
+        }
+        for name, envelopes in patterns.items()
+    ]
+    
+    print(f"generated {len(to_save)} patterns")
+
+    json_out = json.dumps(to_save, indent=2)
+    open("patterns.json", "w").write(json_out)
+    return to_save
+    # exit()
 
 
-to_save = [
-    {
-        "name" : name,
-        "data": [
-            sanitise_envelope(envelope)
-            for envelope in envelopes.values()
-        ]
-    }
-    for name, envelopes in patterns.items()
-]
 
-json_out = json.dumps(to_save, indent=2)
-open("patterns.json", "w").write(json_out)
-exit()
+# final = read_envelopes(root)
+# locators = find_locators(root)
+# # print(locators)
 
+# patterns = {}
+# for envelope_name, envelope in final.items():
+#     splits = split_envelope(envelope, locators)
+#     for locator, section in splits.items():
+#         patterns.setdefault(locator, {})[envelope_name] = section
 
+# final = {
+#     name: sanitise_envelope(envelope)
+#     for name, envelope in final.items()
+# }
 
-final = read_envelopes(root)
-locators = find_locators(root)
-# print(locators)
-
-patterns = {}
-for envelope_name, envelope in final.items():
-    splits = split_envelope(envelope, locators)
-    for locator, section in splits.items():
-        patterns.setdefault(locator, {})[envelope_name] = section
-
-final = {
-    name: sanitise_envelope(envelope)
-    for name, envelope in final.items()
-}
-
-open("patterns.json", "w").write(json.dumps([list(final.values())], indent=2))
+# open("patterns.json", "w").write(json.dumps([list(final.values())], indent=2))
