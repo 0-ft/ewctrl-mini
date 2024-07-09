@@ -184,5 +184,6 @@ void setup()
 void loop()
 {
   faderPlayback.sendFrame();
-  delayMicroseconds(300);
+  vTaskDelay(1 / portTICK_PERIOD_MS);
+  // delayMicroseconds(300);
 }

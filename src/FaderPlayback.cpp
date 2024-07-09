@@ -1,4 +1,3 @@
-
 #include "FaderPlayback.h"
 
 static const char *TAG = "FaderPlayback";
@@ -13,9 +12,6 @@ void FaderPlayback::setup()
         driver.begin();
         driver.setOscillatorFrequency(27000000);
         driver.setPWMFreq(1600);
-        // for(int j=0; j<16; j++) {
-        //     driver.setPin(0, 0, 0);
-        // }
         drivers.push_back(driver);
     }
     ESP_LOGI(TAG, "Set up %d drivers", drivers.size());
@@ -24,53 +20,58 @@ void FaderPlayback::setup()
 
 void FaderPlayback::sendFrame()
 {
-    if(patterns.size() == 0) {
-        // ESP_LOGE(TAG, "No patterns to send");
+    if (activePatterns.empty()) {
         return;
     }
-    const auto maybePattern = patterns.find(currentPatternName);
-    if (maybePattern == patterns.end())
-    {
-        // ESP_LOGD(TAG, "Invalid pattern name %s", currentPatternName.c_str());
-        return;
-    }
-    // ESP_LOGI(TAG, "Sending frame for pattern %s", currentPatternName.c_str());
-    const auto pattern = maybePattern->second;
+
+    std::vector<uint16_t> combinedFrame(availableOutputs, 0);
     const auto now = esp_timer_get_time();
-    const auto deltaTime = (now - patternStartTime) / 1000000.0;
+    double deltaTime;
 
-    // const auto pattern = FADER_PATTERNS[patternIndex];
-    // const auto patternLength = FADER_PATTERN_LENGTHS[patternIndex];
-    // const auto frameIndex = (deltaTime * frameRate / 1000000);
-    // const uint16_t *frame;
-    // if(frameIndex >= patternLength) {
-    //     frame = FADER_FRAME_ZEROES;
-    // } else {
-    //     frame = pattern + (frameIndex * FADER_PATTERN_OUTPUTS_NUM);
-    // }
-    // if (frameIndex != lastFrameIndex)
-    // {
-    //     lastFrameIndex = frameIndex;
-    // }
-    // else
-    // {
-    //     return;
-    // }
+    std::vector<std::string> patternsToRemove;
 
-    const auto frame = pattern.getFrameAtTime(fmod(deltaTime, pattern.duration));
-    for (uint8_t i = 0; i < pattern.numOutputs && i < availableOutputs; i++)
-    {
-        // const auto val = pattern[frameIndex * FADER_PATTERN_OUTPUTS_NUM + i];
-        // Serial.print(String(frame[i]) + "|");
-        // drivers[i / OUTPUTS_PER_DRIVER].setPin(i % OUTPUTS_PER_DRIVER, 4095, false);
-        const uint16_t scaled = ((uint32_t)frame[i] * gain) >> 12;
+    for (const auto& patternName : activePatterns) {
+        const auto maybePattern = patterns.find(patternName);
+        if (maybePattern == patterns.end()) {
+            patternsToRemove.push_back(patternName);
+            continue;
+        }
+        const auto pattern = maybePattern->second;
+        deltaTime = (now - patternStartTime[patternName]) / 1000000.0;
+
+        if (deltaTime > pattern.duration) {
+            patternsToRemove.push_back(patternName);
+            continue;
+        }
+
+        const auto frame = pattern.getFrameAtTime(fmod(deltaTime, pattern.duration));
+
+        for (uint8_t i = 0; i < pattern.numOutputs && i < availableOutputs; i++) {
+            combinedFrame[i] += frame[i]; // Summing up the frames
+        }
+    }
+
+    // clamp the frame to 0-4095
+    for (uint8_t i = 0; i < availableOutputs; i++) {
+        combinedFrame[i] = std::min(4095, (int)combinedFrame[i]);
+    }
+
+    for (const auto& patternName : patternsToRemove) {
+        activePatterns.erase(std::remove(activePatterns.begin(), activePatterns.end(), patternName), activePatterns.end());
+        patternStartTime.erase(patternName);
+        ESP_LOGI(TAG, "Removed pattern %s from active patterns after duration expired", patternName.c_str());
+    }
+
+    for (uint8_t i = 0; i < availableOutputs; i++) {
+        const uint16_t scaled = ((uint32_t)combinedFrame[i] * gain) >> 12;
         drivers[i / OUTPUTS_PER_DRIVER].setPWM(i % OUTPUTS_PER_DRIVER, 0, scaled);
     }
+
     measFramesWritten++;
 
-    if(measFramesWritten == 100) {
+    if (measFramesWritten == 200) {
         const double fps = measFramesWritten / ((now - measStartTime) / 1000000.0);
-        ESP_LOGI(TAG, "FPS: %f", fps);
+        ESP_LOGE(TAG, "FPS: %f", fps);
         measFramesWritten = 0;
         measStartTime = now;
     }
@@ -78,18 +79,26 @@ void FaderPlayback::sendFrame()
 
 void FaderPlayback::goToPattern(std::string patternName)
 {
-    // ESP_LOGI(TAG, "Maybe changing to pattern %s", patternName.c_str());
-    if (patterns.find(patternName) == patterns.end())
-    {
+    if(activePatterns.size() > MAX_CONCURRENT_PATTERNS) {
+        ESP_LOGI(TAG, "Max concurrent patterns reached, not adding %s", patternName.c_str());
+        return;
+    }
+    if (patterns.find(patternName) == patterns.end()) {
         ESP_LOGE(TAG, "Invalid pattern name %s", patternName.c_str());
         return;
     }
-    this->currentPatternName = patternName;
-    this->patternStartTime = esp_timer_get_time();
-    ESP_LOGI(TAG, "Changed to pattern %s", patternName.c_str());
-    // Serial.println("Went to pattern " + String(patternIndex));
-    // frameIndex = 0;
-    // sendFrame();
+    if (std::find(activePatterns.begin(), activePatterns.end(), patternName) == activePatterns.end()) {
+        activePatterns.push_back(patternName);
+    }
+    patternStartTime[patternName] = esp_timer_get_time();
+    ESP_LOGI(TAG, "Started pattern %s", patternName.c_str());
+}
+
+void FaderPlayback::removePattern(std::string patternName)
+{
+    activePatterns.erase(std::remove(activePatterns.begin(), activePatterns.end(), patternName), activePatterns.end());
+    patternStartTime.erase(patternName);
+    ESP_LOGI(TAG, "Removed pattern %s from active patterns", patternName.c_str());
 }
 
 void FaderPlayback::setGain(uint16_t gain)
@@ -97,19 +106,16 @@ void FaderPlayback::setGain(uint16_t gain)
     gain = gain > 4095 ? 4095 : gain;
     this->gain = gain;
     ESP_LOGI(TAG, "Set gain to %d", gain);
-    // sendFrame();
 }
 
 void FaderPlayback::setPatterns(std::map<std::string, BezierPattern> patterns)
 {
     this->patterns = patterns;
     ESP_LOGI(TAG, "Set patterns, count %d", patterns.size());
-    // sendFrame();
 }
 
 void FaderPlayback::addPattern(std::string patternName, BezierPattern pattern)
 {
     patterns.insert({patternName, pattern});
     ESP_LOGI(TAG, "Added pattern %s", patternName.c_str());
-    // sendFrame();
 }

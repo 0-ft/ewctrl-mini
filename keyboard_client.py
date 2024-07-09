@@ -71,7 +71,7 @@ class FaderClient(Commandable):
         ws_url = f"ws://{self.host}:{self.port}/ws"
         logging.info(f"Connecting to WebSocket at {ws_url}")
         try:
-            self.websocket = await websockets.connect(ws_url, max_size=None)
+            self.websocket = await websockets.connect(ws_url, max_size=None, ping_interval=2)
             logging.info(f"Connected to WebSocket server at {self.host}:{self.port}")
             await self.send_patterns()
             while True:
