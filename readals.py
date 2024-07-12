@@ -160,6 +160,14 @@ def generate_patterns(filepath):
 
 
 
+if __name__ == "__main__":
+    if len(argv) < 2:
+        print("Usage: python readals.py <filepath>")
+        exit()
+
+    filepath = argv[1]
+    print(generate_patterns(filepath))
+
 # final = read_envelopes(root)
 # locators = find_locators(root)
 # # print(locators)

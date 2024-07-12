@@ -103,7 +103,7 @@ class FaderClient(Commandable):
         
         if self.websocket is not None and self.websocket.open:
             logging.info(f"sending {len(self.patterns)} patterns to {self.host}:{self.port}")
-            for pattern in self.patterns[:25]:
+            for pattern in self.patterns[:10]:
                 message = json.dumps({
                     "type": 5,
                     "data": pattern
@@ -395,9 +395,10 @@ class KeyboardCommander:
                         del self.devices[fd]
 
 def main():
-    # generate_patterns("pridelx_3.als")
+    # generate_patterns("pridelx_5.als")
     generate_patterns("/boot/ewctrl/lx.als")
     server_manager = ServerManager()
+    # keyboard_commander = KeyboardCommander('newpatmap.csv', server_manager)
     keyboard_commander = KeyboardCommander('/boot/ewctrl/patterns_map.csv', server_manager)
     keyboard_commander.start()
 
