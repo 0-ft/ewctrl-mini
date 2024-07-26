@@ -23,14 +23,16 @@ private:
     uint8_t availableOutputs;
     int64_t measStartTime;
     uint64_t measFramesWritten;
+    std::vector<uint16_t> makeFrame(int64_t time);
 
 public:
     std::vector<std::string> activePatterns; // Vector to store currently active patterns
     uint16_t frameRate;
     std::map<std::string, BezierPattern> patterns;
-
-    FaderPlayback(uint16_t frameRate, uint8_t driverCount, uint8_t* driverAddresses)
-        : frameRate(frameRate), driverCount(driverCount), driverAddresses(driverAddresses) {}
+    std::vector<uint16_t> defaultFrame;
+    std::vector<uint16_t> currentFrame;
+    FaderPlayback(uint16_t frameRate, uint8_t driverCount, uint8_t* driverAddresses, std::vector<uint16_t> defaultFrame = std::vector<uint16_t>(16, 0))
+        : frameRate(frameRate), driverCount(driverCount), driverAddresses(driverAddresses), defaultFrame(defaultFrame) {}
 
     void setup();
     void goToPattern(std::string patternName);

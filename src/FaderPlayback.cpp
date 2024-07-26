@@ -18,14 +18,9 @@ void FaderPlayback::setup()
     availableOutputs = driverCount * OUTPUTS_PER_DRIVER;
 }
 
-void FaderPlayback::sendFrame()
+std::vector<uint16_t> FaderPlayback::makeFrame(int64_t time)
 {
-    if (activePatterns.empty()) {
-        return;
-    }
-
     std::vector<uint16_t> combinedFrame(availableOutputs, 0);
-    const auto now = esp_timer_get_time();
     double deltaTime;
 
     std::vector<std::string> patternsToRemove;
@@ -37,7 +32,7 @@ void FaderPlayback::sendFrame()
             continue;
         }
         const auto pattern = maybePattern->second;
-        deltaTime = (now - patternStartTime[patternName]) / 1000000.0;
+        deltaTime = (time - patternStartTime[patternName]) / 1000000.0;
 
         if (deltaTime > pattern.duration) {
             patternsToRemove.push_back(patternName);
@@ -61,16 +56,29 @@ void FaderPlayback::sendFrame()
         patternStartTime.erase(patternName);
         ESP_LOGI(TAG, "Removed pattern %s from active patterns after duration expired", patternName.c_str());
     }
+    return combinedFrame;
+}
+
+void FaderPlayback::sendFrame()
+{
+    const auto now = esp_timer_get_time();
+
+    const auto newFrame = activePatterns.empty() ? defaultFrame : makeFrame(now);
+    if(newFrame == currentFrame) {
+        return;
+    } else {
+        currentFrame = newFrame;
+        measFramesWritten++;
+    }
 
     for (uint8_t i = 0; i < availableOutputs; i++) {
-        const uint16_t scaled = ((uint32_t)combinedFrame[i] * gain) >> 12;
+        const uint16_t scaled = ((uint32_t)currentFrame[i] * gain) >> 12;
         drivers[i / OUTPUTS_PER_DRIVER].setPWM(i % OUTPUTS_PER_DRIVER, 0, scaled);
     }
 
-    measFramesWritten++;
-
-    if (measFramesWritten == 200) {
-        const double fps = measFramesWritten / ((now - measStartTime) / 1000000.0);
+    const auto measDeltaTime = now - measStartTime;
+    if (measDeltaTime > 1000000) {
+        const double fps = measFramesWritten / (measDeltaTime / 1000000.0);
         ESP_LOGE(TAG, "FPS: %f", fps);
         measFramesWritten = 0;
         measStartTime = now;

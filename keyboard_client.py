@@ -103,7 +103,7 @@ class FaderClient(Commandable):
         
         if self.websocket is not None and self.websocket.open:
             logging.info(f"sending {len(self.patterns)} patterns to {self.host}:{self.port}")
-            for pattern in self.patterns[:10]:
+            for pattern in self.patterns:
                 message = json.dumps({
                     "type": 5,
                     "data": pattern
