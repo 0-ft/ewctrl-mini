@@ -395,11 +395,11 @@ class KeyboardCommander:
                         del self.devices[fd]
 
 def main():
-    # generate_patterns("pridelx_5.als")
-    generate_patterns("/boot/ewctrl/lx.als")
+    generate_patterns("pridelx_5.als")
+    # generate_patterns("/boot/ewctrl/lx.als")
     server_manager = ServerManager()
-    # keyboard_commander = KeyboardCommander('newpatmap.csv', server_manager)
-    keyboard_commander = KeyboardCommander('/boot/ewctrl/patterns_map.csv', server_manager)
+    keyboard_commander = KeyboardCommander('newpatmap.csv', server_manager)
+    # keyboard_commander = KeyboardCommander('/boot/ewctrl/patterns_map.csv', server_manager)
     keyboard_commander.start()
 
 if __name__ == "__main__":
