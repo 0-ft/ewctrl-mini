@@ -16,7 +16,8 @@ public:
         COMMAND_SET_GAIN = 0x02,
         COMMAND_SET_FRAMERATE = 0x03,
         COMMAND_SET_PATTERNS = 0x04,
-        COMMAND_ADD_PATTERN = 0x05
+        COMMAND_ADD_PATTERN = 0x05,
+        COMMAND_CLEAR_PATTERNS = 0x06,
     };
     WebSocketsCommander(const char* ssid, const char* password, void (*onEvent)(JsonDocument& json), BaseType_t core);
     void init();

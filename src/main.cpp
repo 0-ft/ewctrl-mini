@@ -39,6 +39,11 @@ void handleWifiCommand(JsonDocument& doc)
       receivePattern(data);
       break;
     }
+    case WebSocketsCommander::COMMAND_CLEAR_PATTERNS:
+    {
+      faderPlayback.setPatterns({});
+      break;
+    }
     default:
       ESP_LOGW(TAG, "Unknown event type");
       break;

@@ -111,6 +111,10 @@ def sanitise_envelope(envelope):
 
     return envelope
 
+def patterns_size_info(patterns):
+    all = [x for p in patterns for o in p["data"] for s in o for x in s]
+    print(f"Numbers in all patterns: {len(all)}")
+
 def generate_patterns(filepath):
     root = load_als(filepath)
     pointee_envelopes = read_envelopes(root)
@@ -138,7 +142,7 @@ def generate_patterns(filepath):
             for envelope_name, envelope in name_envelopes.items()
         }
 
-    print(patterns)
+    # print(patterns)
 
     to_save = [
         {
@@ -155,6 +159,7 @@ def generate_patterns(filepath):
 
     json_out = json.dumps(to_save, indent=2)
     open("patterns.json", "w").write(json_out)
+    patterns_size_info(to_save)
     return to_save
     # exit()
 

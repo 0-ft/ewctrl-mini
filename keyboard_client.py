@@ -18,7 +18,7 @@ from readals import generate_patterns
 # Ports for different servers
 SERVERS = {
     "ewctrl": 7032,
-    "wled": 80
+    # "wled": 80
 }
 
 # Configure logging
@@ -103,6 +103,12 @@ class FaderClient(Commandable):
         
         if self.websocket is not None and self.websocket.open:
             logging.info(f"sending {len(self.patterns)} patterns to {self.host}:{self.port}")
+
+            # clear patterns
+            await self.websocket.send(json.dumps({
+                "type": 6,
+                "data": {}
+            }))
             for pattern in self.patterns:
                 message = json.dumps({
                     "type": 5,
@@ -110,7 +116,7 @@ class FaderClient(Commandable):
                 })
                 # await self.ws_send_until_success(message)
                 await self.websocket.send(message.replace(" ", ""))
-                sleep(1)
+                time.sleep(0.2)
                 logging.info(f"Sent a pattern to {self.host}:{self.port}")
             logging.info(f"Sent patterns to {self.host}:{self.port}")
 
@@ -301,7 +307,7 @@ class KeyboardCommander:
                 #     'command': row['command']
                 # }
                 keymap[key] = []
-                print(row)
+                # print(row)
                 if(row["ewctrl"]):
                     # cmd = f"1,{row['ewctrl']}" if row
                     keymap[key].append({

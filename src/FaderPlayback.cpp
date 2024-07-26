@@ -126,4 +126,5 @@ void FaderPlayback::addPattern(std::string patternName, BezierPattern pattern)
 {
     patterns.insert({patternName, pattern});
     ESP_LOGE(TAG, "Added pattern %s, now have %d total", patternName.c_str(), patterns.size());
+    ESP_LOGE(TAG, "Used Heap: %u bytes, Free Heap: %u bytes\n", ESP.getHeapSize() - ESP.getFreeHeap(), ESP.getFreeHeap());
 }
