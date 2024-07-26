@@ -116,7 +116,7 @@ class FaderClient(Commandable):
                 })
                 # await self.ws_send_until_success(message)
                 await self.websocket.send(message.replace(" ", ""))
-                time.sleep(0.2)
+                time.sleep(0.1)
                 logging.info(f"Sent a pattern to {self.host}:{self.port}")
             logging.info(f"Sent patterns to {self.host}:{self.port}")
 
@@ -323,6 +323,7 @@ class KeyboardCommander:
 
     def find_keyboards(self):
         devices = [InputDevice(path) for path in list_devices()]
+        print("DEVS", devices)
         keyboards = []
         for device in devices:
             logging.debug(f"Device found: {device.path}, Name: {device.name}")

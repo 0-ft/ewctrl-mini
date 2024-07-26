@@ -80,6 +80,7 @@ void FaderPlayback::sendFrame()
     if (measDeltaTime > 1000000) {
         const double fps = measFramesWritten / (measDeltaTime / 1000000.0);
         ESP_LOGE(TAG, "FPS: %f", fps);
+        ESP_LOGE(TAG, "Sendframe on core %d", xPortGetCoreID());
         measFramesWritten = 0;
         measStartTime = now;
     }
@@ -87,6 +88,7 @@ void FaderPlayback::sendFrame()
 
 void FaderPlayback::goToPattern(std::string patternName)
 {
+    ESP_LOGE(TAG, "Go to pattern on core %d", xPortGetCoreID());
     if(activePatterns.size() > MAX_CONCURRENT_PATTERNS) {
         ESP_LOGI(TAG, "Max concurrent patterns reached, not adding %s", patternName.c_str());
         return;

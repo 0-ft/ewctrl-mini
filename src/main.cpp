@@ -5,7 +5,7 @@
 
 static const char *TAG = "Main";
 
-FaderPlayback faderPlayback(60, 2, new uint8_t[2]{0x40, 0x41}, std::vector<uint16_t>(16, 4096));
+FaderPlayback faderPlayback(60, 2, new uint8_t[2]{0x40, 0x41}, std::vector<uint16_t>(16, 0));
 
 void receivePattern(const JsonObject &doc) {
   ESP_LOGI(TAG, "Received pattern");
