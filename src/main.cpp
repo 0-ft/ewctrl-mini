@@ -75,11 +75,11 @@ void setup()
 {
   ESP_LOGI(TAG, "Setting up");
 
-  wifiCommander.init();
-
   faderPlayback.setup();
   faderPlayback.goToPattern("test");
   faderPlayback.setGain(4095);
+
+  wifiCommander.init();
 }
 
 void loop()
