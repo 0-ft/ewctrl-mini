@@ -116,7 +116,7 @@ class FaderClient(Commandable):
                 })
                 # await self.ws_send_until_success(message)
                 await self.websocket.send(message.replace(" ", ""))
-                time.sleep(0.1)
+                time.sleep(0.15)
                 logging.info(f"Sent a pattern to {self.host}:{self.port}")
             logging.info(f"Sent patterns to {self.host}:{self.port}")
 

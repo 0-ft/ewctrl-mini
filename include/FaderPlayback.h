@@ -31,6 +31,9 @@ public:
     std::map<std::string, BezierPattern> patterns;
     std::vector<uint16_t> defaultFrame;
     std::vector<uint16_t> currentFrame;
+
+    std::vector<uint16_t> multiplier = std::vector<uint16_t>(16, 4096);
+
     FaderPlayback(uint16_t frameRate, uint8_t driverCount, uint8_t* driverAddresses, std::vector<uint16_t> defaultFrame = std::vector<uint16_t>(16, 0))
         : frameRate(frameRate), driverCount(driverCount), driverAddresses(driverAddresses), defaultFrame(defaultFrame) {}
 
@@ -41,6 +44,7 @@ public:
     void setGain(uint16_t gain);
     void setPatterns(std::map<std::string, BezierPattern> patterns);
     void addPattern(std::string patternName, BezierPattern pattern);
+    void setMultiplier(std::vector<uint16_t> multiplier);
 };
 
 #endif // PLAYBACK_H

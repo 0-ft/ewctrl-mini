@@ -1,6 +1,4 @@
 #include "BezierEnvelope.h"
-#include <iostream> // For logging, assuming using std::cout for simplicity
-#include <esp_log.h>
 
 static const char *TAG = "BezierEnvelope";
 

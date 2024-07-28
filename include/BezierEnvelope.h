@@ -4,6 +4,7 @@
 #include <vector>
 #include <limits>
 #include "bezier.h"  // Assuming you have a Bezier library
+#include <esp_log.h>
 
 struct FloatEvent {
     double Time;

@@ -6,7 +6,7 @@
 #include <ArduinoJson.h>
 #include <esp_log.h>
 #include <vector>
-#include <esp_task_wdt.h>
+// #include <esp_task_wdt.h>
 #include <numeric>
 
 class WebSocketsCommander {

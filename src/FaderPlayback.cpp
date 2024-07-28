@@ -80,7 +80,7 @@ void FaderPlayback::sendFrame()
     if (measDeltaTime > 1000000) {
         const double fps = measFramesWritten / (measDeltaTime / 1000000.0);
         ESP_LOGE(TAG, "FPS: %f", fps);
-        ESP_LOGE(TAG, "Sendframe on core %d", xPortGetCoreID());
+        // ESP_LOGE(TAG, "Sendframe on core %d", xPortGetCoreID());
         measFramesWritten = 0;
         measStartTime = now;
     }
@@ -88,7 +88,7 @@ void FaderPlayback::sendFrame()
 
 void FaderPlayback::goToPattern(std::string patternName)
 {
-    ESP_LOGE(TAG, "Go to pattern on core %d", xPortGetCoreID());
+    // ESP_LOGE(TAG, "Go to pattern on core %d", xPortGetCoreID());
     if(activePatterns.size() > MAX_CONCURRENT_PATTERNS) {
         ESP_LOGI(TAG, "Max concurrent patterns reached, not adding %s", patternName.c_str());
         return;
@@ -129,4 +129,10 @@ void FaderPlayback::addPattern(std::string patternName, BezierPattern pattern)
     patterns.insert({patternName, pattern});
     ESP_LOGE(TAG, "Added pattern %s, now have %d total", patternName.c_str(), patterns.size());
     ESP_LOGE(TAG, "Used Heap: %u bytes, Free Heap: %u bytes\n", ESP.getHeapSize() - ESP.getFreeHeap(), ESP.getFreeHeap());
+}
+
+void FaderPlayback::setMultiplier(std::vector<uint16_t> multiplier)
+{
+    this->multiplier = multiplier;
+    ESP_LOGI(TAG, "Set multiplier");
 }
