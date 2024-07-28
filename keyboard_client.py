@@ -1,5 +1,6 @@
 import asyncio
 import websockets
+from websockets.client import WebSocketClientProtocol
 import threading
 import queue
 import logging
@@ -31,6 +32,11 @@ class Commandable:
     def is_connected(self) -> bool:
         raise NotImplementedError("This method should be overridden by subclasses")
 
+class CustomWebSocketClientProtocol(WebSocketClientProtocol):
+    async def ping(self, data=None):
+        logging.info("Ping sent")
+        return await super().ping(data)
+
 class FaderClient(Commandable):
     RETRY_DELAY = 2
     
@@ -40,7 +46,7 @@ class FaderClient(Commandable):
         self.port = port
         self.command_queue = command_queue
         self.websocket = None
-        self.patterns = json.load(open('patterns.json'))
+        self.patterns = json.load(open('patterns_test.json'))
         self.connection_thread = threading.Thread(target=self.manage_connection, daemon=True)
         self.connection_thread.start()
 
@@ -66,56 +72,34 @@ class FaderClient(Commandable):
             logging.error("Failed to send command, retrying...")
             time.sleep(0.05)
 
-    async def send_command(self, command: str):
-        parts = command.split(',')
-        if len(parts) != 2:
-            logging.error(f"Invalid command format: {command}")
-            return
-
-        command_type = int(parts[0])
-        command_data = parts[1]
-
+    async def send_command(self, command: tuple):
+        command_type, command_data = command
         message = json.dumps({
             "type": command_type,
             "data": command_data
         })
-
+        # try:
+        #     pong_waiter = await self.websocket.ping()
+        #     logging.info("sent ping...")
+        #     await pong_waiter
+        #     logging.info("pong received")
+        # except Exception as e:
+        #     logging.error(f"Error sending ping: {e}")
+        #     self.websocket = None
+        #     return
         if self.websocket is not None and self.websocket.open:
             # await self.ws_send_check(message)
             await self.websocket.send(message.replace(" ", ""))
             logging.info(f"Sent command to {self.host}:{self.port} - {message}")
 
     async def send_patterns(self):
-        # url = f"http://{self.host}:{self.port}/patterns"
-        # logging.info(f"Sending patterns to {url}")
-        # while True:
-        #     try:
-        #         response = requests.post(url, json=self.patterns)
-        #         if response.status_code == 200:
-        #             logging.info(f"Sent patterns to {self.host}:{self.port}")
-        #         else:
-        #             logging.error(f"Failed to send patterns: HTTP {response.status_code}")
-        #     except Exception as e:
-        #         logging.error(f"Error sending patterns: {e}")
-        #     logging.info(f"Retrying in {self.RETRY_DELAY} seconds...")
-        #     time.sleep(self.RETRY_DELAY)
-                    
-        
         if self.websocket is not None and self.websocket.open:
             logging.info(f"sending {len(self.patterns)} patterns to {self.host}:{self.port}")
 
             # clear patterns
-            await self.websocket.send(json.dumps({
-                "type": 6,
-                "data": {}
-            }))
+            await self.send_command((6, {}))
             for pattern in self.patterns:
-                message = json.dumps({
-                    "type": 5,
-                    "data": pattern
-                })
-                # await self.ws_send_until_success(message)
-                await self.websocket.send(message.replace(" ", ""))
+                await self.send_command((5, pattern))
                 time.sleep(0.15)
                 logging.info(f"Sent a pattern to {self.host}:{self.port}")
             logging.info(f"Sent patterns to {self.host}:{self.port}")
@@ -124,7 +108,7 @@ class FaderClient(Commandable):
         ws_url = f"ws://{self.host}:{self.port}/ws"
         logging.info(f"Connecting to WebSocket at {ws_url}")
         try:
-            self.websocket = await websockets.connect(ws_url, max_size=None, ping_interval=2, ping_timeout=2)
+            self.websocket = await websockets.connect(ws_url, max_size=None, ping_interval=2, ping_timeout=2, create_protocol=CustomWebSocketClientProtocol)
             logging.info(f"Connected to WebSocket server at {self.host}:{self.port}")
             await self.send_patterns()
             while True:
@@ -220,7 +204,7 @@ class ServerManager:
         self.clients = {}
         self.command_queues = {}
         for name, port in SERVERS.items():
-            self.command_queues[name] = queue.Queue(maxsize=3)
+            self.command_queues[name] = queue.Queue(maxsize=10)
             threading.Thread(target=self.manage_port_connection, args=(name,), daemon=True).start()
             # if isinstance(server, tuple):
             #     ip, port = server
@@ -274,7 +258,10 @@ class ServerManager:
     def queue_command(self, target_name, command: str):
         if target_name in self.clients and self.clients[target_name].is_connected():
             if not self.command_queues[target_name].full():
-                self.command_queues[target_name].put(command)
+                try:
+                    self.command_queues[target_name].put(command, block=False)
+                except queue.Full:
+                    logging.warning(f"Command queue for server {target_name} is full. Dropping command.")
             else:
                 logging.warning(f"Command queue for server {target_name} is full. Dropping command.")
         else:
@@ -283,7 +270,8 @@ class ServerManager:
 class KeyboardCommander:
     DEBOUNCE_TIME = 0.3  # Time in seconds to debounce udev events
 
-    def __init__(self, keymap_file, server_manager):
+    def __init__(self, server_manager, keymap_file, multipliers_file=None):
+        self.multipliers = self.load_multipliers(multipliers_file) if multipliers_file else {}
         self.keymap = self.load_keymap(keymap_file)
         self.server_manager = server_manager
         self.devices = {}
@@ -295,6 +283,15 @@ class KeyboardCommander:
         self.debounce_timer = None
         self.debounce_lock = threading.Lock()
         self.update_keyboards()
+
+    def load_multipliers(self, filename):
+        multipliers = {}
+        with open(filename, mode='r') as file:
+            reader = csv.DictReader(file)
+            for row in reader:
+                name = row['name'].lower()
+                multipliers[name] = json.loads(row['multiplier'])
+        return multipliers
 
     def load_keymap(self, filename):
         keymap = {}
@@ -310,11 +307,19 @@ class KeyboardCommander:
                 # print(row)
                 if(row["ewctrl"]):
                     # cmd = f"1,{row['ewctrl']}" if row
+                    command_type, command_data = row['ewctrl'].split(':')
+                    if command_type == "pattern":
+                        command = (1, command_data)
+                    elif command_type == "multiplier_raw":
+                        command = (7, json.loads(command_data))
+                    elif command_type == "multiplier":
+                        command = (7, self.multipliers[command_data])
+                    logging.info(f"Adding command: {command} for key {key}")
                     keymap[key].append({
                         'target': "ewctrl",
-                        'command': f"1,{row['ewctrl']}"
+                        'command': command
                     })
-                if(row["wled"]):
+                if("wled" in row and row["wled"]):
                     keymap[key].append({
                         'target': "wled",
                         'command': row['wled']
@@ -323,7 +328,7 @@ class KeyboardCommander:
 
     def find_keyboards(self):
         devices = [InputDevice(path) for path in list_devices()]
-        print("DEVS", devices)
+        # print("DEVS", devices)
         keyboards = []
         for device in devices:
             logging.debug(f"Device found: {device.path}, Name: {device.name}")
@@ -392,7 +397,7 @@ class KeyboardCommander:
                                         event = self.keymap[key]
                                         for target in event:
                                             self.server_manager.queue_command(target['target'], target['command'])
-                                            logging.info(f"Key {key} pressed, sent command {target['command']} to {target['target']}")
+                                            logging.info(f"Key {key} pressed, queued command {target['command']} for {target['target']}")
                                         # port = event['port']
                                         # command = event['command']
                                         # self.server_manager.queue_command(port, command)
@@ -403,10 +408,10 @@ class KeyboardCommander:
                         del self.devices[fd]
 
 def main():
-    generate_patterns("pridelx_3.als")
+    # generate_patterns("pridelx_3.als")
     # generate_patterns("/boot/ewctrl/lx.als")
     server_manager = ServerManager()
-    keyboard_commander = KeyboardCommander('patterns_map.csv', server_manager)
+    keyboard_commander = KeyboardCommander(server_manager, 'map_test.csv', multipliers_file='multipliers_test.csv')
     # keyboard_commander = KeyboardCommander('/boot/ewctrl/patterns_map.csv', server_manager)
     keyboard_commander.start()
 

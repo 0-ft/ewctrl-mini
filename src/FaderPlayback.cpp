@@ -46,9 +46,11 @@ std::vector<uint16_t> FaderPlayback::makeFrame(int64_t time)
         }
     }
 
-    // clamp the frame to 0-4095
+    // clamp the frame to 0-4095, apply gain and multiplier
     for (uint8_t i = 0; i < availableOutputs; i++) {
         combinedFrame[i] = std::min(4095, (int)combinedFrame[i]);
+        combinedFrame[i] = ((uint32_t)combinedFrame[i] * gain) >> 12;
+        combinedFrame[i] = ((uint32_t)combinedFrame[i] * multiplier[i]) >> 12;
     }
 
     for (const auto& patternName : patternsToRemove) {
@@ -61,7 +63,18 @@ std::vector<uint16_t> FaderPlayback::makeFrame(int64_t time)
 
 void FaderPlayback::sendFrame()
 {
+    measFrameLoops++;
     const auto now = esp_timer_get_time();
+    const auto measDeltaTime = now - measStartTime;
+    if (measDeltaTime > measReportTime) {
+        const double fps = measFramesWritten / (measDeltaTime / float(measReportTime));
+        const double lps = measFrameLoops / (measDeltaTime / float(measReportTime));
+        ESP_LOGE(TAG, "FPS: %f, LPS: %f", fps, lps);
+        // ESP_LOGE(TAG, "Sendframe on core %d", xPortGetCoreID());
+        measFramesWritten = 0;
+        measFrameLoops = 0;
+        measStartTime = now;
+    }
 
     const auto newFrame = activePatterns.empty() ? defaultFrame : makeFrame(now);
     if(newFrame == currentFrame) {
@@ -72,18 +85,9 @@ void FaderPlayback::sendFrame()
     }
 
     for (uint8_t i = 0; i < availableOutputs; i++) {
-        const uint16_t scaled = ((uint32_t)currentFrame[i] * gain) >> 12;
-        drivers[i / OUTPUTS_PER_DRIVER].setPWM(i % OUTPUTS_PER_DRIVER, 0, scaled);
+        drivers[i / OUTPUTS_PER_DRIVER].setPWM(i % OUTPUTS_PER_DRIVER, 0, currentFrame[i]);
     }
 
-    const auto measDeltaTime = now - measStartTime;
-    if (measDeltaTime > 1000000) {
-        const double fps = measFramesWritten / (measDeltaTime / 1000000.0);
-        ESP_LOGE(TAG, "FPS: %f", fps);
-        // ESP_LOGE(TAG, "Sendframe on core %d", xPortGetCoreID());
-        measFramesWritten = 0;
-        measStartTime = now;
-    }
 }
 
 void FaderPlayback::goToPattern(std::string patternName)

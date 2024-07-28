@@ -1,0 +1,4 @@
+key,ewctrl
+key_a,pattern:p0
+key_b,"multiplier:all"
+key_c,"multiplier:blue"

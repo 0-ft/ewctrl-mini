@@ -22,8 +22,11 @@ private:
     uint16_t lastFrameIndex;
     uint8_t availableOutputs;
     int64_t measStartTime;
-    uint64_t measFramesWritten;
     std::vector<uint16_t> makeFrame(int64_t time);
+
+    uint16_t measFramesWritten;
+    uint16_t measFrameLoops;
+    uint64_t measReportTime = 2000000;
 
 public:
     std::vector<std::string> activePatterns; // Vector to store currently active patterns

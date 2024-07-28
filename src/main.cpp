@@ -44,6 +44,15 @@ void handleWifiCommand(JsonDocument& doc)
       faderPlayback.setPatterns({});
       break;
     }
+    case WebSocketsCommander::COMMAND_SET_MULTIPLIER:
+    {
+      std::vector<uint16_t> multiplier;
+      for (JsonVariant value : doc["data"].as<JsonArray>()) {
+        multiplier.push_back(value);
+      }
+      faderPlayback.setMultiplier(multiplier);
+      break;
+    }
     default:
       ESP_LOGW(TAG, "Unknown event type");
       break;
@@ -51,29 +60,12 @@ void handleWifiCommand(JsonDocument& doc)
   ESP_LOGI(TAG, "Handled WifiCommander command type %d", type);
 }
 
-// void handlePostCommand(JsonDocument& doc)
-// {
-//   // ESP_LOGI(TAG, "Handling WifiCommander post");
-//   uint8_t type = doc["type"];
-//   switch(type) {
-//     case WebSocketsCommander::COMMAND_SET_PATTERNS:
-//     {
-//       auto patterns = parseJsonToBezierPatterns(doc["data"]);
-//       faderPlayback.setPatterns(patterns);
-//       break;
-//     }
-//     default:
-//       ESP_LOGW(TAG, "bad POST with event type %d", type);
-//       break;
-//   }
-//   ESP_LOGI(TAG, "Handled WifiCommander post type %d", type);
-// }
-
 
 // WebSocketsCommander wifiCommander("COMMANDER", "fadercommand", handleWifiCommand, 0);
 // WiFiCommander wifiCommander("Queens", "trlguest021275", handleWifiCommand);
 // WebSocketsCommander wifiCommander("Queens", "trlguest021275", handleWifiCommand, 0);
 WebSocketsCommander wifiCommander("190bpm hardcore steppas", "fungible", handleWifiCommand, 0);
+// WebSocketsCommander wifiCommander("TP-LINK_2C5EE8", "85394919", handleWifiCommand, 0);
 // WiFiCommander wifiCommander("190bpm hardcore steppas", "fungible", handleWifiCommand);
 
 void setup()
