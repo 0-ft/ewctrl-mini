@@ -6,8 +6,8 @@ from lxml import etree as ET
 import logging
 
 def load_als(filepath):
-    with gzip.open(filepath, "r") as xml:
-        open("als.xml", "wb").write(xml.read())
+    # with gzip.open(filepath, "r") as xml:
+    #     open("als.xml", "wb").write(xml.read())
 
     with gzip.open(filepath, "r") as xml:
         tree = ET.parse(xml)

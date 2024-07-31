@@ -5,7 +5,7 @@ import threading
 import time
 
 import websockets
-from common import Commandable, KeyMapEntry
+from common import Commandable, KeyMapEntry, CustomWebSocketClientProtocol
 
 
 class FaderClient(Commandable):
@@ -16,7 +16,7 @@ class FaderClient(Commandable):
         self.port = port
         self.command_queue = command_queue
         self.websocket = None
-        self.patterns = json.load(open('patterns_test.json'))
+        self.patterns = json.load(open('patterns.json'))
         self.connection_thread = threading.Thread(target=self.manage_connection, daemon=True)
         self.connection_thread.start()
 
