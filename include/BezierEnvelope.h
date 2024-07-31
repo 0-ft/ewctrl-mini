@@ -5,28 +5,29 @@
 #include <limits>
 #include "bezier.h"  // Assuming you have a Bezier library
 #include <esp_log.h>
+#include "Bezier.h"
 
 struct FloatEvent {
-    double Time;
+    float Time;
     float Value;
-    double CurveControl1X;
-    double CurveControl1Y;
-    double CurveControl2X;
-    double CurveControl2Y;
+    float CurveControl1X;
+    float CurveControl1Y;
+    float CurveControl2X;
+    float CurveControl2Y;
     bool HasCurveControls;
 };
 
 struct BezierSegment {
-    double StartTime;
-    double EndTime;
-    bezier::Bezier<3> BezierCurve;
+    float StartTime;
+    float EndTime;
+    CurveSegment curve;
 };
 
 class BezierEnvelope {
 public:
     BezierEnvelope(const std::vector<FloatEvent>& events);
-    double sampleAtTime(double time) const;
-    double duration;
+    float sampleAtTime(float time) const;
+    float duration;
 
 private:
     std::vector<BezierSegment> bezierSegments;

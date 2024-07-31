@@ -23,41 +23,39 @@ std::vector<BezierSegment> BezierEnvelope::loadEnvelope(const std::vector<FloatE
             continue;
         }
 
-        std::vector<bezier::Point> controlPoints;
-        if (startEvent.HasCurveControls) {
-            controlPoints = {
-                bezier::Point(startEvent.Time, startEvent.Value),
-                bezier::Point(startEvent.Time + (endEvent.Time - startEvent.Time) * startEvent.CurveControl1X, startEvent.Value + (endEvent.Value - startEvent.Value) * startEvent.CurveControl1Y),
-                bezier::Point(startEvent.Time + (endEvent.Time - startEvent.Time) * startEvent.CurveControl2X, startEvent.Value + (endEvent.Value - startEvent.Value) * startEvent.CurveControl2Y),
-                bezier::Point(endEvent.Time, endEvent.Value)
-            };
-        } else {
-            // For linear interpolation, create a cubic Bezier curve with collinear control points
-            controlPoints = {
-                bezier::Point(startEvent.Time, startEvent.Value),
-                bezier::Point((2 * startEvent.Time + endEvent.Time) / 3, (2 * startEvent.Value + endEvent.Value) / 3),
-                bezier::Point((startEvent.Time + 2 * endEvent.Time) / 3, (startEvent.Value + 2 * endEvent.Value) / 3),
-                bezier::Point(endEvent.Time, endEvent.Value)
-            };
-        }
+        // std::vector<bezier::Point> controlPoints;
+        CurveSegment curveSegment = startEvent.HasCurveControls ? 
+            CurveSegment({
+                Vec2(startEvent.Time, startEvent.Value),
+                Vec2(startEvent.Time + (endEvent.Time - startEvent.Time) * startEvent.CurveControl1X, startEvent.Value + (endEvent.Value - startEvent.Value) * startEvent.CurveControl1Y),
+                Vec2(startEvent.Time + (endEvent.Time - startEvent.Time) * startEvent.CurveControl2X, startEvent.Value + (endEvent.Value - startEvent.Value) * startEvent.CurveControl2Y),
+                Vec2(endEvent.Time, endEvent.Value)
+            }) : 
+            CurveSegment(Vec2(startEvent.Time, startEvent.Value), Vec2(endEvent.Time, endEvent.Value));
+            // controlPoints = {
+            //     Vec2(startEvent.Time, startEvent.Value),
+            //     Vec2((2 * startEvent.Time + endEvent.Time) / 3, (2 * startEvent.Value + endEvent.Value) / 3),
+            //     Vec2((startEvent.Time + 2 * endEvent.Time) / 3, (startEvent.Value + 2 * endEvent.Value) / 3),
+            //     Vec2(endEvent.Time, endEvent.Value)
+            // };
 
         // Log all control points
         // std::cout << "SEG\n";
         // for (auto& point : controlPoints) {
         //     std::cout << "Control point: " << point.x << ", " << point.y << '\n';
         // }
-        bezier::Bezier<3> bezierCurve(controlPoints);
-        bezierSegments.push_back({startEvent.Time, endEvent.Time, bezierCurve});
+        // bezier::Bezier<3> bezierCurve(controlPoints);
+        bezierSegments.push_back({startEvent.Time, endEvent.Time, curveSegment});
     }
 
     return bezierSegments;
 }
 
-double BezierEnvelope::sampleAtTime(double time) const {
+float BezierEnvelope::sampleAtTime(float time) const {
     for (const auto& segment : bezierSegments) {
         if (segment.StartTime <= time && time <= segment.EndTime) {
-            double t = (time - segment.StartTime) / (segment.EndTime - segment.StartTime);
-            return segment.BezierCurve.valueAt(t).y;
+            float t = (time - segment.StartTime) / (segment.EndTime - segment.StartTime);
+            return segment.curve.valueAt(t).y;
         }
     }
 
