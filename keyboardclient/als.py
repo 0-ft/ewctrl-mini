@@ -2,8 +2,8 @@ import gzip
 import json
 import re
 from sys import argv
-import numpy as np
 from lxml import etree as ET
+import logging
 
 def load_als(filepath):
     with gzip.open(filepath, "r") as xml:
@@ -81,7 +81,7 @@ def read_envelopes(root):
     return pointee_envelopes
 
 def cut_envelope(envelope, start_time, end_time):
-    # print(f"cutting envelope {envelope} from {start_time} to {end_time}")
+    # logging.debug(f"Cutting envelope {envelope} from {start_time} to {end_time}")
     cut = [
         (event | { "Time": event["Time"] - start_time})
         for event in envelope
@@ -113,7 +113,7 @@ def sanitise_envelope(envelope):
 
 def patterns_size_info(patterns):
     all = [x for p in patterns for o in p["data"] for s in o for x in s]
-    print(f"Numbers in all patterns: {len(all)}")
+    return len(all)
 
 def generate_patterns(filepath):
     root = load_als(filepath)
@@ -125,10 +125,10 @@ def generate_patterns(filepath):
         for name, pointee in name_pointees.items()
         if pointee in pointee_envelopes
     }
-    print(f"Found {len(name_envelopes)} envelopes: {list(name_envelopes.keys())}")
+    logging.debug(f"Found {len(name_envelopes)} envelopes: {list(name_envelopes.keys())}")
 
     locators = find_locators(root)
-    print(f"Found {len(locators)} locators: {locators}")
+    logging.debug(f"Found {len(locators)} locators: {locators}")
 
     patterns = {}
     for start_locator, end_locator in zip(locators, locators[1:]):
@@ -136,13 +136,11 @@ def generate_patterns(filepath):
         start_time = start_locator[1]
         # end_name = end_locator[0]
         end_time = end_locator[1]
-        print(f"Pattern {start_name} from {start_time} to {end_time}")
+        logging.debug(f"Cutting pattern {start_name} from {start_time} to {end_time}")
         patterns[start_name] = {
             envelope_name: cut_envelope(envelope, start_time, end_time)
             for envelope_name, envelope in name_envelopes.items()
         }
-
-    # print(patterns)
 
     to_save = [
         {
@@ -155,11 +153,11 @@ def generate_patterns(filepath):
         for name, envelopes in patterns.items()
     ]
     
-    print(f"generated {len(to_save)} patterns")
+    logging.info(f"Loaded {len(to_save)} patterns")
 
     json_out = json.dumps(to_save, indent=2)
     open("patterns.json", "w").write(json_out)
-    patterns_size_info(to_save)
+    logging.info(f"Total value count in all patterns: {patterns_size_info(to_save)}")
     return to_save
     # exit()
 
@@ -167,25 +165,8 @@ def generate_patterns(filepath):
 
 if __name__ == "__main__":
     if len(argv) < 2:
-        print("Usage: python readals.py <filepath>")
+        logging.error("Usage: python readals.py <filepath>")
         exit()
 
     filepath = argv[1]
     print(generate_patterns(filepath))
-
-# final = read_envelopes(root)
-# locators = find_locators(root)
-# # print(locators)
-
-# patterns = {}
-# for envelope_name, envelope in final.items():
-#     splits = split_envelope(envelope, locators)
-#     for locator, section in splits.items():
-#         patterns.setdefault(locator, {})[envelope_name] = section
-
-# final = {
-#     name: sanitise_envelope(envelope)
-#     for name, envelope in final.items()
-# }
-
-# open("patterns.json", "w").write(json.dumps([list(final.values())], indent=2))

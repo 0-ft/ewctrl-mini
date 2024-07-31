@@ -32,7 +32,7 @@ std::vector<uint16_t> FaderPlayback::makeFrame(int64_t time)
             continue;
         }
         const auto pattern = maybePattern->second;
-        deltaTime = ((time - patternPlayback.startTime) / 1000000.0) * speedMultiplier;
+        deltaTime = ((time - patternPlayback.startTime) / 1000000.0) * speed;
 
         if (!patternPlayback.loop && deltaTime > pattern.duration) {
             patternsToRemove.push_back(patternPlayback.name);
@@ -54,7 +54,7 @@ std::vector<uint16_t> FaderPlayback::makeFrame(int64_t time)
     }
 
     for (const auto& patternName : patternsToRemove) {
-        removePattern(patternName);
+        stopPattern(patternName);
         // activePatterns.erase(std::remove(activePatterns.begin(), activePatterns.end(), patternName), activePatterns.end());
         // ESP_LOGI(TAG, "Removed pattern %s from active patterns after duration expired", patternName.c_str());
     }
@@ -132,7 +132,7 @@ void FaderPlayback::startPattern(std::string patternName, bool loop)
     ESP_LOGI(TAG, "Started pattern %s", patternName.c_str());
 }
 
-void FaderPlayback::removePattern(std::string patternName)
+void FaderPlayback::stopPattern(std::string patternName)
 {
     // remove from activepatterns
     activePatterns.erase(std::remove_if(activePatterns.begin(), activePatterns.end(), [patternName](const PatternPlayback& pattern) {
@@ -157,8 +157,11 @@ void FaderPlayback::setPatterns(std::map<std::string, BezierPattern> patterns)
 void FaderPlayback::addPattern(std::string patternName, BezierPattern pattern)
 {
     patterns.insert({patternName, pattern});
-    ESP_LOGE(TAG, "Added pattern %s, now have %d total", patternName.c_str(), patterns.size());
-    ESP_LOGE(TAG, "Used Heap: %u bytes, Free Heap: %u bytes\n", ESP.getHeapSize() - ESP.getFreeHeap(), ESP.getFreeHeap());
+    
+    uint32_t heapSize  = ESP.getHeapSize();
+    uint32_t usedHeap = heapSize - ESP.getFreeHeap();
+    float heapUsage = float(usedHeap) / heapSize;
+    ESP_LOGE(TAG, "Added pattern %s, now have %d total, heap at %f (%d / %d)", patternName.c_str(), patterns.size(), heapUsage, usedHeap, heapSize);
 }
 
 void FaderPlayback::setMultiplier(std::vector<uint16_t> multiplier)
@@ -167,8 +170,8 @@ void FaderPlayback::setMultiplier(std::vector<uint16_t> multiplier)
     ESP_LOGI(TAG, "Set multiplier");
 }
 
-void FaderPlayback::setSpeedMultiplier(float speedMultiplier)
+void FaderPlayback::setSpeed(float speed)
 {
-    this->speedMultiplier = speedMultiplier;
-    ESP_LOGI(TAG, "Set speed multiplier to %.2f", speedMultiplier);
+    this->speed = speed;
+    ESP_LOGI(TAG, "Set speed multiplier to %.2f", speed);
 }

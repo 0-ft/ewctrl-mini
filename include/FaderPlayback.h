@@ -27,7 +27,7 @@ private:
     std::vector<Adafruit_PWMServoDriver> drivers;
     const uint8_t MAX_CONCURRENT_PATTERNS = 10;
 
-    float speedMultiplier = 1;
+    float speed = 1;
     uint16_t gain;
     uint16_t lastFrameIndex;
     uint8_t availableOutputs;
@@ -47,7 +47,7 @@ public:
 
     void setup();
     void startPattern(std::string patternName, bool loop = false);
-    void removePattern(std::string patternName);
+    void stopPattern(std::string patternName);
     void sendFrame();
     void setGain(uint16_t gain);
     void setPatterns(std::map<std::string, BezierPattern> patterns);
@@ -55,7 +55,7 @@ public:
     void setMultiplier(std::vector<uint16_t> multiplier);
 
     void flashAll(uint8_t times);
-    void setSpeedMultiplier(float speedMultiplier);
+    void setSpeed(float speedMultiplier);
 };
 
 #endif // PLAYBACK_H

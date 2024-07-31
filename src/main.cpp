@@ -18,14 +18,17 @@ void handleWifiCommand(JsonDocument& doc)
   // ESP_LOGI(TAG, "Handling WifiCommander command");
   uint8_t type = doc["type"];
   switch(type) {
-    case WebSocketsCommander::COMMAND_SET_PATTERN:
-      faderPlayback.startPattern(doc["data"]);
+    case WebSocketsCommander::COMMAND_START_PATTERN:
+      faderPlayback.startPattern(doc["data"]["name"], doc["data"]["loop"]);
+      break;
+    case WebSocketsCommander::COMMAND_STOP_PATTERN:
+      faderPlayback.stopPattern(doc["data"]["name"]);
       break;
     case WebSocketsCommander::COMMAND_SET_GAIN:
       faderPlayback.setGain(doc["data"]);
       break;
     case WebSocketsCommander::COMMAND_SET_SPEED:
-      faderPlayback.setSpeedMultiplier(doc["data"]);
+      faderPlayback.setSpeed(doc["data"]);
       break;
     case WebSocketsCommander::COMMAND_SET_PATTERNS:
     {
