@@ -28,7 +28,15 @@ void handleWifiCommand(JsonDocument& doc)
       faderPlayback.setGain(doc["data"]);
       break;
     case WebSocketsCommander::COMMAND_SET_SPEED:
-      faderPlayback.setSpeed(doc["data"]);
+      auto rawSpeed = doc["data"]["speed"];
+      // check if it's a number
+      if (rawSpeed.is<float>() || rawSpeed.is<int>()) {
+        faderPlayback.setSpeed(rawSpeed);
+      } else if(rawSpeed == "+") {
+        faderPlayback.setSpeed(faderPlayback.getSpeed() * 1.05);
+      } else if(rawSpeed == "-") {
+        faderPlayback.setSpeed(faderPlayback.getSpeed() * 0.95);
+      }
       break;
     case WebSocketsCommander::COMMAND_SET_PATTERNS:
     {

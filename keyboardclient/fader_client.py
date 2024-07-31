@@ -125,4 +125,11 @@ class FaderClient(Commandable):
             return KeyMapEntry("ewctrl", (7, json.loads(command_data)))
         elif command_type == "multiplier":
             return KeyMapEntry("ewctrl", (7, multipliers[command_data]))
+        elif command_type == "speed":
+            if command_data in ["-", "+"]:
+                return KeyMapEntry("ewctrl", (6, {"speed": command_data}))
+            try:
+                return KeyMapEntry("ewctrl", (6, {"speed": float(command_data)}))
+            except ValueError:
+                raise ValueError(f"Invalid speed value: {command_data}")
         raise ValueError(f"Invalid command type: {command_type}")

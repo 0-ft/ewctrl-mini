@@ -175,3 +175,8 @@ void FaderPlayback::setSpeed(float speed)
     this->speed = speed;
     ESP_LOGI(TAG, "Set speed multiplier to %.2f", speed);
 }
+
+float FaderPlayback::getSpeed()
+{
+    return speed;
+}

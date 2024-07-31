@@ -56,6 +56,7 @@ public:
 
     void flashAll(uint8_t times);
     void setSpeed(float speedMultiplier);
+    float getSpeed();
 };
 
 #endif // PLAYBACK_H
