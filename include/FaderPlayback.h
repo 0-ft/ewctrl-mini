@@ -34,6 +34,8 @@ private:
     int64_t measStartTime;
     std::vector<uint16_t> makeFrame(int64_t time);
 
+    uint64_t quantizeTime = 10;
+
     uint16_t measFramesWritten;
     uint16_t measFrameLoops;
     uint64_t measReportTime = 2000000;

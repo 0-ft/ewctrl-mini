@@ -123,9 +123,20 @@ void FaderPlayback::startPattern(std::string patternName, bool loop)
     if (std::find_if(activePatterns.begin(), activePatterns.end(), [patternName](const PatternPlayback& pattern) {
         return pattern.name == patternName;
     }) == activePatterns.end()) {
+
+        auto startTime = esp_timer_get_time();
+        // find other patterns started less than quantizeTime ago, update startTime to the earliest
+        if(quantizeTime > 0) {
+            for (const auto& pattern : activePatterns) {
+                if (startTime - pattern.startTime < quantizeTime) {
+                    startTime = pattern.startTime;
+                }
+            }
+        }
+
         activePatterns.push_back({
             .name = patternName,
-            .startTime = esp_timer_get_time(),
+            .startTime = startTime,
             .loop = loop
         });
     }
