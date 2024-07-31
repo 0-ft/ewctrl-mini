@@ -28,6 +28,7 @@ void handleWifiCommand(JsonDocument& doc)
       faderPlayback.setGain(doc["data"]);
       break;
     case WebSocketsCommander::COMMAND_SET_SPEED:
+    {
       auto rawSpeed = doc["data"]["speed"];
       // check if it's a number
       if (rawSpeed.is<float>() || rawSpeed.is<int>()) {
@@ -38,6 +39,7 @@ void handleWifiCommand(JsonDocument& doc)
         faderPlayback.setSpeed(faderPlayback.getSpeed() * 0.95);
       }
       break;
+    }
     case WebSocketsCommander::COMMAND_SET_PATTERNS:
     {
       auto patterns = parseJsonToBezierPatterns(doc["data"]);

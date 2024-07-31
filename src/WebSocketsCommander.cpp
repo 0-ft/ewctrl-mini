@@ -92,39 +92,6 @@ void WebSocketsCommander::WiFiEvent(WiFiEvent_t event)
 
 uint8_t WebSocketsCommander::handleWebSocketMessage(AwsFrameInfo *info, uint8_t *data, size_t len)
 {
-
-    // if(info->final && info->index == 0 && info->len == len){
-    //   // the whole message is in a single frame and we got all of its data (max. 1450 bytes)
-    //   if(info->opcode == WS_TEXT) {
-    //     DynamicJsonDocument jsonDoc(65535);
-    //     DeserializationError error = deserializeJson(jsonDoc, data);
-    //     if (error)
-    //     {
-    //         ESP_LOGE(TAG, "deserializeJson() failed: %s", error.c_str());
-    //         delete[] messageBuffer;
-    //         messageBuffer = nullptr;
-    //         return 1;
-    //     }
-
-    //     if (!jsonDoc.containsKey("type") || !jsonDoc.containsKey("data"))
-    //     {
-    //         ESP_LOGE(TAG, "Invalid JSON format");
-    //         delete[] messageBuffer;
-    //         messageBuffer = nullptr;
-    //         return 1;
-    //     }
-
-    //     onEvent(jsonDoc);
-
-    //   } else {
-    //     ESP_LOGE(TAG, "Received non-text frame");
-    //   }
-    // } else {
-    //     ESP_LOGE(TAG, "Received fragmented frame");
-    // }
-    // return 0;
-    // ESP_LOGI(TAG, "Received message chunk, index %llu, len %llu, final %d", info->index, info->len, info->final);
-
     if (info->index == 0)
     {
         if (messageBuffer != nullptr)
@@ -156,7 +123,7 @@ uint8_t WebSocketsCommander::handleWebSocketMessage(AwsFrameInfo *info, uint8_t 
             messageBuffer = nullptr;
             return 1;
         }
-        DynamicJsonDocument jsonDoc(8192);
+        JsonDocument jsonDoc;
         DeserializationError error = deserializeJson(jsonDoc, messageBuffer);
         if (error)
         {
