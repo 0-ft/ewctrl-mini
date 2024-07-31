@@ -20,22 +20,22 @@ void FaderPlayback::setup()
 
 std::vector<uint16_t> FaderPlayback::makeFrame(int64_t time)
 {
-    std::vector<uint16_t> combinedFrame(availableOutputs, 0);
+    std::vector<uint32_t> combinedFrame(availableOutputs, 0);
     double deltaTime;
 
     std::vector<std::string> patternsToRemove;
 
-    for (const auto& patternName : activePatterns) {
-        const auto maybePattern = patterns.find(patternName);
+    for (const auto& patternPlayback : activePatterns) {
+        const auto maybePattern = patterns.find(patternPlayback.name);
         if (maybePattern == patterns.end()) {
-            patternsToRemove.push_back(patternName);
+            patternsToRemove.push_back(patternPlayback.name);
             continue;
         }
         const auto pattern = maybePattern->second;
-        deltaTime = (time - patternStartTime[patternName]) / 1000000.0;
+        deltaTime = ((time - patternPlayback.startTime) / 1000000.0) * speedMultiplier;
 
-        if (deltaTime > pattern.duration) {
-            patternsToRemove.push_back(patternName);
+        if (!patternPlayback.loop && deltaTime > pattern.duration) {
+            patternsToRemove.push_back(patternPlayback.name);
             continue;
         }
 
@@ -49,16 +49,17 @@ std::vector<uint16_t> FaderPlayback::makeFrame(int64_t time)
     // clamp the frame to 0-4095, apply gain and multiplier
     for (uint8_t i = 0; i < availableOutputs; i++) {
         combinedFrame[i] = std::min(4095, (int)combinedFrame[i]);
-        combinedFrame[i] = ((uint32_t)combinedFrame[i] * gain) >> 12;
-        combinedFrame[i] = ((uint32_t)combinedFrame[i] * multiplier[i]) >> 12;
+        combinedFrame[i] = (combinedFrame[i] * gain) >> 12;
+        combinedFrame[i] = (combinedFrame[i] * currentMultiplier[i]) >> 12;
     }
 
     for (const auto& patternName : patternsToRemove) {
-        activePatterns.erase(std::remove(activePatterns.begin(), activePatterns.end(), patternName), activePatterns.end());
-        patternStartTime.erase(patternName);
-        ESP_LOGI(TAG, "Removed pattern %s from active patterns after duration expired", patternName.c_str());
+        removePattern(patternName);
+        // activePatterns.erase(std::remove(activePatterns.begin(), activePatterns.end(), patternName), activePatterns.end());
+        // ESP_LOGI(TAG, "Removed pattern %s from active patterns after duration expired", patternName.c_str());
     }
-    return combinedFrame;
+    std::vector<uint16_t> result(combinedFrame.begin(), combinedFrame.end());
+    return result;
 }
 
 void FaderPlayback::sendFrame()
@@ -88,6 +89,14 @@ void FaderPlayback::sendFrame()
         drivers[i / OUTPUTS_PER_DRIVER].setPWM(i % OUTPUTS_PER_DRIVER, 0, currentFrame[i]);
     }
 
+    // std::string outputLine;
+    // std::string brightnessLevels = " .:-=+*#%@";
+    // for (uint8_t i = 0; i < availableOutputs; i++) {
+    //     outputLine += brightnessLevels[currentFrame[i] * (brightnessLevels.size() - 1) / 4095];
+    // }
+    // ESP_LOGI(TAG, "Output Line: %s", outputLine.c_str());
+
+    
 }
 
 void FaderPlayback::flashAll(uint8_t times) {
@@ -100,7 +109,7 @@ void FaderPlayback::flashAll(uint8_t times) {
     }
 }
 
-void FaderPlayback::goToPattern(std::string patternName)
+void FaderPlayback::startPattern(std::string patternName, bool loop)
 {
     // ESP_LOGE(TAG, "Go to pattern on core %d", xPortGetCoreID());
     if(activePatterns.size() > MAX_CONCURRENT_PATTERNS) {
@@ -111,17 +120,24 @@ void FaderPlayback::goToPattern(std::string patternName)
         ESP_LOGE(TAG, "Invalid pattern name %s", patternName.c_str());
         return;
     }
-    if (std::find(activePatterns.begin(), activePatterns.end(), patternName) == activePatterns.end()) {
-        activePatterns.push_back(patternName);
+    if (std::find_if(activePatterns.begin(), activePatterns.end(), [patternName](const PatternPlayback& pattern) {
+        return pattern.name == patternName;
+    }) == activePatterns.end()) {
+        activePatterns.push_back({
+            .name = patternName,
+            .startTime = esp_timer_get_time(),
+            .loop = loop
+        });
     }
-    patternStartTime[patternName] = esp_timer_get_time();
     ESP_LOGI(TAG, "Started pattern %s", patternName.c_str());
 }
 
 void FaderPlayback::removePattern(std::string patternName)
 {
-    activePatterns.erase(std::remove(activePatterns.begin(), activePatterns.end(), patternName), activePatterns.end());
-    patternStartTime.erase(patternName);
+    // remove from activepatterns
+    activePatterns.erase(std::remove_if(activePatterns.begin(), activePatterns.end(), [patternName](const PatternPlayback& pattern) {
+        return pattern.name == patternName;
+    }), activePatterns.end());
     ESP_LOGI(TAG, "Removed pattern %s from active patterns", patternName.c_str());
 }
 
@@ -147,6 +163,12 @@ void FaderPlayback::addPattern(std::string patternName, BezierPattern pattern)
 
 void FaderPlayback::setMultiplier(std::vector<uint16_t> multiplier)
 {
-    this->multiplier = multiplier;
+    this->currentMultiplier = multiplier;
     ESP_LOGI(TAG, "Set multiplier");
+}
+
+void FaderPlayback::setSpeedMultiplier(float speedMultiplier)
+{
+    this->speedMultiplier = speedMultiplier;
+    ESP_LOGI(TAG, "Set speed multiplier to %.2f", speedMultiplier);
 }

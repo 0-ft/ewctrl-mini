@@ -11,13 +11,23 @@
 
 class FaderPlayback {
 private:
+    struct PatternPlayback {
+        std::string name;
+        int64_t startTime;
+        bool loop;
+    };
+
+    std::vector<PatternPlayback> activePatterns; // Vector to store currently active patterns
+    std::map<std::string, BezierPattern> patterns;
+    std::vector<uint16_t> currentFrame;
+    std::vector<uint16_t> currentMultiplier = std::vector<uint16_t>(16, 4096);
+
     uint8_t driverCount;
     uint8_t* driverAddresses;
     std::vector<Adafruit_PWMServoDriver> drivers;
     const uint8_t MAX_CONCURRENT_PATTERNS = 10;
 
-
-    std::map<std::string, int64_t> patternStartTime; // Map to store start time for each active pattern
+    float speedMultiplier = 1;
     uint16_t gain;
     uint16_t lastFrameIndex;
     uint8_t availableOutputs;
@@ -29,19 +39,14 @@ private:
     uint64_t measReportTime = 2000000;
 
 public:
-    std::vector<std::string> activePatterns; // Vector to store currently active patterns
-    uint16_t frameRate;
-    std::map<std::string, BezierPattern> patterns;
     std::vector<uint16_t> defaultFrame;
-    std::vector<uint16_t> currentFrame;
 
-    std::vector<uint16_t> multiplier = std::vector<uint16_t>(16, 4096);
 
-    FaderPlayback(uint16_t frameRate, uint8_t driverCount, uint8_t* driverAddresses, std::vector<uint16_t> defaultFrame = std::vector<uint16_t>(16, 0))
-        : frameRate(frameRate), driverCount(driverCount), driverAddresses(driverAddresses), defaultFrame(defaultFrame) {}
+    FaderPlayback(uint8_t driverCount, uint8_t* driverAddresses, std::vector<uint16_t> defaultFrame = std::vector<uint16_t>(16, 0))
+        : driverCount(driverCount), driverAddresses(driverAddresses), defaultFrame(defaultFrame) {}
 
     void setup();
-    void goToPattern(std::string patternName);
+    void startPattern(std::string patternName, bool loop = false);
     void removePattern(std::string patternName);
     void sendFrame();
     void setGain(uint16_t gain);
@@ -50,6 +55,7 @@ public:
     void setMultiplier(std::vector<uint16_t> multiplier);
 
     void flashAll(uint8_t times);
+    void setSpeedMultiplier(float speedMultiplier);
 };
 
 #endif // PLAYBACK_H

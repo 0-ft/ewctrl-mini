@@ -5,7 +5,7 @@
 
 static const char *TAG = "Main";
 
-FaderPlayback faderPlayback(60, 2, new uint8_t[2]{0x40, 0x41}, std::vector<uint16_t>(16, 0));
+FaderPlayback faderPlayback(2, new uint8_t[2]{0x40, 0x41}, std::vector<uint16_t>(16, 0));
 
 void receivePattern(const JsonObject &doc) {
   ESP_LOGI(TAG, "Received pattern");
@@ -19,13 +19,13 @@ void handleWifiCommand(JsonDocument& doc)
   uint8_t type = doc["type"];
   switch(type) {
     case WebSocketsCommander::COMMAND_SET_PATTERN:
-      faderPlayback.goToPattern(doc["data"]);
+      faderPlayback.startPattern(doc["data"]);
       break;
     case WebSocketsCommander::COMMAND_SET_GAIN:
       faderPlayback.setGain(doc["data"]);
       break;
-    case WebSocketsCommander::COMMAND_SET_FRAMERATE:
-      faderPlayback.frameRate = doc["data"];
+    case WebSocketsCommander::COMMAND_SET_SPEED:
+      faderPlayback.setSpeedMultiplier(doc["data"]);
       break;
     case WebSocketsCommander::COMMAND_SET_PATTERNS:
     {
@@ -73,7 +73,7 @@ void setup()
   ESP_LOGI(TAG, "Setting up");
 
   faderPlayback.setup();
-  faderPlayback.goToPattern("test");
+  faderPlayback.startPattern("test");
   faderPlayback.setGain(4095);
 
   faderPlayback.flashAll(3);
