@@ -90,6 +90,16 @@ void FaderPlayback::sendFrame()
 
 }
 
+void FaderPlayback::flashAll(uint8_t times) {
+    for(uint8_t f=0; f<times*2+1;f++) {
+        // ESP_LOGE(TAG, "Flashing all %d", f);
+        for (uint8_t i = 0; i < availableOutputs; i++) {
+            drivers[i / OUTPUTS_PER_DRIVER].setPWM(i % OUTPUTS_PER_DRIVER, 0, 4095 * (f % 2));
+        }
+        delay(60);
+    }
+}
+
 void FaderPlayback::goToPattern(std::string patternName)
 {
     // ESP_LOGE(TAG, "Go to pattern on core %d", xPortGetCoreID());

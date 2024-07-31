@@ -23,7 +23,7 @@ SERVERS = {
 }
 
 # Configure logging
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
 class Commandable:
     def send_command(self, command: str):
@@ -78,6 +78,7 @@ class FaderClient(Commandable):
             "type": command_type,
             "data": command_data
         })
+        print(message)
         # try:
         #     pong_waiter = await self.websocket.ping()
         #     logging.info("sent ping...")
@@ -111,6 +112,15 @@ class FaderClient(Commandable):
             self.websocket = await websockets.connect(ws_url, max_size=None, ping_interval=2, ping_timeout=2, create_protocol=CustomWebSocketClientProtocol)
             logging.info(f"Connected to WebSocket server at {self.host}:{self.port}")
             await self.send_patterns()
+            # while True:
+            #     command = self.command_queue.get()  # Use blocking get() from queue
+            #     await self.send_command(command)
+        except Exception as e:
+            logging.error(f"Error connecting to WebSocket server: {e}")
+            self.websocket = None
+
+    async def read_commands(self):
+        try:
             while True:
                 command = self.command_queue.get()  # Use blocking get() from queue
                 await self.send_command(command)
@@ -121,10 +131,12 @@ class FaderClient(Commandable):
     def manage_connection(self):
         loop = asyncio.new_event_loop()
         asyncio.set_event_loop(loop)
-        while True:
-            if not self.websocket or not self.websocket.open:
-                loop.run_until_complete(self.connect_to_server())
-            time.sleep(1)  # Retry connection after a short delay
+        loop.run_until_complete(self.connect_to_server())
+        loop.run_until_complete(self.read_commands())
+        # while True:
+        #     if not self.websocket or not self.websocket.open:
+        #         loop.run_until_complete(self.connect_to_server())
+        #     time.sleep(1)  # Retry connection after a short delay
 
     def is_connected(self) -> bool:
         return self.websocket is not None and self.websocket.open
@@ -159,7 +171,10 @@ class WLEDClient(Commandable):
             logging.info(f"Retrying in {self.RETRY_DELAY} seconds...")
             time.sleep(self.RETRY_DELAY)
 
-    async def send_command(self, command: str):
+    async def send_command(self, command: tuple):
+        key_state, command = command
+        if key_state != key_state.key_down:
+            return
         if command in self.presets:
             preset_id = self.presets[command]
             try:
@@ -206,14 +221,6 @@ class ServerManager:
         for name, port in SERVERS.items():
             self.command_queues[name] = queue.Queue(maxsize=10)
             threading.Thread(target=self.manage_port_connection, args=(name,), daemon=True).start()
-            # if isinstance(server, tuple):
-            #     ip, port = server
-            #     self.command_queues[port] = queue.Queue(maxsize=3)
-            #     threading.Thread(target=self.manage_port_connection, args=(port, ip), daemon=True).start()
-            # else:
-            #     port = server
-            #     self.command_queues[port] = queue.Queue(maxsize=3)
-            #     threading.Thread(target=self.manage_port_connection, args=(port,), daemon=True).start()
 
     def get_lan_devices(self):
         result = subprocess.run(['arp', '-an'], capture_output=True, text=True)
@@ -253,9 +260,9 @@ class ServerManager:
                     self.clients[name].connection_thread.join()
                 else:
                     logging.debug(f"Could not find the server on the LAN for port {SERVERS[name]}. Retrying...")
-            time.sleep(0.5)  # Retry every half second
+            time.sleep(1)  # Retry connecting
 
-    def queue_command(self, target_name, command: str):
+    def queue_command(self, target_name, command: tuple):
         if target_name in self.clients and self.clients[target_name].is_connected():
             if not self.command_queues[target_name].full():
                 try:
@@ -369,6 +376,44 @@ class KeyboardCommander:
             self.debounce_timer = threading.Timer(self.DEBOUNCE_TIME, self.update_keyboards)
             self.debounce_timer.start()
 
+    def handle_key_event(self, key_event):
+            # logging.debug(f"Key event: {key_event}")
+            if not hasattr(key_event, 'keycode'):
+                return
+            key = key_event.keycode
+            if isinstance(key, list):
+                key = key[0]  # Handle cases where keycode is a list
+            key = key.lower()
+            logging.debug(f"{key} {["up", "down", "hold"][key_event.keystate]} detected")
+            if key not in self.keymap:
+                return
+
+            targets = self.keymap[key]
+            for target in targets:
+                # if target['target'] == "ewctrl":
+                #     print(target["command"])
+                #     play_type, command = target['command'].split("|")
+                #     if play_type == "once" and key_event.keystate == key_event.key_down:
+                #         self.server_manager.queue_command(target['target'], f"play|{target['command']}")
+                #         logging.info(f"{key} down → queued command play|{target['command']} for {target['target']}")
+                #     elif play_type == "hold":
+                #         commands = {
+                #             key_event.key_down: f"start|{command}",
+                #             key_event.key_up: f"stop|{command}"
+                #         }
+                #         if key_event.keystate in commands:
+                #             self.server_manager.queue_command(target['target'], commands[key_event.keystate])
+                #             logging.info(f"{key} down → queued command {commands[key_event.keystate]} for {target['target']}")
+
+                #     else:
+                #         logging.error(f"Invalid play type: {play_type}")
+
+                # elif target['target'] == "wled":
+                if key_event.keystate in [key_event.key_down, key_event.key_up] :
+                    self.server_manager.queue_command(target['target'], (key_event.keystate, target['command']))
+                    logging.info(f"{key} down → queued command {(key_event.keystate, target['command'])} for {target['target']}")
+
+
     def start(self):
         logging.info("Starting to read events from the keyboards...")
         
@@ -385,23 +430,7 @@ class KeyboardCommander:
                     for event in device.read():
                         if event.type == ecodes.EV_KEY:
                             key_event = categorize(event)
-                            logging.debug(f"Key event: {key_event}")
-                            if hasattr(key_event, 'keycode'):
-                                key = key_event.keycode
-                                if isinstance(key, list):
-                                    key = key[0]  # Handle cases where keycode is a list
-                                key = key.lower()
-                                logging.debug(f"Key {key} event detected, state: {key_event.keystate}")
-                                if key in self.keymap:
-                                    if key_event.keystate == key_event.key_down:
-                                        event = self.keymap[key]
-                                        for target in event:
-                                            self.server_manager.queue_command(target['target'], target['command'])
-                                            logging.info(f"Key {key} pressed, queued command {target['command']} for {target['target']}")
-                                        # port = event['port']
-                                        # command = event['command']
-                                        # self.server_manager.queue_command(port, command)
-                                        # logging.info(f"Key {key} pressed, sent command {command} to port {port}")
+                            self.handle_key_event(key_event)
                 except OSError as e:
                     if e.errno == errno.ENODEV:
                         logging.warning(f"Device {device.path} removed.")

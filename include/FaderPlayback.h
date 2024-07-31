@@ -48,6 +48,8 @@ public:
     void setPatterns(std::map<std::string, BezierPattern> patterns);
     void addPattern(std::string patternName, BezierPattern pattern);
     void setMultiplier(std::vector<uint16_t> multiplier);
+
+    void flashAll(uint8_t times);
 };
 
 #endif // PLAYBACK_H
