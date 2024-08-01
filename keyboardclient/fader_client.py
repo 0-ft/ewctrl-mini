@@ -35,9 +35,12 @@ class FaderClient(Commandable):
     async def ws_recv_ack(self):
         # receive a single byte, 0 means OK, 1 means error & resend
         if self.websocket is not None and self.websocket.open:
-            ack = await self.websocket.recv()
-            print("Got ack", ack)
-            return ack == "0"
+            while True:
+                msg = await self.websocket.recv()
+                print("Got msg", msg)
+                if msg == "ACK":
+                    print("Got ack")
+                    return True
         else:
             self.websocket = None
 
@@ -84,7 +87,8 @@ class FaderClient(Commandable):
             await self.send_command((FaderClient.COMMAND_SET_PATTERNS, {}))
             for pattern in self.patterns:
                 await self.send_command((FaderClient.COMMAND_ADD_PATTERN, pattern))
-                time.sleep(0.3)
+                # await self.ws_recv_ack()
+                time.sleep(0.8)
                 logging.info(f"Sent a pattern to {self.host}:{self.port}")
             logging.info(f"Sent patterns to {self.host}:{self.port}")
 

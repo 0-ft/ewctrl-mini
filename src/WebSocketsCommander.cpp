@@ -4,7 +4,7 @@ static const char *TAG = "WebSocketsCommander";
 
 WebSocketsCommander *WebSocketsCommander::instance = nullptr;
 
-WebSocketsCommander::WebSocketsCommander(const char *ssid, const char *password, void (*onEvent)(JsonDocument &json), BaseType_t core)
+WebSocketsCommander::WebSocketsCommander(const char *ssid, const char *password, bool (*onEvent)(JsonDocument &json), BaseType_t core)
     : ssid(ssid), password(password), onEvent(onEvent), core(core), server(7032), ws("/ws")
 {
     instance = this;
@@ -141,11 +141,12 @@ uint8_t WebSocketsCommander::handleWebSocketMessage(AwsFrameInfo *info, uint8_t 
             return 1;
         }
 
-        onEvent(jsonDoc);
+        ESP_LOGE(TAG, "Finished deserialising, calling onEvent");
+        auto shouldAck = onEvent(jsonDoc);
+        return shouldAck ? 0 : 1;
         // ESP_LOGE(TAG, "DELETING MESSAGE BUFFER");
         delete[] messageBuffer;
         messageBuffer = nullptr;
-        return 0;
     }
     return 2;
 }
@@ -162,7 +163,11 @@ void WebSocketsCommander::onWebSocketEvent(AsyncWebSocket *server, AsyncWebSocke
         break;
     case WS_EVT_DATA:
     {
-        handleWebSocketMessage((AwsFrameInfo *)arg, data, len);
+        auto result = handleWebSocketMessage((AwsFrameInfo *)arg, data, len);
+        // if(result == 0) {
+        //     ESP_LOGE(TAG, "Sending ACK");
+        //     client->text("ACK");
+        // }
         break;
     }
     case WS_EVT_PONG:

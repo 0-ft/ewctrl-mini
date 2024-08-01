@@ -11,13 +11,13 @@
 
 class WebSocketsCommander {
 public:
-    WebSocketsCommander(const char* ssid, const char* password, void (*onEvent)(JsonDocument& json), BaseType_t core);
+    WebSocketsCommander(const char* ssid, const char* password, bool (*onEvent)(JsonDocument& json), BaseType_t core);
     void init();
 
 private:
     const char* ssid;
     const char* password;
-    void (*onEvent)(JsonDocument& json);
+    bool (*onEvent)(JsonDocument& json);
     BaseType_t core;
     AsyncWebServer server;
     AsyncWebSocket ws;

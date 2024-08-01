@@ -13,7 +13,7 @@ void receivePattern(const JsonObject &doc) {
   faderPlayback.addPattern(patternName, pattern);
 }
 
-void handleWifiCommand(JsonDocument& doc)
+bool handleWifiCommand(JsonDocument& doc)
 {
   // ESP_LOGI(TAG, "Handling WifiCommander command");
   uint8_t type = doc["type"];
@@ -51,6 +51,7 @@ void handleWifiCommand(JsonDocument& doc)
     {
       JsonObject data = doc["data"];
       receivePattern(data);
+      return true;
       break;
     }
     case FaderPlayback::COMMAND_CLEAR_PATTERNS:
@@ -78,6 +79,7 @@ void handleWifiCommand(JsonDocument& doc)
       break;
   }
   ESP_LOGI(TAG, "Handled WifiCommander command type %d", type);
+  return false;
 }
 
 
