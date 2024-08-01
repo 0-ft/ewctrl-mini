@@ -40,12 +40,15 @@ private:
     uint16_t measFrameLoops;
     uint64_t measReportTime = 2000000;
 
+    bool paused = false;
 public:
     std::vector<uint16_t> defaultFrame;
 
 
-    FaderPlayback(uint8_t driverCount, uint8_t* driverAddresses, std::vector<uint16_t> defaultFrame = std::vector<uint16_t>(16, 0))
+    FaderPlayback(uint8_t driverCount, uint8_t* driverAddresses, std::vector<uint16_t> defaultFrame = std::vector<uint16_t>(OUTPUTS_COUNT, 0))
         : driverCount(driverCount), driverAddresses(driverAddresses), defaultFrame(defaultFrame) {}
+
+    std::vector<uint8_t> scanI2C();
 
     void setup();
     void startPattern(std::string patternName, bool loop = false);
@@ -56,9 +59,12 @@ public:
     void addPattern(std::string patternName, BezierPattern pattern);
     void setMultiplier(std::vector<uint16_t> multiplier);
 
-    void flashAll(uint8_t times);
+    void flashAll(uint8_t times, uint16_t duration);
+    void testSequence();
     void setSpeed(float speedMultiplier);
     float getSpeed();
+
+    void setPaused(bool paused);
 };
 
 #endif // PLAYBACK_H

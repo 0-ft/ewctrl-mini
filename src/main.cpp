@@ -5,7 +5,7 @@
 
 static const char *TAG = "Main";
 
-FaderPlayback faderPlayback(2, new uint8_t[2]{0x40, 0x41}, std::vector<uint16_t>(16, 0));
+FaderPlayback faderPlayback(0, {}, std::vector<uint16_t>(OUTPUTS_COUNT, 0));
 
 void receivePattern(const JsonObject &doc) {
   ESP_LOGI(TAG, "Received pattern");
@@ -81,6 +81,7 @@ WebSocketsCommander wifiCommander("190bpm hardcore steppas", "fungible", handleW
 // WebSocketsCommander wifiCommander("TP-LINK_2C5EE8", "85394919", handleWifiCommand, 0);
 // WiFiCommander wifiCommander("190bpm hardcore steppas", "fungible", handleWifiCommand);
 
+
 void setup()
 {
   ESP_LOGI(TAG, "Setting up");
@@ -89,7 +90,7 @@ void setup()
   faderPlayback.startPattern("test");
   faderPlayback.setGain(4095);
 
-  faderPlayback.flashAll(3);
+  faderPlayback.testSequence();
   wifiCommander.init();
 }
 
