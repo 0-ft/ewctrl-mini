@@ -19,6 +19,10 @@ class Commandable:
     def is_connected(self) -> bool:
         raise NotImplementedError("This method should be overridden by subclasses")
 
+    @staticmethod
+    def parse_keymap(self, raw_command: str) -> tuple:
+        raise NotImplementedError("This method should be overridden by subclasses")
+
 class CustomWebSocketClientProtocol(WebSocketClientProtocol):
     async def ping(self, data=None):
         logging.info("Ping sent")

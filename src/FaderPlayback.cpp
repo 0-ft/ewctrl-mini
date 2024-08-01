@@ -284,3 +284,9 @@ void FaderPlayback::setPaused(bool paused)
     this->paused = paused;
     ESP_LOGI(TAG, paused ? "Paused" : "Unpaused");
 }
+
+void FaderPlayback::stopAll()
+{
+    activePatterns.clear();
+    ESP_LOGI(TAG, "Stopped all patterns");
+}

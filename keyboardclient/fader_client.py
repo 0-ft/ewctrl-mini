@@ -9,14 +9,17 @@ from common import Commandable, KeyMapEntry, CustomWebSocketClientProtocol
 
 
 class FaderClient(Commandable):
-    COMMAND_START_PATTERN = 0x01
-    COMMAND_SET_GAIN = 0x02
-    COMMAND_SET_SPEED = 0x03
-    COMMAND_SET_PATTERNS = 0x04
-    COMMAND_ADD_PATTERN = 0x05
-    COMMAND_CLEAR_PATTERNS = 0x06
-    COMMAND_SET_MULTIPLIER = 0x07
-    COMMAND_STOP_PATTERN = 0x08
+    COMMAND_ACK = 0
+    COMMAND_START_PATTERN = 1
+    COMMAND_SET_GAIN = 2
+    COMMAND_SET_SPEED = 3
+    COMMAND_SET_PATTERNS = 4
+    COMMAND_ADD_PATTERN = 5
+    COMMAND_CLEAR_PATTERNS = 6
+    COMMAND_SET_MULTIPLIER = 7
+    COMMAND_STOP_PATTERN = 8
+    COMMAND_STOP_ALL = 9
+    COMMAND_SET_PAUSED = 10
 
     RETRY_DELAY = 2
     
@@ -74,14 +77,19 @@ class FaderClient(Commandable):
     async def send_patterns(self):
         if self.websocket is not None and self.websocket.open:
             logging.info(f"sending {len(self.patterns)} patterns to {self.host}:{self.port}")
+            # pause output
+            await self.send_command((FaderClient.COMMAND_SET_PAUSED, {"paused": True}))
 
             # clear patterns
             await self.send_command((FaderClient.COMMAND_SET_PATTERNS, {}))
             for pattern in self.patterns:
                 await self.send_command((FaderClient.COMMAND_ADD_PATTERN, pattern))
-                time.sleep(0.15)
+                time.sleep(0.3)
                 logging.info(f"Sent a pattern to {self.host}:{self.port}")
             logging.info(f"Sent patterns to {self.host}:{self.port}")
+
+            # resume output
+            await self.send_command((FaderClient.COMMAND_SET_PAUSED, {"paused": False}))
 
     async def connect_to_server(self):
         ws_url = f"ws://{self.host}:{self.port}/ws"
@@ -120,7 +128,7 @@ class FaderClient(Commandable):
         return self.websocket is not None and self.websocket.open
 
     @staticmethod
-    def parse_command(raw_command: str, multipliers: dict) -> KeyMapEntry:
+    def parse_keymap(raw_command: str, multipliers: dict) -> KeyMapEntry:
         parts = raw_command.split(':')
         if len(parts) != 2:
             raise ValueError(f"Invalid command format: {raw_command}")
@@ -140,4 +148,6 @@ class FaderClient(Commandable):
                 return KeyMapEntry("ewctrl", (FaderClient.COMMAND_SET_SPEED, {"speed": float(command_data)}))
             except ValueError:
                 raise ValueError(f"Invalid speed value: {command_data}")
+        elif command_type == "blackout":
+            return KeyMapEntry("ewctrl", (FaderClient.COMMAND_STOP_ALL, {}))
         raise ValueError(f"Invalid command type: {command_type}")

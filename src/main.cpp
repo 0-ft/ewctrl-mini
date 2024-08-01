@@ -19,6 +19,7 @@ void handleWifiCommand(JsonDocument& doc)
   uint8_t type = doc["type"];
   switch(type) {
     case FaderPlayback::COMMAND_START_PATTERN:
+      faderPlayback.setPaused(false);
       faderPlayback.startPattern(doc["data"]["name"], doc["data"]["loop"]);
       break;
     case FaderPlayback::COMMAND_STOP_PATTERN:
@@ -66,6 +67,12 @@ void handleWifiCommand(JsonDocument& doc)
       faderPlayback.setMultiplier(multiplier);
       break;
     }
+    case FaderPlayback::COMMAND_STOP_ALL:
+      faderPlayback.stopAll();
+      break;
+    case FaderPlayback::COMMAND_SET_PAUSED:
+      faderPlayback.setPaused(doc["data"]["paused"]);
+      break;
     default:
       ESP_LOGW(TAG, "Unknown event type");
       break;
@@ -94,6 +101,7 @@ void setup()
   faderPlayback.setGain(4095);
 
   faderPlayback.testSequence();
+  faderPlayback.setPaused(false);
   wifiCommander.init();
 
 

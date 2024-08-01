@@ -83,5 +83,5 @@ class WLEDClient(Commandable):
         return self.websocket is not None and self.websocket.open
 
     @staticmethod
-    def parse_command(raw_command: str) -> KeyMapEntry:
+    def parse_keymap(raw_command: str) -> KeyMapEntry:
         return KeyMapEntry("wled", raw_command)

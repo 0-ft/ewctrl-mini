@@ -51,11 +51,11 @@ class KeyboardCommander:
                 keymap[key] = []
                 # print(row)
                 if(row["ewctrl"]):
-                    command = FaderClient.parse_command(row["ewctrl"], self.multipliers)
+                    command = FaderClient.parse_keymap(row["ewctrl"], self.multipliers)
                     logging.debug(f"Adding command: {command} for key {key}")
                     keymap[key].append(command)
                 if("wled" in row and row["wled"]):
-                    keymap[key].append(WLEDClient.parse_command(row["wled"]))
+                    keymap[key].append(WLEDClient.parse_keymap(row["wled"]))
         return keymap
 
     def find_keyboards(self):

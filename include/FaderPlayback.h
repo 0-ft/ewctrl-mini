@@ -43,14 +43,17 @@ private:
     bool paused = false;
 public:
     enum CommandTypes {
-        COMMAND_START_PATTERN = 0x01,
-        COMMAND_SET_GAIN = 0x02,
-        COMMAND_SET_SPEED = 0x03,
-        COMMAND_SET_PATTERNS = 0x04,
-        COMMAND_ADD_PATTERN = 0x05,
-        COMMAND_CLEAR_PATTERNS = 0x06,
-        COMMAND_SET_MULTIPLIER = 0x07,
-        COMMAND_STOP_PATTERN = 0x08,
+        COMMAND_ACK = 255,
+        COMMAND_START_PATTERN = 1,
+        COMMAND_SET_GAIN = 2,
+        COMMAND_SET_SPEED = 3,
+        COMMAND_SET_PATTERNS = 4,
+        COMMAND_ADD_PATTERN = 5,
+        COMMAND_CLEAR_PATTERNS = 6,
+        COMMAND_SET_MULTIPLIER = 7,
+        COMMAND_STOP_PATTERN = 8,
+        COMMAND_STOP_ALL = 9,
+        COMMAND_SET_PAUSED = 10
     };
 
     std::vector<uint16_t> defaultFrame;
@@ -76,6 +79,7 @@ public:
     float getSpeed();
 
     void setPaused(bool paused);
+    void stopAll();
 };
 
 #endif // PLAYBACK_H
