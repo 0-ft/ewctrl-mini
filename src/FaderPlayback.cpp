@@ -1,5 +1,5 @@
 #include "FaderPlayback.h"
-
+#include <numeric>
 static const char *TAG = "FaderPlayback";
 
 #define OUTPUTS_PER_DRIVER 8
@@ -24,9 +24,15 @@ std::vector<uint8_t> FaderPlayback::scanI2C()
 
 void FaderPlayback::setup()
 {
-    if(driverCount == 0) {
+    if (driverCount == 0)
+    {
         const auto foundAddresses = scanI2C();
         driverCount = foundAddresses.size();
+
+        const auto addrString = std::accumulate(std::next(foundAddresses.begin()), foundAddresses.end(), std::to_string(foundAddresses[0]), [](std::string a, uint8_t b)
+                                                                                 { return a + ", " + std::to_string(b); });
+        ESP_LOGE(TAG, "No drivers specified, scan found %d: %s", driverCount, addrString.c_str());
+
         driverAddresses = new uint8_t[driverCount];
         for (uint8_t i = 0; i < driverCount; i++)
         {
@@ -125,7 +131,8 @@ void FaderPlayback::sendFrame()
 
     for (uint8_t i = 0; i < availableOutputs; i++)
     {
-        if(currentFrame[i] == newFrame[i]) {
+        if (currentFrame[i] == newFrame[i])
+        {
             continue;
         }
         drivers[i / OUTPUTS_PER_DRIVER].setPWM(i % OUTPUTS_PER_DRIVER, 0, newFrame[i]);
@@ -155,18 +162,19 @@ void FaderPlayback::flashAll(uint8_t times, uint16_t duration)
     }
 }
 
-void FaderPlayback::testSequence() {
+void FaderPlayback::testSequence()
+{
     setPaused(true);
     flashAll(3, 100);
     delay(100);
-    for(uint8_t i = 0; i < availableOutputs; i++) {
+    for (uint8_t i = 0; i < availableOutputs; i++)
+    {
         drivers[i / OUTPUTS_PER_DRIVER].setPWM(i % OUTPUTS_PER_DRIVER, 0, 4095);
         delay(60);
         drivers[i / OUTPUTS_PER_DRIVER].setPWM(i % OUTPUTS_PER_DRIVER, 0, 0);
     }
     setPaused(false);
 }
-
 
 void FaderPlayback::startPattern(std::string patternName, bool loop)
 {
@@ -183,7 +191,7 @@ void FaderPlayback::startPattern(std::string patternName, bool loop)
     }
     auto now = esp_timer_get_time();
     auto alreadyActive = std::find_if(activePatterns.begin(), activePatterns.end(), [patternName](const PatternPlayback &pattern)
-                     { return pattern.name == patternName; });
+                                      { return pattern.name == patternName; });
     if (alreadyActive == activePatterns.end())
     {
 
@@ -202,7 +210,9 @@ void FaderPlayback::startPattern(std::string patternName, bool loop)
         activePatterns.push_back({.name = patternName,
                                   .startTime = now,
                                   .loop = loop});
-    } else {
+    }
+    else
+    {
         // pattern already active, restart it
         (*alreadyActive).startTime = now;
     }
