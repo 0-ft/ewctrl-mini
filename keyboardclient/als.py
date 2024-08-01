@@ -15,6 +15,10 @@ def load_als(filepath):
     root = tree.getroot()
     return root
 
+def get_tempo(root: ET.Element):
+    tempo = next(x for x in root.findall('.//Tempo') if x.get('Value'))
+    return float(tempo.get('Value'))
+
 def find_locators(root):
     locator_elements = root.findall('.//Locator')
     locators = []
@@ -107,19 +111,19 @@ def remove_redundant_points(points):
     result.append(points[-1])  # Keep the last point
     return result
 
-def sanitise_envelope(envelope):
+def sanitise_envelope(envelope, tempo):
     envelope = [event for event in envelope if event["Time"] >= 0]
     
     rounding = 2
     envelope = [[
-        event["Time"],
+        round(event["Time"] * 60 / tempo, rounding),
         round(event["Value"] / 127.0, rounding),
         round(event.get("CurveControl1X", 0), rounding),
         round(event.get("CurveControl1Y", 0), rounding),
         round(event.get("CurveControl2X", 0), rounding),
         round(event.get("CurveControl2Y", 0), rounding)
     ] if "CurveControl1X" in event else [
-        event["Time"],
+        round(event["Time"] * 60 / tempo, rounding),
         round(event["Value"] / 127.0, rounding),
     ] for event in envelope
     ]
@@ -135,6 +139,8 @@ def patterns_size_info(patterns):
 
 def generate_patterns(filepath):
     root = load_als(filepath)
+    tempo = get_tempo(root)
+    logging.info("Found tempo: %d", tempo)
     pointee_envelopes = read_envelopes(root)
     name_pointees = extract_macro_mappings(root)
 
@@ -164,7 +170,7 @@ def generate_patterns(filepath):
         {
             "name" : name,
             "data": [
-                sanitise_envelope(envelope)
+                sanitise_envelope(envelope, tempo)
                 for name, envelope in sorted(list(envelopes.items()), key=lambda x: x[0])
             ]
         }
