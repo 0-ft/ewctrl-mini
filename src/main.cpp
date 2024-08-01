@@ -18,16 +18,16 @@ void handleWifiCommand(JsonDocument& doc)
   // ESP_LOGI(TAG, "Handling WifiCommander command");
   uint8_t type = doc["type"];
   switch(type) {
-    case WebSocketsCommander::COMMAND_START_PATTERN:
+    case FaderPlayback::COMMAND_START_PATTERN:
       faderPlayback.startPattern(doc["data"]["name"], doc["data"]["loop"]);
       break;
-    case WebSocketsCommander::COMMAND_STOP_PATTERN:
+    case FaderPlayback::COMMAND_STOP_PATTERN:
       faderPlayback.stopPattern(doc["data"]["name"]);
       break;
-    case WebSocketsCommander::COMMAND_SET_GAIN:
+    case FaderPlayback::COMMAND_SET_GAIN:
       faderPlayback.setGain(doc["data"]);
       break;
-    case WebSocketsCommander::COMMAND_SET_SPEED:
+    case FaderPlayback::COMMAND_SET_SPEED:
     {
       auto rawSpeed = doc["data"]["speed"];
       // check if it's a number
@@ -40,24 +40,24 @@ void handleWifiCommand(JsonDocument& doc)
       }
       break;
     }
-    case WebSocketsCommander::COMMAND_SET_PATTERNS:
+    case FaderPlayback::COMMAND_SET_PATTERNS:
     {
       auto patterns = parseJsonToBezierPatterns(doc["data"]);
       faderPlayback.setPatterns(patterns);
       break;
     }
-    case WebSocketsCommander::COMMAND_ADD_PATTERN:
+    case FaderPlayback::COMMAND_ADD_PATTERN:
     {
       JsonObject data = doc["data"];
       receivePattern(data);
       break;
     }
-    case WebSocketsCommander::COMMAND_CLEAR_PATTERNS:
+    case FaderPlayback::COMMAND_CLEAR_PATTERNS:
     {
       faderPlayback.setPatterns({});
       break;
     }
-    case WebSocketsCommander::COMMAND_SET_MULTIPLIER:
+    case FaderPlayback::COMMAND_SET_MULTIPLIER:
     {
       std::vector<uint16_t> multiplier;
       for (JsonVariant value : doc["data"].as<JsonArray>()) {
@@ -81,6 +81,9 @@ WebSocketsCommander wifiCommander("190bpm hardcore steppas", "fungible", handleW
 // WebSocketsCommander wifiCommander("TP-LINK_2C5EE8", "85394919", handleWifiCommand, 0);
 // WiFiCommander wifiCommander("190bpm hardcore steppas", "fungible", handleWifiCommand);
 
+void sendFrameCallback(void *arg) {
+  faderPlayback.sendFrame();
+}
 
 void setup()
 {
@@ -92,11 +95,24 @@ void setup()
 
   faderPlayback.testSequence();
   wifiCommander.init();
+
+
+  esp_timer_create_args_t timerArgs;
+  timerArgs.callback = &sendFrameCallback;
+  timerArgs.arg = NULL;
+  timerArgs.dispatch_method = ESP_TIMER_TASK;
+  timerArgs.name = "frameTimer";
+    
+  esp_timer_handle_t myTimer;
+  esp_timer_create(&timerArgs, &myTimer);
+
+    // Start the timer (200 times per second -> 5ms interval)
+  esp_timer_start_periodic(myTimer, 5000); // interval is in microseconds
 }
 
 void loop()
 {
-  faderPlayback.sendFrame();
-  vTaskDelay(1 / portTICK_PERIOD_MS);
+  // faderPlayback.sendFrame();
+  // vTaskDelay(1 / portTICK_PERIOD_MS);
   // delayMicroseconds(300);
 }
