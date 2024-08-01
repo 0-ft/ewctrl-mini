@@ -43,6 +43,7 @@ void FaderPlayback::setup()
     }
     ESP_LOGI(TAG, "Set up %d drivers", drivers.size());
     availableOutputs = driverCount * OUTPUTS_PER_DRIVER;
+    currentFrame = std::vector<uint16_t>(availableOutputs, 0);
 }
 
 std::vector<uint16_t> FaderPlayback::makeFrame(int64_t time)
@@ -121,16 +122,17 @@ void FaderPlayback::sendFrame()
     {
         return;
     }
-    else
-    {
-        currentFrame = newFrame;
-        measFramesWritten++;
-    }
 
     for (uint8_t i = 0; i < availableOutputs; i++)
     {
-        drivers[i / OUTPUTS_PER_DRIVER].setPWM(i % OUTPUTS_PER_DRIVER, 0, currentFrame[i]);
+        if(currentFrame[i] == newFrame[i]) {
+            continue;
+        }
+        drivers[i / OUTPUTS_PER_DRIVER].setPWM(i % OUTPUTS_PER_DRIVER, 0, newFrame[i]);
     }
+
+    currentFrame = newFrame;
+    measFramesWritten++;
 
     // std::string outputLine;
     // std::string brightnessLevels = " .:-=+*#%@";
@@ -159,7 +161,7 @@ void FaderPlayback::testSequence() {
     delay(100);
     for(uint8_t i = 0; i < availableOutputs; i++) {
         drivers[i / OUTPUTS_PER_DRIVER].setPWM(i % OUTPUTS_PER_DRIVER, 0, 4095);
-        delay(200);
+        delay(60);
         drivers[i / OUTPUTS_PER_DRIVER].setPWM(i % OUTPUTS_PER_DRIVER, 0, 0);
     }
     setPaused(false);
@@ -179,26 +181,30 @@ void FaderPlayback::startPattern(std::string patternName, bool loop)
         ESP_LOGE(TAG, "Invalid pattern name %s", patternName.c_str());
         return;
     }
-    if (std::find_if(activePatterns.begin(), activePatterns.end(), [patternName](const PatternPlayback &pattern)
-                     { return pattern.name == patternName; }) == activePatterns.end())
+    auto now = esp_timer_get_time();
+    auto alreadyActive = std::find_if(activePatterns.begin(), activePatterns.end(), [patternName](const PatternPlayback &pattern)
+                     { return pattern.name == patternName; });
+    if (alreadyActive == activePatterns.end())
     {
 
-        auto startTime = esp_timer_get_time();
         // find other patterns started less than quantizeTime ago, update startTime to the earliest
         if (quantizeTime > 0)
         {
             for (const auto &pattern : activePatterns)
             {
-                if (startTime - pattern.startTime < quantizeTime)
+                if (now - pattern.startTime < quantizeTime)
                 {
-                    startTime = pattern.startTime;
+                    now = pattern.startTime;
                 }
             }
         }
 
         activePatterns.push_back({.name = patternName,
-                                  .startTime = startTime,
+                                  .startTime = now,
                                   .loop = loop});
+    } else {
+        // pattern already active, restart it
+        (*alreadyActive).startTime = now;
     }
     ESP_LOGI(TAG, "Started pattern %s", patternName.c_str());
 }

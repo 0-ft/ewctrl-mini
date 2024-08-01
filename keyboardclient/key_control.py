@@ -120,8 +120,10 @@ class KeyboardCommander:
             mappings = self.keymap[key]
             for mapping in mappings:
                 command = [mapping.on_up, mapping.on_down][key_event.keystate]
+                if command is None:
+                    continue
                 self.server_manager.queue_command(mapping.target, command)
-                logging.info(f"{key} down → queued command {command} for {mapping.target}")
+                logging.info(f"{key} {["up", "down"][key_event.keystate]} → queued command {command} for {mapping.target}")
 
             # targets = self.keymap[key]
             # for target in targets:
