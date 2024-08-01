@@ -3,9 +3,10 @@
 
 #include <vector>
 #include <limits>
-#include "bezier.h"  // Assuming you have a Bezier library
+// #include "bezier.h"  // Assuming you have a Bezier library
 #include <esp_log.h>
 #include "Bezier.h"
+#include <string>
 
 struct FloatEvent {
     float Time;

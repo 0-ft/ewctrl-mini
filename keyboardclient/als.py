@@ -177,7 +177,7 @@ def generate_patterns(filepath):
         for name, envelopes in patterns.items()
     ]
 
-    # to_save = [x for x in to_save if x["name"] == "s1"]
+    to_save = [x for x in to_save if x["name"] == "s1"]
     
     logging.info(f"Loaded {len(to_save)} patterns")
 
