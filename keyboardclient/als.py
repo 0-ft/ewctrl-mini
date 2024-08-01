@@ -92,6 +92,18 @@ def cut_envelope(envelope, start_time, end_time):
         cut.pop()
     return cut
 
+def remove_redundant_points(points):
+    if len(points) <= 2:
+        return points  # No points to remove if there are 2 or fewer points
+
+    result = [points[0]]  # Keep the first point
+    for i in range(1, len(points) - 1):
+        if points[i][1] != points[i-1][1] or points[i][1] != points[i+1][1]:
+            result.append(points[i])
+
+    result.append(points[-1])  # Keep the last point
+    return result
+
 def sanitise_envelope(envelope):
     envelope = [event for event in envelope if event["Time"] >= 0]
     
@@ -108,6 +120,8 @@ def sanitise_envelope(envelope):
         round(event["Value"] / 127.0, rounding),
     ] for event in envelope
     ]
+
+    envelope = remove_redundant_points(envelope)
 
     return envelope
 
