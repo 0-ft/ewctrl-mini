@@ -9,6 +9,15 @@ from common import Commandable, KeyMapEntry, CustomWebSocketClientProtocol
 
 
 class FaderClient(Commandable):
+    COMMAND_START_PATTERN = 0x01
+    COMMAND_SET_GAIN = 0x02
+    COMMAND_SET_SPEED = 0x03
+    COMMAND_SET_PATTERNS = 0x04
+    COMMAND_ADD_PATTERN = 0x05
+    COMMAND_CLEAR_PATTERNS = 0x06
+    COMMAND_SET_MULTIPLIER = 0x07
+    COMMAND_STOP_PATTERN = 0x08
+
     RETRY_DELAY = 2
     
     def __init__(self, host, port, command_queue):
@@ -48,7 +57,6 @@ class FaderClient(Commandable):
             "type": command_type,
             "data": command_data
         })
-        print(message)
         # try:
         #     pong_waiter = await self.websocket.ping()
         #     logging.info("sent ping...")
@@ -68,9 +76,9 @@ class FaderClient(Commandable):
             logging.info(f"sending {len(self.patterns)} patterns to {self.host}:{self.port}")
 
             # clear patterns
-            await self.send_command((6, {}))
+            await self.send_command((FaderClient.COMMAND_SET_PATTERNS, {}))
             for pattern in self.patterns:
-                await self.send_command((5, pattern))
+                await self.send_command((FaderClient.COMMAND_ADD_PATTERN, pattern))
                 time.sleep(0.15)
                 logging.info(f"Sent a pattern to {self.host}:{self.port}")
             logging.info(f"Sent patterns to {self.host}:{self.port}")
@@ -118,18 +126,18 @@ class FaderClient(Commandable):
             raise ValueError(f"Invalid command format: {raw_command}")
         command_type, command_data = parts
         if command_type == "once":
-            return KeyMapEntry("ewctrl", (1, {"name": command_data, "loop": False}))
+            return KeyMapEntry("ewctrl", (FaderClient.COMMAND_START_PATTERN, {"name": command_data, "loop": False}))
         elif command_type == "hold":
-            return KeyMapEntry("ewctrl", (1, {"name": command_data, "loop": True}), (8, {"name": command_data}))
+            return KeyMapEntry("ewctrl", (FaderClient.COMMAND_START_PATTERN, {"name": command_data, "loop": True}), (8, {"name": command_data}))
         elif command_type == "multiplier_raw":
-            return KeyMapEntry("ewctrl", (7, json.loads(command_data)))
+            return KeyMapEntry("ewctrl", (FaderClient.COMMAND_SET_MULTIPLIER, json.loads(command_data)))
         elif command_type == "multiplier":
-            return KeyMapEntry("ewctrl", (7, multipliers[command_data]))
+            return KeyMapEntry("ewctrl", (FaderClient.COMMAND_SET_MULTIPLIER, multipliers[command_data]))
         elif command_type == "speed":
             if command_data in ["-", "+"]:
-                return KeyMapEntry("ewctrl", (6, {"speed": command_data}))
+                return KeyMapEntry("ewctrl", (FaderClient.COMMAND_SET_SPEED, {"speed": command_data}))
             try:
-                return KeyMapEntry("ewctrl", (6, {"speed": float(command_data)}))
+                return KeyMapEntry("ewctrl", (FaderClient.COMMAND_SET_SPEED, {"speed": float(command_data)}))
             except ValueError:
                 raise ValueError(f"Invalid speed value: {command_data}")
         raise ValueError(f"Invalid command type: {command_type}")

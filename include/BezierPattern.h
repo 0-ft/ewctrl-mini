@@ -15,6 +15,16 @@ public:
     float duration;
     uint8_t numOutputs;
 
+
+    std::string toString() const {
+        std::string str = "BezierPattern with " + std::to_string(envelopes.size()) + " envelopes, duration " + std::to_string(duration) + ", numOutputs " + std::to_string(numOutputs);
+        for (const auto& envelope : envelopes) {
+            str += "\n" + envelope.toString();
+        }
+        return str + "\n";
+    }
+
+    void printSamples();
 private:
 };
 

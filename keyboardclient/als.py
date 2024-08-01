@@ -93,6 +93,9 @@ def cut_envelope(envelope, start_time, end_time):
     return cut
 
 def remove_redundant_points(points):
+    if all([p[1] == 0 for p in points]):
+        return []
+
     if len(points) <= 2:
         return points  # No points to remove if there are 2 or fewer points
 
@@ -126,8 +129,9 @@ def sanitise_envelope(envelope):
     return envelope
 
 def patterns_size_info(patterns):
-    all = [x for p in patterns for o in p["data"] for s in o for x in s]
-    return len(all)
+    segments = [s for p in patterns for o in p["data"] for s in o]
+    values = [x for s in segments for x in s]
+    return (len(values), len(segments))
 
 def generate_patterns(filepath):
     root = load_als(filepath)
@@ -166,12 +170,15 @@ def generate_patterns(filepath):
         }
         for name, envelopes in patterns.items()
     ]
+
+    # to_save = [x for x in to_save if x["name"] == "s1"]
     
     logging.info(f"Loaded {len(to_save)} patterns")
 
     json_out = json.dumps(to_save, indent=2)
     open("patterns.json", "w").write(json_out)
-    logging.info(f"Total value count in all patterns: {patterns_size_info(to_save)}")
+    num_values, num_segments = patterns_size_info(to_save)
+    logging.info(f"All patterns have {num_values} values in {num_segments} segments")
     return to_save
     # exit()
 

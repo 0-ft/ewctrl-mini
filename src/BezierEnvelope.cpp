@@ -52,6 +52,9 @@ std::vector<BezierSegment> BezierEnvelope::loadEnvelope(const std::vector<FloatE
 }
 
 float BezierEnvelope::sampleAtTime(float time) const {
+    if(bezierSegments.empty()) {
+        return 0;
+    }
     for (const auto& segment : bezierSegments) {
         if (segment.StartTime <= time && time <= segment.EndTime) {
             float t = (time - segment.StartTime) / (segment.EndTime - segment.StartTime);
@@ -63,4 +66,12 @@ float BezierEnvelope::sampleAtTime(float time) const {
     // std::cerr << "Time " << time << " is not within any segment\n";
     ESP_LOGD(TAG, "Time %.2f is not within any segment", time);
     return 0;
+}
+
+std::string BezierEnvelope::toString() const {
+    std::string str = "Envelope:\n";
+    for (const auto& segment : bezierSegments) {
+        str += "    " + std::to_string(segment.StartTime) + " -> " + std::to_string(segment.EndTime) + '\n';
+    }
+    return str;
 }

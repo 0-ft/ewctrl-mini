@@ -20,7 +20,7 @@ private:
     std::vector<PatternPlayback> activePatterns; // Vector to store currently active patterns
     std::map<std::string, BezierPattern> patterns;
     std::vector<uint16_t> currentFrame;
-    std::vector<uint16_t> currentMultiplier = std::vector<uint16_t>(16, 4096);
+    std::vector<uint16_t> currentMultiplier;
 
     uint8_t driverCount;
     uint8_t* driverAddresses;

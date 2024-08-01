@@ -52,7 +52,7 @@ class KeyboardCommander:
                 # print(row)
                 if(row["ewctrl"]):
                     command = FaderClient.parse_command(row["ewctrl"], self.multipliers)
-                    logging.info(f"Adding command: {command} for key {key}")
+                    logging.debug(f"Adding command: {command} for key {key}")
                     keymap[key].append(command)
                 if("wled" in row and row["wled"]):
                     keymap[key].append(WLEDClient.parse_command(row["wled"]))

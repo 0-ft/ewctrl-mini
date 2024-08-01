@@ -47,9 +47,10 @@ void FaderPlayback::setup()
         driver.setPWMFreq(1600);
         drivers.push_back(driver);
     }
-    ESP_LOGI(TAG, "Set up %d drivers", drivers.size());
     availableOutputs = driverCount * OUTPUTS_PER_DRIVER;
+    ESP_LOGE(TAG, "Set up %d drivers, %d available outputs", drivers.size(), availableOutputs);
     currentFrame = std::vector<uint16_t>(availableOutputs, 0);
+    currentMultiplier = std::vector<uint16_t>(availableOutputs, 4095);
 }
 
 std::vector<uint16_t> FaderPlayback::makeFrame(int64_t time)
@@ -129,15 +130,18 @@ void FaderPlayback::sendFrame()
         return;
     }
 
+    // ESP_LOGE(TAG, "FRAME size %d for %d outputs", newFrame.size(), availableOutputs);
+    // std::string frameLine = "";
     for (uint8_t i = 0; i < availableOutputs; i++)
     {
+        // frameLine += std::to_string(newFrame[i]) + " ";
         if (currentFrame[i] == newFrame[i])
         {
             continue;
         }
         drivers[i / OUTPUTS_PER_DRIVER].setPWM(i % OUTPUTS_PER_DRIVER, 0, newFrame[i]);
     }
-
+    // ESP_LOGE(TAG, "Frame: %s", frameLine.c_str());
     currentFrame = newFrame;
     measFramesWritten++;
 
@@ -178,15 +182,21 @@ void FaderPlayback::testSequence()
 
 void FaderPlayback::startPattern(std::string patternName, bool loop)
 {
-    // ESP_LOGE(TAG, "Go to pattern on core %d", xPortGetCoreID());
+    ESP_LOGI(TAG, "Start pattern %s on core %d", patternName.c_str(), xPortGetCoreID());
     if (activePatterns.size() > MAX_CONCURRENT_PATTERNS)
     {
-        ESP_LOGI(TAG, "Max concurrent patterns reached, not adding %s", patternName.c_str());
+        ESP_LOGE(TAG, "Max concurrent patterns reached, not adding %s", patternName.c_str());
         return;
     }
     if (patterns.find(patternName) == patterns.end())
     {
         ESP_LOGE(TAG, "Invalid pattern name %s", patternName.c_str());
+        // log all available pattern names
+        ESP_LOGE(TAG, "Available patterns:");
+        for (const auto &pattern : patterns)
+        {
+            ESP_LOGE(TAG, "Available pattern: %s", pattern.first.c_str());
+        }
         return;
     }
     auto now = esp_timer_get_time();
@@ -225,7 +235,7 @@ void FaderPlayback::stopPattern(std::string patternName)
     activePatterns.erase(std::remove_if(activePatterns.begin(), activePatterns.end(), [patternName](const PatternPlayback &pattern)
                                         { return pattern.name == patternName; }),
                          activePatterns.end());
-    ESP_LOGI(TAG, "Removed pattern %s from active patterns", patternName.c_str());
+    ESP_LOGI(TAG, "Stop pattern %s", patternName.c_str());
 }
 
 void FaderPlayback::setGain(uint16_t gain)
@@ -244,11 +254,12 @@ void FaderPlayback::setPatterns(std::map<std::string, BezierPattern> patterns)
 void FaderPlayback::addPattern(std::string patternName, BezierPattern pattern)
 {
     patterns.insert({patternName, pattern});
-
     uint32_t heapSize = ESP.getHeapSize();
     uint32_t usedHeap = heapSize - ESP.getFreeHeap();
     float heapUsage = float(usedHeap) / heapSize;
     ESP_LOGE(TAG, "Added pattern %s, now have %d total, heap at %f (%d / %d)", patternName.c_str(), patterns.size(), heapUsage, usedHeap, heapSize);
+    // ESP_LOGE(TAG, "%s", pattern.toString().c_str());
+    // pattern.printSamples();
 }
 
 void FaderPlayback::setMultiplier(std::vector<uint16_t> multiplier)
@@ -260,7 +271,7 @@ void FaderPlayback::setMultiplier(std::vector<uint16_t> multiplier)
 void FaderPlayback::setSpeed(float speed)
 {
     this->speed = speed;
-    ESP_LOGI(TAG, "Set speed multiplier to %.2f", speed);
+    ESP_LOGE(TAG, "Set speed multiplier to %.2f", speed);
 }
 
 float FaderPlayback::getSpeed()

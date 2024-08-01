@@ -74,9 +74,10 @@ class ServerManager:
 
 def main():
     generate_patterns("data/ew4lx_1.als")
+    # generate_patterns("data/pridelx_3.als")
     # generate_patterns("/boot/ewctrl/lx.als")
     server_manager = ServerManager()
-    keyboard_commander = KeyboardCommander(server_manager, 'data/map_test.csv', multipliers_file='data/multipliers_test.csv')
+    keyboard_commander = KeyboardCommander(server_manager, 'data/map_ewlx4.csv', multipliers_file='data/multipliers_test.csv')
     # keyboard_commander = KeyboardCommander('/boot/ewctrl/patterns_map.csv', server_manager)
     keyboard_commander.start()
 

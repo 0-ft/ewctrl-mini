@@ -28,6 +28,7 @@ public:
     BezierEnvelope(const std::vector<FloatEvent>& events);
     float sampleAtTime(float time) const;
     float duration;
+    std::string toString() const;
 
 private:
     std::vector<BezierSegment> bezierSegments;
