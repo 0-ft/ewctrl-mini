@@ -109,7 +109,7 @@ class KeyboardCommander:
             if isinstance(key, list):
                 key = key[0]  # Handle cases where keycode is a list
             key = key.lower()
-            logging.debug(f"{key} {["up", "down", "hold"][key_event.keystate]} detected")
+            logging.debug(f'{key} {["up", "down", "hold"][key_event.keystate]} detected')
 
             if key_event.keystate not in [key_event.key_down, key_event.key_up]:
                 return
