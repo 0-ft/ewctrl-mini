@@ -28,7 +28,9 @@ class FaderClient(Commandable):
         self.port = port
         self.command_queue = command_queue
         self.websocket = None
-        self.patterns = json.load(open('patterns.json'))
+        patterns = json.load(open('patterns.json'))
+        self.patterns = sorted(patterns, key=lambda x: len(json.dumps(x)))[::-1]
+
         self.connection_thread = threading.Thread(target=self.manage_connection, daemon=True)
         self.connection_thread.start()
 
@@ -75,7 +77,7 @@ class FaderClient(Commandable):
         if self.websocket is not None and self.websocket.open:
             # await self.ws_send_check(message)
             await self.websocket.send(message.replace(" ", ""))
-            logging.info(f"Sent command to {self.host}:{self.port} - {message}")
+            logging.info(f"Sent command to {self.host}:{self.port} - length {len(message)}")
 
     async def send_patterns(self):
         if self.websocket is not None and self.websocket.open:
@@ -85,10 +87,11 @@ class FaderClient(Commandable):
 
             # clear patterns
             await self.send_command((FaderClient.COMMAND_SET_PATTERNS, {}))
+
             for pattern in self.patterns:
                 await self.send_command((FaderClient.COMMAND_ADD_PATTERN, pattern))
                 # await self.ws_recv_ack()
-                time.sleep(0.8)
+                time.sleep(1)
                 logging.info(f"Sent a pattern to {self.host}:{self.port}")
             logging.info(f"Sent patterns to {self.host}:{self.port}")
 

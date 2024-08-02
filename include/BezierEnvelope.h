@@ -34,7 +34,7 @@ public:
 private:
     std::vector<BezierSegment> bezierSegments;
 
-    std::vector<BezierSegment> loadEnvelope(const std::vector<FloatEvent>& events);
+    void loadEvents(const std::vector<FloatEvent>& events);
 };
 
 #endif // BEZIERENVELOPE_H

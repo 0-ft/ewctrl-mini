@@ -3,16 +3,16 @@
 static const char *TAG = "BezierEnvelope";
 
 BezierEnvelope::BezierEnvelope(const std::vector<FloatEvent>& events) {
-    bezierSegments = loadEnvelope(events);
+    loadEvents(events);
     duration = events.empty() ? 0.0 : events.back().Time;
 }
 
-std::vector<BezierSegment> BezierEnvelope::loadEnvelope(const std::vector<FloatEvent>& events) {
-    std::vector<BezierSegment> bezierSegments;
+void BezierEnvelope::loadEvents(const std::vector<FloatEvent>& events) {
+    // std::vector<BezierSegment> bezierSegments;
 
     if(events.size() < 2) {
         // ESP_LOGE(TAG, "At least two events are required to create a Bezier envelope");
-        return bezierSegments;
+        return;
     }
 
     for (size_t i = 0; i < events.size() - 1; ++i) {
@@ -48,7 +48,7 @@ std::vector<BezierSegment> BezierEnvelope::loadEnvelope(const std::vector<FloatE
         bezierSegments.push_back({startEvent.Time, endEvent.Time, curveSegment});
     }
 
-    return bezierSegments;
+    // return bezierSegments;
 }
 
 float BezierEnvelope::sampleAtTime(float time) const {
@@ -58,7 +58,7 @@ float BezierEnvelope::sampleAtTime(float time) const {
     for (const auto& segment : bezierSegments) {
         if (segment.StartTime <= time && time <= segment.EndTime) {
             float t = (time - segment.StartTime) / (segment.EndTime - segment.StartTime);
-            return segment.curve.valueAt(t).y;
+            return segment.curve.valueAt(t);
         }
     }
 

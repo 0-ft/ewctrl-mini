@@ -35,7 +35,7 @@ KEY_T,once:p5,
 KEY_Y,once:p7,
 KEY_U,once:p12,
 KEY_I,once:p14,
-KEY_O,,
+KEY_O,once:long1,
 KEY_P,,
 KEY_LEFTBRACE,,HV Strobe W1
 KEY_RIGHTBRACE,,HV Strobe W2
