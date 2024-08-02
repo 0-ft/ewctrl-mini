@@ -9,6 +9,7 @@ import time
 import pyudev
 from evdev import InputDevice, categorize, ecodes, list_devices
 from fader_client import FaderClient
+from keyboardclient.multipliers import load_multipliers
 from wled_client import WLEDClient
 
 
@@ -16,7 +17,7 @@ class KeyboardCommander:
     DEBOUNCE_TIME = 0.3  # Time in seconds to debounce udev events
 
     def __init__(self, server_manager, keymap_file, multipliers_file=None):
-        self.multipliers = self.load_multipliers(multipliers_file) if multipliers_file else {}
+        self.multipliers = load_multipliers(multipliers_file) if multipliers_file else {}
         self.keymap = self.load_keymap(keymap_file)
         self.server_manager = server_manager
         self.devices = {}
@@ -29,14 +30,14 @@ class KeyboardCommander:
         self.debounce_lock = threading.Lock()
         self.update_keyboards()
 
-    def load_multipliers(self, filename):
-        multipliers = {}
-        with open(filename, mode='r') as file:
-            reader = csv.DictReader(file)
-            for row in reader:
-                name = row['name'].lower()
-                multipliers[name] = json.loads(row['multiplier'])
-        return multipliers
+    # def load_multipliers(self, filename):
+    #     multipliers = {}
+    #     with open(filename, mode='r') as file:
+    #         reader = csv.DictReader(file)
+    #         for row in reader:
+    #             name = row['name'].lower()
+    #             multipliers[name] = json.loads(row['multiplier'])
+    #     return multipliers
 
     def load_keymap(self, filename):
         keymap = {}
