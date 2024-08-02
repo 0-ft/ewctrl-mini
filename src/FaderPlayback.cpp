@@ -192,10 +192,10 @@ void FaderPlayback::startPattern(std::string patternName, bool loop)
     {
         ESP_LOGE(TAG, "Invalid pattern name %s", patternName.c_str());
         // log all available pattern names
-        ESP_LOGE(TAG, "Available patterns:");
+        ESP_LOGI(TAG, "Available patterns:");
         for (const auto &pattern : patterns)
         {
-            ESP_LOGE(TAG, "Available pattern: %s", pattern.first.c_str());
+            ESP_LOGI(TAG, "Available pattern: %s", pattern.first.c_str());
         }
         return;
     }

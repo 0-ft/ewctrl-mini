@@ -1,12 +1,12 @@
 [Unit]
-Description=Keyboard Commander Service
+Description=EWCtrl Service
 After=network.target
 
 [Service]
-ExecStart=/home/atlas/ewctrl-mini/venv/bin/python3 /home/atlas/ewctrl-mini/keyboard_client.py
+ExecStart=/home/atlas/ewctrl-mini/keyboardclient/venv/bin/python3 /home/atlas/ewctrl-mini/keyboardclient/keyboard_client.py
 Restart=always
 User=atlas
-WorkingDirectory=/home/atlas/ewctrl-mini
+WorkingDirectory=/home/atlas/ewctrl-mini/keyboardclient
 
 [Install]
 WantedBy=multi-user.target
