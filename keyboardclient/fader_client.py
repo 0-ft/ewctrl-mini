@@ -65,6 +65,7 @@ class FaderClient(Commandable):
             "type": command_type,
             "data": command_data
         })
+        message = message.replace(" ", "")
         # try:
         #     pong_waiter = await self.websocket.ping()
         #     logging.info("sent ping...")
@@ -76,7 +77,7 @@ class FaderClient(Commandable):
         #     return
         if self.websocket is not None and self.websocket.open:
             # await self.ws_send_check(message)
-            await self.websocket.send(message.replace(" ", ""))
+            await self.websocket.send(message)
             logging.info(f"Sent command to {self.host}:{self.port} - length {len(message)}")
 
     async def send_patterns(self):

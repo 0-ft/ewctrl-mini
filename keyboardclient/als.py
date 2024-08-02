@@ -128,6 +128,8 @@ def sanitise_envelope(envelope, tempo):
     ] for event in envelope
     ]
 
+    envelope = [[int(x) if x.is_integer() else x for x in event] for event in envelope]
+
     envelope = remove_redundant_points(envelope)
 
     return envelope
@@ -178,7 +180,7 @@ def generate_patterns(filepath):
     ]
 
     # to_save = [x for x in to_save if x["name"] == "long2"]
-    
+    # to_save = to_save[:10]
     logging.info(f"Loaded {len(to_save)} patterns")
 
     json_out = json.dumps(to_save, indent=2)

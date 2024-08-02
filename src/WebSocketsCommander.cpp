@@ -143,10 +143,10 @@ uint8_t WebSocketsCommander::handleWebSocketMessage(AwsFrameInfo *info, uint8_t 
 
         ESP_LOGE(TAG, "Finished deserialising, calling onEvent");
         auto shouldAck = onEvent(jsonDoc);
-        return shouldAck ? 0 : 1;
         // ESP_LOGE(TAG, "DELETING MESSAGE BUFFER");
         delete[] messageBuffer;
         messageBuffer = nullptr;
+        return shouldAck ? 0 : 1;
     }
     return 2;
 }

@@ -51,6 +51,7 @@ bool handleWifiCommand(JsonDocument& doc)
     {
       JsonObject data = doc["data"];
       receivePattern(data);
+      doc.clear();
       return true;
       break;
     }
@@ -79,14 +80,15 @@ bool handleWifiCommand(JsonDocument& doc)
       break;
   }
   ESP_LOGI(TAG, "Handled WifiCommander command type %d", type);
+  doc.clear();
   return false;
 }
 
 
-// WebSocketsCommander wifiCommander("COMMANDER", "fadercommand", handleWifiCommand, 0);
+WebSocketsCommander wifiCommander("COMMANDER", "fadercommand", handleWifiCommand, 0);
 // WiFiCommander wifiCommander("Queens", "trlguest021275", handleWifiCommand);
 // WebSocketsCommander wifiCommander("Queens", "trlguest021275", handleWifiCommand, 0);
-WebSocketsCommander wifiCommander("190bpm hardcore steppas", "fungible", handleWifiCommand, 0);
+// WebSocketsCommander wifiCommander("190bpm hardcore steppas", "fungible", handleWifiCommand, 0);
 // WebSocketsCommander wifiCommander("TP-LINK_2C5EE8", "85394919", handleWifiCommand, 0);
 // WiFiCommander wifiCommander("190bpm hardcore steppas", "fungible", handleWifiCommand);
 
@@ -117,7 +119,7 @@ void setup()
   esp_timer_create(&timerArgs, &myTimer);
 
     // Start the timer (200 times per second -> 5ms interval)
-  esp_timer_start_periodic(myTimer, 5000); // interval is in microseconds
+  esp_timer_start_periodic(myTimer, 20000); // interval is in microseconds
 }
 
 void loop()
