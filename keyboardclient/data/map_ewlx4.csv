@@ -1,0 +1,73 @@
+key,ewctrl,wled
+KEY_ESC,once:blackout,Off
+KEY_F1,once:ext0,Wavesins B1
+KEY_F2,once:ext1,Wavesins M1
+KEY_F3,once:ext2,Wavesins W1
+KEY_F4,once:ext3,Strobe B1
+KEY_F5,,Strobe B2
+KEY_F6,,Strobe B3
+KEY_F7,,Puddles B1
+KEY_F8,,Puddles M1
+KEY_F9,,Puddles W1
+KEY_F10,,Pulse B
+KEY_F11,,Pulse M
+KEY_F12,,Pulse W
+KEY_DELETE,,
+KEY_1,once:prgb0,Wavesins B2
+KEY_2,once:prgb1,Wavesins M2
+KEY_3,once:prgb2,Wavesins W2
+KEY_4,once:prgb3,Strobe W1
+KEY_5,hold:s8,Strobe W2
+KEY_6,hold:s9,Strobe W3
+KEY_7,hold:s10,Lightning B1
+KEY_8,hold:s11,Lightning M1
+KEY_9,hold:s12,Lightning MB1
+KEY_0,hold:s13,Lightning W1
+KEY_MINUS,hold:s14,Meteor H1
+KEY_EQUAL,hold:s15,Meteor H2
+KEY_BACKSPACE,,
+KEY_TAB,multiplier:blue,
+KEY_Q,once:p10,
+KEY_W,once:p8,
+KEY_E,once:p3,
+KEY_R,once:p1,
+KEY_T,once:p5,
+KEY_Y,once:p7,
+KEY_U,once:p12,
+KEY_I,once:p14,
+KEY_O,once:long2,
+KEY_P,,
+KEY_LEFTBRACE,once:waveleft,HV Strobe W1
+KEY_RIGHTBRACE,once:waveright,HV Strobe W2
+KEY_ENTER,,
+KEY_CAPSLOCK,,
+KEY_A,once:p11,
+KEY_S,once:p9,
+KEY_D,once:p2,
+KEY_F,once:p0,
+KEY_G,once:p4,
+KEY_H,once:p6,
+KEY_J,once:p13,
+KEY_K,once:p15,
+KEY_L,,Bouncing Balls W2
+KEY_SEMICOLON,once:chaseleft,Bouncing Balls M1
+KEY_APOSTROPHE,once:chaseright,Bouncing Balls W1
+KEY_LEFTSHIFT,,
+KEY_Z,hold:s0,
+KEY_X,hold:s1,
+KEY_C,hold:s2,
+KEY_V,hold:s3,
+KEY_B,hold:s4,
+KEY_N,hold:s5,
+KEY_M,hold:s6,
+KEY_COMMA,hold:s7,
+KEY_DOT,,
+KEY_SLASH,,
+KEY_RIGHTSHIFT,,
+KEY_LEFTALT,,
+KEY_SPACE,,
+KEY_BACKSLASH,,
+KEY_UP,speed:+,
+KEY_LEFT,,
+KEY_RIGHT,,
+KEY_DOWN,speed:-,
