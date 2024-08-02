@@ -73,7 +73,7 @@ class ServerManager:
             logging.warning(f"No active connection to server {target_name}. Command discarded.")
 
 def main():
-    generate_patterns("data/ew4lx_no_longs.als")
+    generate_patterns("data/ew4lx_5.als")
     # generate_patterns("data/pridelx_3.als")
     # generate_patterns("/boot/ewctrl/lx.als")
     server_manager = ServerManager()
