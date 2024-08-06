@@ -73,11 +73,11 @@ class ServerManager:
             logging.warning(f"No active connection to server {target_name}. Command discarded.")
 
 def main():
-    generate_patterns("data/ew4lx_5.als")
+    generate_patterns("data/ew4lx_final2.als")
     # generate_patterns("data/pridelx_3.als")
     # generate_patterns("/boot/ewctrl/lx.als")
     server_manager = ServerManager()
-    keyboard_commander = KeyboardCommander(server_manager, 'data/map_ewlx4.csv', multipliers_file='data/multipliers_test.csv')
+    keyboard_commander = KeyboardCommander(server_manager, 'data/keymap_final.csv', multipliers_file='data/colors_final.csv')
     # keyboard_commander = KeyboardCommander('/boot/ewctrl/patterns_map.csv', server_manager)
     keyboard_commander.start()
 

@@ -151,7 +151,7 @@ def generate_patterns(filepath):
         for name, pointee in name_pointees.items()
         if pointee in pointee_envelopes
     }
-    logging.debug(f"Found {len(name_envelopes)} envelopes: {list(name_envelopes.keys())}")
+    logging.info(f"Found {len(name_envelopes)} envelopes: {list(name_envelopes.keys())}")
 
     locators = find_locators(root)
     logging.debug(f"Found {len(locators)} locators: {locators}")
@@ -167,20 +167,36 @@ def generate_patterns(filepath):
             envelope_name: cut_envelope(envelope, start_time, end_time)
             for envelope_name, envelope in name_envelopes.items()
         }
+    # print(patterns["pulselowleft"])
 
+    channel_order = [
+        "T1L0","T1L1","T1L2","T1L3",
+        "T2L0","T2L1","T2L2","T2L3",
+
+        "R0","R1","R2","R3",
+        "EO","E1","E2","E3",
+
+        "G0","G1","G2","G3",
+        "B0","B1","B2","B3",
+
+        "W0","W1","W2","W3",
+        "W4","W5","W6","W7"
+    ]
+
+    # sorted_envs = 
     to_save = [
         {
             "name" : name,
             "data": [
-                sanitise_envelope(envelope, tempo)
-                for name, envelope in sorted(list(envelopes.items()), key=lambda x: x[0])
+                sanitise_envelope(envelopes[c], tempo)
+                for c in channel_order
             ]
         }
         for name, envelopes in patterns.items()
     ]
 
-    # to_save = [x for x in to_save if x["name"] == "long2"]
-    # to_save = to_save[:10]
+    to_save = [x for x in to_save if x["name"] not in ["s1", "long1", "long2", "strobetreeboth"]]
+    # to_save = to_save[:20]
     logging.info(f"Loaded {len(to_save)} patterns")
 
     json_out = json.dumps(to_save, indent=2)

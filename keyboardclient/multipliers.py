@@ -27,7 +27,7 @@ def make_sum_multiplier(groups, group_scales):
     return result
 
 def load_multipliers(filename):
-    groups, scales = load_groups_and_scales("data/channel_map.csv")
+    groups, scales = load_groups_and_scales(filename)
     multipliers = {
         color_name: (make_sum_multiplier(groups, group_scales) * 4095).astype(int).tolist()
         for color_name, group_scales in scales.items()
